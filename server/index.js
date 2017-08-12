@@ -8,12 +8,12 @@ server.listen(8010, function() {
 
 io.on('connection', function(socket){
 	console.log("Player connected!");
-	
+
 	socket.on('new msg', function(data) {
 		console.log('message: ' + data.text);
 		socket.broadcast.emit('message', data);
 	});
-	
+
 	socket.on('disconnect', function() {
 		console.log("Player disconnected!");
 	});

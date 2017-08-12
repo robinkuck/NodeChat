@@ -124,8 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 //scroller.scrollTo(0,scroller.getBottom());
             }
         });
-
-        
     }
 
     //socket.emit(EVENT, data);
