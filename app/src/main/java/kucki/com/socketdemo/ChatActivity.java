@@ -28,10 +28,8 @@ import io.socket.emitter.Emitter;
 
 import static android.widget.LinearLayout.HORIZONTAL;
 
-public class MainActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
-    public Socket socket;
-    //public TextView messages;
     public EditText editMsg;
     public Button sendButton;
     public ScrollView scroller;
@@ -39,26 +37,40 @@ public class MainActivity extends AppCompatActivity {
 
     public int x,y;
 
+    //TODO: Activity for global chat and for private chat(multiple chat objects possible)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat);
+        App.current = this;
 
         //KEYBOARD OPEN
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         //messages = (TextView)findViewById(R.id.MessagesView);
+        configViews();
+        msgs = (LinearLayout) findViewById(R.id.rel);
+
+        configSocketEvents();
+
+        Display d = getWindowManager().getDefaultDisplay();
+        x = d.getWidth();
+        y = d.getHeight();
+    }
+
+    private void configViews() {
         editMsg = (EditText)findViewById(R.id.editMessage);
         scroller = (ScrollView)findViewById(R.id.scroller);
         sendButton = (Button)findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(socket.connected()&&!editMsg.getText().toString().equals("")) {
+                if(App.getSocket().connected()&&!editMsg.getText().toString().equals("")) {
                     JSONObject data = new JSONObject();
                     try {
                         data.put("text", editMsg.getText());
-                        socket.emit("new msg",data);
+                        App.getSocket().emit("new msg",data);
 
 
                         //addPersonalMessageView(editMsg.getText().toString());
@@ -70,34 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        msgs = (LinearLayout) findViewById(R.id.rel);
-
-
-        connectSocket();
-        configSocketEvents();
-
-        Display d = getWindowManager().getDefaultDisplay();
-        x = d.getWidth();
-        y = d.getHeight();
     }
 
-    public void connectSocket() {
-        try {
-            socket = IO.socket("http://37.10.112.240:8010/");
-            socket.connect();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+    //TODO: Add Writing Display
+    //TODO: Add reading checkmark
 
     public void configSocketEvents() {
-        final Context ct = this;
-        socket.on(Socket.EVENT_CONNECT, new Emitter.Listener(){
-            @Override
-            public void call(Object... args) {
-                System.out.println("SocketIO connected!");
-            }
-        }).on("message",new Emitter.Listener() {
+        App.getSocket().on("message",new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 JSONObject data = (JSONObject) args[0];
@@ -168,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
         mv.setBackgroundResource(R.drawable.bgpersonalmessageview);
         l.addView(mv);
         msgs.addView(l);
-        BadgeView badgeView = new BadgeView(this, mv);
         addBadgeView(mv);
     }
 
@@ -179,28 +169,42 @@ public class MainActivity extends AppCompatActivity {
         addBadgeView(mv);
     }
 
-    public void clearEditMsg() {
+    private void clearEditMsg() {
         editMsg.setText("");
     }
 
-    public void addBadgeView(MessageView mv) {
+    private void addBadgeView(MessageView mv) {
         BadgeView badgeView = new BadgeView(this, mv);
         badgeView.setText(getCurrentTime());
         badgeView.setTextColor(getResources().getColor(R.color.date));
         badgeView.setTextSize((int)dpToPixel(4));
         badgeView.setBadgeBackgroundColor(Color.TRANSPARENT);
         badgeView.setBadgePosition(BadgeView.POSITION_BOTTOM_RIGHT);
+        //badgeView.setBackgroundDrawable(getResources().getDrawable(R.drawable.linemessageview));
         //badgeView.setBadgeMargin((int)dpToPixel(3),(int)dpToPixel(3));
         badgeView.show();
     }
 
     private String getCurrentTime() {
         Calendar c = Calendar.getInstance(Locale.GERMANY);
-        if(c.get(Calendar.MINUTE) < 10) {
-            return "" + c.get(Calendar.HOUR_OF_DAY) + ":0" + c.get(Calendar.MINUTE);
+        String date = "";
+        if(c.get(Calendar.DAY_OF_MONTH)<10) {
+            date = "0" + c.get(Calendar.DAY_OF_MONTH) + "." +
+                    (c.get(Calendar.MONTH)<10 ? "0" + c.get(Calendar.MONTH) : c.get(Calendar.MONTH)) +
+                    "." + c.get(Calendar.YEAR);
         } else {
-            return "" + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
+            date =  c.get(Calendar.DAY_OF_MONTH) + "." +
+                    (c.get(Calendar.MONTH)<10 ? "0" + c.get(Calendar.MONTH) : c.get(Calendar.MONTH)) +
+                    "." + c.get(Calendar.YEAR);
         }
+
+        String time = "";
+        if(c.get(Calendar.MINUTE) < 10) {
+            time = "" + c.get(Calendar.HOUR_OF_DAY) + ":0" + c.get(Calendar.MINUTE);
+        } else {
+            time = "" + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
+        }
+        return date + ", " + time;
     }
 
     //DP to Pixel
