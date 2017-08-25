@@ -1,10 +1,13 @@
 package kucki.com.socketdemo;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,9 +18,7 @@ import org.json.JSONObject;
 
 import io.socket.emitter.Emitter;
 
-public class Chatlist extends AppCompatActivity {
-
-    //TODO: Chatlist and Nick input in one Activity with 2 Fragments
+public class ChatlistFragment extends Fragment {
 
     public LinearLayout layout;
     public LinearLayout privateChatList;
@@ -26,20 +27,29 @@ public class Chatlist extends AppCompatActivity {
     public String nick;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chatlist);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_chatlist, container, false);
+    }
 
-        nick = getNick();
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        View v = getView();
+        if(v!=null) {
+            configViews(v);
+        }
+
+        nick = ((MainActivity)getActivity()).getNick();
         System.out.println("[I] Your name: " + nick);
 
-        configViews();
         configSocketEvents();
         App.getSocket().emit("getPlayers");
     }
 
-    private void configViews() {
-        layout = (LinearLayout)findViewById(R.id.chatentrylist);
+    private void configViews(View v) {
+        layout = (LinearLayout)v.findViewById(R.id.chatentrylist);
         privateChatList = (LinearLayout)layout.findViewById(R.id.private_chat_list);
         RelativeLayout rl = (RelativeLayout)layout.findViewById(R.id.global_chat);
         rl.setOnClickListener(new View.OnClickListener() {
@@ -52,19 +62,14 @@ public class Chatlist extends AppCompatActivity {
         global_chat.setText("Global Chat");
     }
 
-    @Override
-    public void onBackPressed() {
-        ActivityManager.startNickActivity(this);
-    }
-
     public void configSocketEvents() {
-        final Context ct = this;
+        final Context ct = getContext();
         final String currentNick = this.nick;
         App.getSocket().on("sendPlayers", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 JSONArray users = (JSONArray) args[0];
-                System.out.println("[INFO] Updating Chatlist, Users online: " + users.length());
+                System.out.println("[INFO] Updating Users online: " + users.length());
                 clearPrivateChatList();
                 try {
                     for(int i = 0; i<users.length(); i++) {
@@ -72,7 +77,7 @@ public class Chatlist extends AppCompatActivity {
                         final String nick = current.getString("name");
                         if(!nick.equalsIgnoreCase(currentNick)) {
                             final ChatlistEntry entry = new ChatlistEntry(ct, nick);
-                            System.out.println("Adding User to Chatlist: " + nick);
+                            System.out.println("Adding User to list: " + nick);
 
                             addViewtoPrivateChatList(entry);
                         }
@@ -85,7 +90,7 @@ public class Chatlist extends AppCompatActivity {
     }
 
     private void clearPrivateChatList() {
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 privateChatList.removeAllViews();
@@ -94,17 +99,12 @@ public class Chatlist extends AppCompatActivity {
     }
 
     private void addViewtoPrivateChatList(final View v) {
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 privateChatList.addView(v);
             }
         });
-    }
-
-    private String getNick() {
-        Bundle extras = getIntent().getExtras();
-        return extras.getString("nick");
     }
 
 }

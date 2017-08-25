@@ -14,16 +14,13 @@ public class ActivityManager {
     public static HashMap<String, ChatActivity> chats = new HashMap<>();
 
     //Resuming Activities
+    /*
     public static void startNickActivity(AppCompatActivity current) {
-        Intent intent = new Intent(current,NickActivity.class);
+        Intent intent = new Intent(current,NickFragment.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         current.startActivityIfNeeded(intent,0);
     }
-
-    public static void startChatlistActivity(AppCompatActivity current, Intent intent) {
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        current.startActivityIfNeeded(intent,0);
-    }
+    */
 
     public static void startChatActivity(AppCompatActivity current, String name) {
         Intent intent = new Intent(current, ChatActivity.class);

@@ -7,15 +7,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import io.socket.emitter.Emitter;
 
@@ -23,10 +25,7 @@ import io.socket.emitter.Emitter;
  * Created by kuckr on 12.08.2017.
  */
 
-public class NickActivity extends AppCompatActivity {
-
-    public SharedPreferences prefs;
-    public SharedPreferences.Editor editor;
+public class NickFragment extends Fragment {
 
     private Button enter;
     private EditText editNick;
@@ -35,12 +34,19 @@ public class NickActivity extends AppCompatActivity {
     private String currentNick;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.nick_activity);
-        App.current = this;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_nick, container, false);
+    }
 
-        configViews();
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        View v = getView();
+        if(v!=null) {
+            configViews();
+        }
 
         if(isOnline()) {
             App.connectSocket();
@@ -49,24 +55,20 @@ public class NickActivity extends AppCompatActivity {
             App.showNoInternetConnectionToast();
         }
 
-
     }
 
     private void configSocketEvents() {
-        final Context ct = this;
-        final AppCompatActivity app = this;
         App.getSocket().on("suclogin", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                Intent intent = new Intent(ct,Chatlist.class);
-                intent.putExtra("nick", currentNick);
-                ActivityManager.startChatlistActivity(app, intent);
+                ((MainActivity)getActivity()).setNick(currentNick);
+                ((MainActivity)getActivity()).setChatlistFragment();
             }
         }).on("nologin", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 if(notificationText.getVisibility() == View.INVISIBLE) {
-                    runOnUiThread(new Runnable() {
+                    getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             setNotification(true);
@@ -78,9 +80,9 @@ public class NickActivity extends AppCompatActivity {
     }
 
     private void configViews() {
-        notificationText = (TextView)findViewById(R.id.notification);
-        editNick = (EditText)findViewById(R.id.editNick);
-        enter = (Button)findViewById(R.id.buttonEnter);
+        notificationText = (TextView)getView().findViewById(R.id.notification);
+        editNick = (EditText)getView().findViewById(R.id.editNick);
+        enter = (Button)getView().findViewById(R.id.buttonEnter);
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +110,7 @@ public class NickActivity extends AppCompatActivity {
 
     public boolean isOnline() {
         ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null &&
                 cm.getActiveNetworkInfo().isConnectedOrConnecting();
