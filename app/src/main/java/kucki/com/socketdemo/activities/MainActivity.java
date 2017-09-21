@@ -1,8 +1,12 @@
-package kucki.com.socketdemo;
+package kucki.com.socketdemo.activities;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import kucki.com.socketdemo.R;
+import kucki.com.socketdemo.fragments.ChatlistFragment;
+import kucki.com.socketdemo.fragments.NickFragment;
 
 public class MainActivity extends AppCompatActivity {
 

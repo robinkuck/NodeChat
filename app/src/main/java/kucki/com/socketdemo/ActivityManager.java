@@ -3,15 +3,13 @@ package kucki.com.socketdemo;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
-import java.util.HashMap;
+import kucki.com.socketdemo.activities.ChatActivity;
 
 /**
  * Created by kuckr on 23.08.2017.
  */
 
 public class ActivityManager {
-
-    public static HashMap<String, ChatActivity> chats = new HashMap<>();
 
     //Resuming Activities
     /*

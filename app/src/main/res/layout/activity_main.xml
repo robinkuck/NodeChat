@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kucki.com.socketdemo.MainActivity"
+    tools:context="kucki.com.socketdemo.activities.MainActivity"
     android:id="@+id/container">
 
 </FrameLayout>

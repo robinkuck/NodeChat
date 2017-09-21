@@ -1,14 +1,11 @@
-package kucki.com.socketdemo;
+package kucki.com.socketdemo.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.socket.emitter.Emitter;
+import kucki.com.socketdemo.App;
+import kucki.com.socketdemo.activities.MainActivity;
+import kucki.com.socketdemo.R;
 
 /**
  * Created by kuckr on 12.08.2017.

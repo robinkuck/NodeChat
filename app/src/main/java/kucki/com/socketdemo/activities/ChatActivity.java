@@ -1,4 +1,4 @@
-package kucki.com.socketdemo;
+package kucki.com.socketdemo.activities;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -25,6 +25,9 @@ import java.util.Locale;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import kucki.com.socketdemo.App;
+import kucki.com.socketdemo.MessageView;
+import kucki.com.socketdemo.R;
 
 import static android.widget.LinearLayout.HORIZONTAL;
 

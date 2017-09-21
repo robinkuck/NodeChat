@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="kucki.com.socketdemo.ChatlistFragment">
+    tools:context="kucki.com.socketdemo.fragments.ChatlistFragment">
 
     <ScrollView
         android:layout_width="match_parent"

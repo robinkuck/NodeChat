@@ -6,7 +6,7 @@
     android:background="@color/background"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context="kucki.com.socketdemo.NickFragment">
+    tools:context="kucki.com.socketdemo.fragments.NickFragment">
 
         <Space
             android:layout_width="match_parent"
