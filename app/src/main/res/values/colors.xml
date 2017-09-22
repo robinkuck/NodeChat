@@ -5,6 +5,6 @@
     <color name="colorPrimaryDark">#101f2b</color>
     <color name="colorAccent">#747474</color>
     <color name="PersonalMessageView">#65b8fc</color>
-    <color name="background">#bababa</color>
+    <color name="background">#e4e4e4</color>
     <color name="date">#919191</color>
 </resources>

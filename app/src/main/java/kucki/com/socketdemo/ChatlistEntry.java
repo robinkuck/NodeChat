@@ -21,7 +21,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  *
  */
 
-public class ChatlistEntry extends View {
+public class ChatlistEntry extends RelativeLayout {
 
     private String nick;
     private TextView tvtitle;
@@ -38,15 +38,18 @@ public class ChatlistEntry extends View {
 
 
     public void init(String text) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+        setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT,(int)dpToPixel(80)));
+        setBackgroundDrawable(getResources().getDrawable(R.drawable.bgchatlistentry));
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 MATCH_PARENT,WRAP_CONTENT);
-        params.weight = 0;
         params.setMargins((int)dpToPixel(15),(int)dpToPixel(25),0,0);
-        tvtitle = (TextView)findViewById(R.id.name_view);
+        tvtitle = new TextView(getContext());
         tvtitle.setLayoutParams(params);
         tvtitle.setTextColor(Color.BLACK);
         tvtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
         tvtitle.setText(text);
+        addView(tvtitle);
         final String fnick = text;
         setOnClickListener(new OnClickListener() {
             @Override
