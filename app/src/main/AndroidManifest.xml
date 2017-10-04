@@ -16,7 +16,28 @@
         <activity
             android:name=".activities.ChatActivity"
             android:windowSoftInputMode="adjustResize|stateHidden">
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name=".activities.GlobalChatActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name=".activities.PrivateChatActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

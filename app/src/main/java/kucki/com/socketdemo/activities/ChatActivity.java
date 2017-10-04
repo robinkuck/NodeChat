@@ -55,14 +55,12 @@ public class ChatActivity extends AppCompatActivity {
         configViews();
         msgs = (LinearLayout) findViewById(R.id.rel);
 
-        configSocketEvents();
-
         Display d = getWindowManager().getDefaultDisplay();
         x = d.getWidth();
         y = d.getHeight();
     }
 
-    private void configViews() {
+    public void configViews() {
         editMsg = (EditText)findViewById(R.id.editMessage);
         scroller = (ScrollView)findViewById(R.id.scroller);
         sendButton = (Button)findViewById(R.id.sendButton);
@@ -90,6 +88,7 @@ public class ChatActivity extends AppCompatActivity {
     //TODO: Add Writing Display
     //TODO: Add reading checkmark
 
+    /*
     public void configSocketEvents() {
         App.getSocket().on("message",new Emitter.Listener() {
             @Override
@@ -98,14 +97,10 @@ public class ChatActivity extends AppCompatActivity {
                 try {
                     //final String s1 = messages.getText().toString();
                     final String s2 = data.getString("text");
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            /*
-                            messages.setText(s1 + "\n\n" + s2);
-                            scrollDown();
-                            */
+
                             addMessageView(s2);
                             scrollDown();
                         }
@@ -125,10 +120,6 @@ public class ChatActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            /*
-                            messages.setText(s1 + "\n\n" + s2);
-                            scrollDown();
-                            */
                             addPersonalMessageView(s2);
                             scrollDown();
                         }
@@ -139,6 +130,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
+    */
 
     public void scrollDown() {
         scroller.post(new Runnable() {
@@ -162,21 +154,14 @@ public class ChatActivity extends AppCompatActivity {
         mv.setBackgroundResource(R.drawable.bgpersonalmessageview);
         l.addView(mv);
         msgs.addView(l);
-        addBadgeView(mv);
+        addDate(mv);
     }
 
-    //Messages from the server
-    public void addMessageView(String text) {
-        MessageView mv = new MessageView(this,text,(int)((x/3)*2));
-        msgs.addView(mv);
-        addBadgeView(mv);
-    }
-
-    private void clearEditMsg() {
+    public void clearEditMsg() {
         editMsg.setText("");
     }
 
-    private void addBadgeView(MessageView mv) {
+    public void addDate(MessageView mv) {
         BadgeView badgeView = new BadgeView(this, mv);
         badgeView.setText(getCurrentTime());
         badgeView.setTextColor(getResources().getColor(R.color.date));
@@ -188,7 +173,15 @@ public class ChatActivity extends AppCompatActivity {
         badgeView.show();
     }
 
-    private String getCurrentTime() {
+    //Messages from the server
+    public MessageView createMessageView(String text) {
+        MessageView mv = new MessageView(this,text,(int)((x/3)*2));
+        msgs.addView(mv);
+        addDate(mv);
+        return mv;
+    }
+
+    public String getCurrentTime() {
         Calendar c = Calendar.getInstance(Locale.GERMANY);
         String date = "";
         if(c.get(Calendar.DAY_OF_MONTH)<10) {
@@ -211,7 +204,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     //DP to Pixel
-    private float dpToPixel(float dp) {
+    public float dpToPixel(float dp) {
         final float density = getResources().getDisplayMetrics().density;
         return dp * (density == 1.0f || density == 1.5f || density == 2.0f ? 3.0f : density) + 0.5f;
     }

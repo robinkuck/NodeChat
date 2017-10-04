@@ -1,8 +1,10 @@
 package kucki.com.socketdemo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -23,13 +25,25 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class ChatlistEntry extends RelativeLayout {
 
+    public boolean isGlobal;
+
     private String nick;
     private TextView tvtitle;
 
-    public ChatlistEntry(Context ct, String nick) {
-        super(ct);
-        this.nick = nick;
+    public Activity act;
+
+    public ChatlistEntry(Activity act, String nick) {
+        super(act);
+        this.act = act;
+        if(nick.equals("global")) {
+            isGlobal = true;
+            this.nick = "Global Chat";
+        } else {
+            isGlobal = false;
+            this.nick = nick;
+        }
         init(nick);
+
     }
 
     public ChatlistEntry(Context ct, AttributeSet attrs) {
@@ -50,13 +64,6 @@ public class ChatlistEntry extends RelativeLayout {
         tvtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
         tvtitle.setText(text);
         addView(tvtitle);
-        final String fnick = text;
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("[I] " + fnick);
-            }
-        });
     }
 
     //DP to Pixel

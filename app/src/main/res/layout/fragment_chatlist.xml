@@ -34,10 +34,17 @@
                 android:text="Global Chat"
                 android:textSize="17sp" />
 
+            <!--
             <include
                 layout="@layout/chatlistentry_view"
                 android:id="@+id/global_chat"
-                />
+                />-->
+
+            <LinearLayout
+            android:id="@+id/global_chat_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
 
             <TextView
                 android:id="@+id/online_users_textview"
@@ -51,7 +58,7 @@
                 android:textSize="17sp" />
 
             <LinearLayout
-                android:id="@+id/private_chat_list"
+                android:id="@+id/private_chat_list_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">

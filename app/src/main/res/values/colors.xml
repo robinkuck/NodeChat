@@ -7,4 +7,5 @@
     <color name="PersonalMessageView">#65b8fc</color>
     <color name="background">#e4e4e4</color>
     <color name="date">#919191</color>
+    <color name="nameHeader">#f20e0e</color>
 </resources>

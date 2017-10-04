@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.socket.emitter.Emitter;
+import kucki.com.socketdemo.ActivityManager;
 import kucki.com.socketdemo.App;
 import kucki.com.socketdemo.ChatlistEntry;
 import kucki.com.socketdemo.activities.MainActivity;
@@ -23,7 +24,8 @@ import kucki.com.socketdemo.R;
 public class ChatlistFragment extends Fragment {
 
     public LinearLayout layout;
-    public LinearLayout privateChatList;
+    public LinearLayout privateChatListLayout;
+    public LinearLayout globalChatLayout;
     public TextView global_chat;
 
     public String nick;
@@ -38,30 +40,35 @@ public class ChatlistFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        View v = getView();
-        if(v!=null) {
-            configViews(v);
-        }
-
         nick = ((MainActivity)getActivity()).getNick();
         System.out.println("[I] Your name: " + nick);
 
         configSocketEvents();
         App.getSocket().emit("getPlayers");
+
+        View v = getView();
+        if(v!=null) {
+            configViews(v);
+        }
     }
 
     private void configViews(View v) {
         layout = (LinearLayout)v.findViewById(R.id.chatentrylist);
-        privateChatList = (LinearLayout)layout.findViewById(R.id.private_chat_list);
-        RelativeLayout rl = (RelativeLayout)layout.findViewById(R.id.global_chat);
-        rl.setOnClickListener(new View.OnClickListener() {
+        privateChatListLayout = (LinearLayout)layout.findViewById(R.id.private_chat_list_layout);
+        globalChatLayout = (LinearLayout)layout.findViewById(R.id.global_chat_layout);
+        final ChatlistEntry entry = new ChatlistEntry(getActivity(),"global");
+        addViewtoGlobalChatList(entry);
+        entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("[I] Starting Global Chat");
+                ActivityManager.startGlobalChatAcitity(getActivity());
+                System.out.println("[I] Global Chat started!");
             }
         });
+        /*
         global_chat = (TextView)rl.findViewById(R.id.name_view);
         global_chat.setText("Global Chat");
+        */
     }
 
     public void configSocketEvents() {
@@ -78,7 +85,7 @@ public class ChatlistFragment extends Fragment {
                         JSONObject current = users.getJSONObject(i);
                         final String nick = current.getString("name");
                         if(!nick.equalsIgnoreCase(currentNick)) {
-                            final ChatlistEntry entry = new ChatlistEntry(ct, nick);
+                            final ChatlistEntry entry = new ChatlistEntry(getActivity(), nick);
                             System.out.println("Adding User to list: " + nick);
 
                             addViewtoPrivateChatList(entry);
@@ -95,7 +102,7 @@ public class ChatlistFragment extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                privateChatList.removeAllViews();
+                privateChatListLayout.removeAllViews();
             }
         });
     }
@@ -104,7 +111,16 @@ public class ChatlistFragment extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                privateChatList.addView(v);
+                privateChatListLayout.addView(v);
+            }
+        });
+    }
+
+    private void addViewtoGlobalChatList(final View v) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                globalChatLayout.addView(v);
             }
         });
     }
