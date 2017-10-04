@@ -23,6 +23,7 @@ public class GlobalChatActivity extends ChatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configSocketEvents();
+        setTitle("Global Chat");
     }
 
     public void configSocketEvents() {

@@ -50,9 +50,9 @@ public class App extends Application {
         online = pOnline;
     }
 
-    public static void showNoInternetConnectionToast() {
+    public static void showNoInternetConnectionToast(Context ct) {
         String txt = "Please check your Internet connection!";
-        Toast t = Toast.makeText(current,txt,Toast.LENGTH_SHORT);
+        Toast t = Toast.makeText(ct,txt,Toast.LENGTH_SHORT);
         t.show();
     }
 

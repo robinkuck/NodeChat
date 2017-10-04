@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import kucki.com.socketdemo.activities.ChatActivity;
 import kucki.com.socketdemo.activities.GlobalChatActivity;
+import kucki.com.socketdemo.activities.MainActivity;
 
 /**
  * Created by kuckr on 23.08.2017.
@@ -22,9 +23,15 @@ public class ActivityManager {
     }
     */
 
-    public static void startGlobalChatAcitity(Activity current) {
-        Intent intent = new Intent(current, GlobalChatActivity.class);
-        current.startActivityIfNeeded(intent,0);
+    public static void startGlobalChatAcitity(Activity curr) {
+        final Activity current = curr;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(current, GlobalChatActivity.class);
+                current.startActivityIfNeeded(intent,0);
+            }
+        }).start();
     }
 
     public static void startPrivateChatActivity(AppCompatActivity current, String name) {

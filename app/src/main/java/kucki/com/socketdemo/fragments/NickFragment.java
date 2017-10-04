@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -52,7 +53,7 @@ public class NickFragment extends Fragment {
             App.connectSocket();
             configSocketEvents();
         } else {
-            App.showNoInternetConnectionToast();
+            App.showNoInternetConnectionToast(getContext());
         }
 
     }
@@ -63,6 +64,7 @@ public class NickFragment extends Fragment {
             public void call(Object... args) {
                 ((MainActivity)getActivity()).setNick(currentNick);
                 ((MainActivity)getActivity()).setChatlistFragment();
+                closeKeyboard();
             }
         }).on("nologin", new Emitter.Listener() {
             @Override
@@ -89,7 +91,7 @@ public class NickFragment extends Fragment {
                 if(isOnline()) {
                     checkNick(editNick.getText().toString());
                 } else {
-                    App.showNoInternetConnectionToast();
+                    App.showNoInternetConnectionToast(getContext());
                 }
             }
         });
@@ -132,6 +134,23 @@ public class NickFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void closeKeyboard() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InputMethodManager inputManager = (InputMethodManager)
+                            getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                } catch(NullPointerException e) {
+
+                }
+            }
+        }).start();
     }
 
 }

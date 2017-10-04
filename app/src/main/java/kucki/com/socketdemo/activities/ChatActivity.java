@@ -1,12 +1,15 @@
 package kucki.com.socketdemo.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ import java.util.Locale;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import kucki.com.socketdemo.ActivityManager;
 import kucki.com.socketdemo.App;
 import kucki.com.socketdemo.MessageView;
 import kucki.com.socketdemo.R;
@@ -58,6 +62,27 @@ public class ChatActivity extends AppCompatActivity {
         Display d = getWindowManager().getDefaultDisplay();
         x = d.getWidth();
         y = d.getHeight();
+    }
+
+    @Override
+    public void onBackPressed() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }).start();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }).start();
+        return true;
     }
 
     public void configViews() {

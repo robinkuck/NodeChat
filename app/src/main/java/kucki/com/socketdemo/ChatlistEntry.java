@@ -35,15 +35,7 @@ public class ChatlistEntry extends RelativeLayout {
     public ChatlistEntry(Activity act, String nick) {
         super(act);
         this.act = act;
-        if(nick.equals("global")) {
-            isGlobal = true;
-            this.nick = "Global Chat";
-        } else {
-            isGlobal = false;
-            this.nick = nick;
-        }
         init(nick);
-
     }
 
     public ChatlistEntry(Context ct, AttributeSet attrs) {
@@ -51,7 +43,7 @@ public class ChatlistEntry extends RelativeLayout {
     }
 
 
-    public void init(String text) {
+    public void init(String nick) {
         setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT,(int)dpToPixel(80)));
         setBackgroundDrawable(getResources().getDrawable(R.drawable.bgchatlistentry));
 
@@ -62,13 +54,25 @@ public class ChatlistEntry extends RelativeLayout {
         tvtitle.setLayoutParams(params);
         tvtitle.setTextColor(Color.BLACK);
         tvtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-        tvtitle.setText(text);
         addView(tvtitle);
+
+        if(nick.equals("global")) {
+            isGlobal = true;
+            this.nick = "Global Chat";
+            tvtitle.setText(this.nick);
+        } else {
+            isGlobal = false;
+            this.nick = nick;
+        }
     }
 
     //DP to Pixel
     private float dpToPixel(float dp) {
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        return (dp * scale + 0.5f);
+        /*
         final float density = getResources().getDisplayMetrics().density;
         return dp * (density == 1.0f || density == 1.5f || density == 2.0f ? 3.0f : density) + 0.5f;
+        */
     }
 }
