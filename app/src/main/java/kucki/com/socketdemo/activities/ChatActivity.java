@@ -89,6 +89,7 @@ public class ChatActivity extends AppCompatActivity {
         editMsg = (EditText)findViewById(R.id.editMessage);
         scroller = (ScrollView)findViewById(R.id.scroller);
         sendButton = (Button)findViewById(R.id.sendButton);
+        /*
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +109,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+        */
     }
 
     //TODO: Add Writing Display
@@ -175,7 +177,7 @@ public class ChatActivity extends AppCompatActivity {
         l.setOrientation(HORIZONTAL);
         l.setHorizontalGravity(Gravity.RIGHT);
 
-        MessageView mv = new MessageView(this,text,(int)((x/3)*2));
+        MessageView mv = new MessageView(this,text,(int)((x/3)*2), false);
         mv.setBackgroundResource(R.drawable.bgpersonalmessageview);
         l.addView(mv);
         msgs.addView(l);
@@ -199,8 +201,8 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     //Messages from the server
-    public MessageView createMessageView(String text) {
-        MessageView mv = new MessageView(this,text,(int)((x/3)*2));
+    public MessageView createMessageView(String text, boolean global) {
+        MessageView mv = new MessageView(this,text,(int)((x/3)*2), global);
         msgs.addView(mv);
         addDate(mv);
         return mv;
@@ -230,7 +232,11 @@ public class ChatActivity extends AppCompatActivity {
 
     //DP to Pixel
     public float dpToPixel(float dp) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (dp * scale + 0.5f);
+        /*
         final float density = getResources().getDisplayMetrics().density;
         return dp * (density == 1.0f || density == 1.5f || density == 2.0f ? 3.0f : density) + 0.5f;
+        */
     }
 }

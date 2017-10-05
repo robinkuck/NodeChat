@@ -59,10 +59,11 @@ public class ChatlistEntry extends RelativeLayout {
         if(nick.equals("global")) {
             isGlobal = true;
             this.nick = "Global Chat";
-            tvtitle.setText(this.nick);
+            tvtitle.setText("Global Chat");
         } else {
             isGlobal = false;
             this.nick = nick;
+            tvtitle.setText(this.nick);
         }
     }
 

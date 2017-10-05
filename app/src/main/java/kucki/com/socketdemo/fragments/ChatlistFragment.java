@@ -61,7 +61,7 @@ public class ChatlistFragment extends Fragment {
         entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityManager.startGlobalChatAcitity(getActivity());
+                ActivityManager.startGlobalChatAcitity(getActivity(),nick);
                 System.out.println("[I] Global Chat started!");
             }
         });

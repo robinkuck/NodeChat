@@ -77,7 +77,7 @@ public class PrivateChatActivity extends ChatActivity {
     }
 
     public void addPrivateMessageView(String text) {
-        MessageView mv = super.createMessageView(text);
+        MessageView mv = super.createMessageView(text, false);
     }
 
     public String getRecipient() {

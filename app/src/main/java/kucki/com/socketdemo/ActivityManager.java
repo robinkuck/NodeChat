@@ -23,12 +23,14 @@ public class ActivityManager {
     }
     */
 
-    public static void startGlobalChatAcitity(Activity curr) {
+    public static void startGlobalChatAcitity(Activity curr, String nick) {
         final Activity current = curr;
+        final String n = nick;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(current, GlobalChatActivity.class);
+                intent.putExtra("nick", n);
                 current.startActivityIfNeeded(intent,0);
             }
         }).start();

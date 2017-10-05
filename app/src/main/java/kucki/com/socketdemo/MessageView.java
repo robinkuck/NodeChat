@@ -34,10 +34,12 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class MessageView extends android.support.v7.widget.AppCompatTextView {
 
     public int size;
+    public boolean isGlobal;
 
-    public MessageView(Context ct, String text, int size) {
+    public MessageView(Context ct, String text, int size, boolean global) {
         super(ct);
         this.size = size;
+        this.isGlobal = global;
         init(text);
     }
 
@@ -52,7 +54,7 @@ public class MessageView extends android.support.v7.widget.AppCompatTextView {
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         setTypeface(Typeface.MONOSPACE);
         setPadding((int)dpToPixel(6),
-                (int)dpToPixel(6),
+                isGlobal ? (int)dpToPixel(22) : (int)dpToPixel(6),
                 (int)dpToPixel(12),
                 (int)dpToPixel(22));
         setMinWidth((int)dpToPixel(110));
