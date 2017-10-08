@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kucki.com.socketdemo.MessageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity=""
+    android:id="@+id/lfirst">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lsecond">
+
+        <TextView
+            android:id="@+id/vmessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/bgmessageview"
+            android:minWidth="110dp"
+            android:paddingBottom="18dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="12dp"
+            android:paddingTop="18dp"
+            android:text="message"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:typeface="monospace"
+            android:weight="0" />
+
+        <TextView
+            android:id="@+id/vname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="name"
+            android:textColor="@color/nameHeader"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/vdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/vmessage"
+            android:layout_alignEnd="@+id/vmessage"
+            android:layout_alignRight="@+id/vmessage"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="3dp"
+            android:text="00.00.0000, 00:00"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+</kucki.com.socketdemo.MessageView>

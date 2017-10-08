@@ -11,8 +11,10 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import android.widget.ScrollView;
@@ -193,8 +195,9 @@ public class ChatActivity extends AppCompatActivity {
         badgeView.setText(getCurrentTime());
         badgeView.setTextColor(getResources().getColor(R.color.date));
         badgeView.setTextSize((int)dpToPixel(4));
-        badgeView.setBadgeBackgroundColor(Color.TRANSPARENT);
-        badgeView.setBadgePosition(BadgeView.POSITION_BOTTOM_RIGHT);
+        badgeView.setBadgeBackgroundColor(Color.BLACK);
+        badgeView.setBadgePosition(BadgeView.POSITION_BOTTOM_LEFT);
+        //badgeView.setPadding((int)dpToPixel(2),(int)dpToPixel(2),(int)dpToPixel(2),(int)dpToPixel(2));
         //badgeView.setBackgroundDrawable(getResources().getDrawable(R.drawable.linemessageview));
         //badgeView.setBadgeMargin((int)dpToPixel(3),(int)dpToPixel(3));
         badgeView.show();
@@ -202,9 +205,14 @@ public class ChatActivity extends AppCompatActivity {
 
     //Messages from the server
     public MessageView createMessageView(String text, boolean global) {
+        LinearLayout l = new LinearLayout(this);
+        l.setOrientation(HORIZONTAL);
+        l.setHorizontalGravity(Gravity.LEFT);
+
         MessageView mv = new MessageView(this,text,(int)((x/3)*2), global);
-        msgs.addView(mv);
-        addDate(mv);
+        l.addView(mv);
+        msgs.addView(l);
+        //addDate(mv);
         return mv;
     }
 

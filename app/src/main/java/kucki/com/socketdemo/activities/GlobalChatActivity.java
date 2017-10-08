@@ -3,6 +3,8 @@ package kucki.com.socketdemo.activities;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.readystatesoftware.viewbadger.BadgeView;
 
@@ -15,7 +17,7 @@ import kucki.com.socketdemo.MessageView;
 import kucki.com.socketdemo.R;
 
 /**
- * Created by D070264 on 21.09.2017.
+ * Created by KuckR on 21.09.2017.
  */
 
 public class GlobalChatActivity extends ChatActivity {
@@ -33,7 +35,7 @@ public class GlobalChatActivity extends ChatActivity {
     }
 
     public void configSocketEvents() {
-        App.getSocket().on("globalmessage",new Emitter.Listener() {
+        App.getSocket().on("globalmessage", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 JSONObject data = (JSONObject) args[0];
@@ -51,11 +53,11 @@ public class GlobalChatActivity extends ChatActivity {
                             scrollDown();
                         }
                     });
-                }catch(JSONException e){
+                } catch (JSONException e) {
                     System.out.println("Error getting new message!");
                 }
             }
-        }).on("yourmessage",new Emitter.Listener() {
+        }).on("yourmessage", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 JSONObject data = (JSONObject) args[0];
@@ -74,7 +76,7 @@ public class GlobalChatActivity extends ChatActivity {
                             System.out.println("[I] !!!");
                         }
                     });
-                }catch(JSONException e){
+                } catch (JSONException e) {
                     System.out.println("Error getting new message!");
                 }
             }
@@ -85,16 +87,16 @@ public class GlobalChatActivity extends ChatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(App.getSocket().connected()&&!editMsg.getText().toString().equals("")) {
+                if (App.getSocket().connected() && !editMsg.getText().toString().equals("")) {
                     JSONObject data = new JSONObject();
                     try {
                         data.put("msg", editMsg.getText());
-                        App.getSocket().emit("new gmsg",data);
+                        App.getSocket().emit("new gmsg", data);
                         addPersonalMessageView(editMsg.getText().toString());
                         clearEditMsg();
                         scrollDown();
                         System.out.println("[I] Sending global message!");
-                    } catch(JSONException e) {
+                    } catch (JSONException e) {
                         System.out.println("Error sending data");
                     }
                 }
@@ -106,13 +108,14 @@ public class GlobalChatActivity extends ChatActivity {
     public void addGlobalMessageView(String sender, String text) {
         MessageView mv = super.createMessageView(text, true);
         addNameHeader(mv, sender);
+        super.addDate(mv);
     }
 
     public void addNameHeader(MessageView message, String sender) {
         BadgeView badgeView = new BadgeView(this, message);
         badgeView.setText(sender);
         badgeView.setTextColor(getResources().getColor(R.color.nameHeader));
-        badgeView.setTextSize((int)super.dpToPixel(5));
+        badgeView.setTextSize((int) super.dpToPixel(5));
         badgeView.setBadgeBackgroundColor(Color.TRANSPARENT);
         badgeView.setBadgePosition(BadgeView.POSITION_TOP_LEFT);
         //badgeView.setBackgroundDrawable(getResources().getDrawable(R.drawable.linemessageview));

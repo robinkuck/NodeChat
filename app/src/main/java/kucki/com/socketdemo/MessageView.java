@@ -1,49 +1,31 @@
 package kucki.com.socketdemo;
 
-import android.app.Application;
-import android.app.Notification;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.shapes.Shape;
-import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
-import android.view.Display;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.readystatesoftware.viewbadger.BadgeView;
-
-import java.util.Calendar;
-import java.util.Locale;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * Created by kuckr on 31.07.2017.
  */
 
-public class MessageView extends android.support.v7.widget.AppCompatTextView {
+public class MessageView extends LinearLayout {
 
     public int size;
     public boolean isGlobal;
 
-    public MessageView(Context ct, String text, int size, boolean global) {
+    public MessageView(Context ct, String message, String name, boolean isGlobal, boolean isPersonal,int size) {
         super(ct);
         this.size = size;
-        this.isGlobal = global;
-        init(text);
+        this.isGlobal = isGlobal;
+        init(message,name, isGlobal, isPersonal);
     }
 
-    public void init(String text) {
+    public void init(String text, String name, boolean isGlobal, boolean isPersonal) {
+
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 WRAP_CONTENT,WRAP_CONTENT);
         params.weight = 0;
@@ -54,12 +36,14 @@ public class MessageView extends android.support.v7.widget.AppCompatTextView {
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         setTypeface(Typeface.MONOSPACE);
         setPadding((int)dpToPixel(6),
-                isGlobal ? (int)dpToPixel(22) : (int)dpToPixel(6),
+                isGlobal ? (int)dpToPixel(18) : (int)dpToPixel(6),
                 (int)dpToPixel(12),
-                (int)dpToPixel(22));
+                (int)dpToPixel(18));
         setMinWidth((int)dpToPixel(110));
         setMaxWidth(size);
+
         setBackgroundResource(R.drawable.bgmessageview);
+
         setTextColor(Color.BLACK);
         setText(text);
         //this.setBackgroundDrawable(new BitmapDrawable(rbt));

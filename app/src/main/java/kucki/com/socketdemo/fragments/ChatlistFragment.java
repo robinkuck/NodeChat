@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -17,7 +16,7 @@ import org.json.JSONObject;
 import io.socket.emitter.Emitter;
 import kucki.com.socketdemo.ActivityManager;
 import kucki.com.socketdemo.App;
-import kucki.com.socketdemo.ChatlistEntry;
+import kucki.com.socketdemo.Views.ChatlistEntry;
 import kucki.com.socketdemo.activities.MainActivity;
 import kucki.com.socketdemo.R;
 
