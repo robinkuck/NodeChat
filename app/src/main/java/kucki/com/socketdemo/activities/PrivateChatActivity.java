@@ -65,7 +65,7 @@ public class PrivateChatActivity extends ChatActivity {
                             messages.setText(s1 + "\n\n" + s2);
                             scrollDown();
                             */
-                            addPersonalMessageView(s2);
+                            PrivateChatActivity.super.createPChatMessageView(s2);
                             scrollDown();
                         }
                     });
@@ -77,7 +77,7 @@ public class PrivateChatActivity extends ChatActivity {
     }
 
     public void addPrivateMessageView(String text) {
-        MessageView mv = super.createMessageView(text, false);
+        //MessageView mv = super.createMessageView(text, false);
     }
 
     public String getRecipient() {

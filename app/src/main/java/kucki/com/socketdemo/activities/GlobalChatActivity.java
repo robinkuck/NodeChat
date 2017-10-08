@@ -49,7 +49,7 @@ public class GlobalChatActivity extends ChatActivity {
                             messages.setText(s1 + "\n\n" + s2);
                             scrollDown();
                             */
-                            addGlobalMessageView(s1, s2);
+                            GlobalChatActivity.super.createGChatMessageView(s2,s1);
                             scrollDown();
                         }
                     });
@@ -71,7 +71,7 @@ public class GlobalChatActivity extends ChatActivity {
                             messages.setText(s1 + "\n\n" + s2);
                             scrollDown();
                             */
-                            addPersonalMessageView(msg);
+                            GlobalChatActivity.super.createPersonalMessageView(msg);
                             scrollDown();
                             System.out.println("[I] !!!");
                         }
@@ -92,7 +92,7 @@ public class GlobalChatActivity extends ChatActivity {
                     try {
                         data.put("msg", editMsg.getText());
                         App.getSocket().emit("new gmsg", data);
-                        addPersonalMessageView(editMsg.getText().toString());
+                        GlobalChatActivity.super.createPersonalMessageView(editMsg.getText().toString());
                         clearEditMsg();
                         scrollDown();
                         System.out.println("[I] Sending global message!");
@@ -104,12 +104,14 @@ public class GlobalChatActivity extends ChatActivity {
         });
     }
 
+    /*
     //Messages from the server
     public void addGlobalMessageView(String sender, String text) {
         MessageView mv = super.createMessageView(text, true);
         addNameHeader(mv, sender);
         super.addDate(mv);
     }
+    */
 
     public void addNameHeader(MessageView message, String sender) {
         BadgeView badgeView = new BadgeView(this, message);

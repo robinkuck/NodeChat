@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -44,7 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     public ScrollView scroller;
     public LinearLayout msgs;
 
-    public int x,y;
+    public int x, y;
 
     //TODO: Activity for global chat and for private chat(multiple chat objects possible)
 
@@ -88,9 +89,9 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void configViews() {
-        editMsg = (EditText)findViewById(R.id.editMessage);
-        scroller = (ScrollView)findViewById(R.id.scroller);
-        sendButton = (Button)findViewById(R.id.sendButton);
+        editMsg = (EditText) findViewById(R.id.editMessage);
+        scroller = (ScrollView) findViewById(R.id.scroller);
+        sendButton = (Button) findViewById(R.id.sendButton);
         /*
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,52 +115,39 @@ public class ChatActivity extends AppCompatActivity {
         */
     }
 
+    protected void createPersonalMessageView(String msg) {
+        LinearLayout l = new LinearLayout(this);
+        l.setOrientation(HORIZONTAL);
+        l.setHorizontalGravity(Gravity.LEFT);
+
+        MessageView mv = new MessageView(this, msg, "", false, true, ((x / 3) * 2));
+        l.addView(mv);
+        msgs.addView(l);
+    }
+
+    protected void createPChatMessageView(String msg) {
+        LinearLayout l = new LinearLayout(this);
+        l.setOrientation(HORIZONTAL);
+        l.setHorizontalGravity(Gravity.RIGHT);
+
+        MessageView mv = new MessageView(this, msg, "", false, false, ((x / 3) * 2));
+        l.addView(mv);
+        msgs.addView(l);
+    }
+
+    protected void createGChatMessageView(String msg, String name) {
+        LinearLayout l = new LinearLayout(this);
+        l.setOrientation(HORIZONTAL);
+        l.setHorizontalGravity(Gravity.RIGHT);
+
+        MessageView mv = new MessageView(this, msg, name, true, false, ((x / 3) * 2));
+        l.addView(mv);
+        msgs.addView(l);
+        System.out.println("[I] GChatMessageView created!");
+    }
+
     //TODO: Add Writing Display
     //TODO: Add reading checkmark
-
-    /*
-    public void configSocketEvents() {
-        App.getSocket().on("message",new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                JSONObject data = (JSONObject) args[0];
-                try {
-                    //final String s1 = messages.getText().toString();
-                    final String s2 = data.getString("text");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            addMessageView(s2);
-                            scrollDown();
-                        }
-                    });
-                }catch(JSONException e){
-                    System.out.println("Error getting new message!");
-                }
-            }
-        }).on("yourmessage",new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                JSONObject data = (JSONObject) args[0];
-                try {
-                    //final String s1 = messages.getText().toString();
-                    final String s2 = data.getString("text");
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            addPersonalMessageView(s2);
-                            scrollDown();
-                        }
-                    });
-                }catch(JSONException e){
-                    System.out.println("Error getting new message!");
-                }
-            }
-        });
-    }
-    */
 
     public void scrollDown() {
         scroller.post(new Runnable() {
@@ -173,18 +161,20 @@ public class ChatActivity extends AppCompatActivity {
 
     //socket.emit(EVENT, data);
 
+    /*
     //Messages from the client
     public void addPersonalMessageView(String text) {
         LinearLayout l = new LinearLayout(this);
         l.setOrientation(HORIZONTAL);
         l.setHorizontalGravity(Gravity.RIGHT);
 
-        MessageView mv = new MessageView(this,text,(int)((x/3)*2), false);
+        MessageView mv = new MessageView(this, text, "", false, true, (int) ((x / 3) * 2));
         mv.setBackgroundResource(R.drawable.bgpersonalmessageview);
         l.addView(mv);
         msgs.addView(l);
         addDate(mv);
     }
+    */
 
     public void clearEditMsg() {
         editMsg.setText("");
@@ -194,7 +184,7 @@ public class ChatActivity extends AppCompatActivity {
         BadgeView badgeView = new BadgeView(this, mv);
         badgeView.setText(getCurrentTime());
         badgeView.setTextColor(getResources().getColor(R.color.date));
-        badgeView.setTextSize((int)dpToPixel(4));
+        badgeView.setTextSize((int) dpToPixel(4));
         badgeView.setBadgeBackgroundColor(Color.BLACK);
         badgeView.setBadgePosition(BadgeView.POSITION_BOTTOM_LEFT);
         //badgeView.setPadding((int)dpToPixel(2),(int)dpToPixel(2),(int)dpToPixel(2),(int)dpToPixel(2));
@@ -203,34 +193,36 @@ public class ChatActivity extends AppCompatActivity {
         badgeView.show();
     }
 
+    /*
     //Messages from the server
     public MessageView createMessageView(String text, boolean global) {
         LinearLayout l = new LinearLayout(this);
         l.setOrientation(HORIZONTAL);
         l.setHorizontalGravity(Gravity.LEFT);
 
-        MessageView mv = new MessageView(this,text,(int)((x/3)*2), global);
+        MessageView mv = new MessageView(this, text, (int) ((x / 3) * 2), global);
         l.addView(mv);
         msgs.addView(l);
         //addDate(mv);
         return mv;
     }
+    */
 
     public String getCurrentTime() {
         Calendar c = Calendar.getInstance(Locale.GERMANY);
         String date = "";
-        if(c.get(Calendar.DAY_OF_MONTH)<10) {
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
             date = "0" + c.get(Calendar.DAY_OF_MONTH) + "." +
-                    (c.get(Calendar.MONTH)<10 ? "0" + c.get(Calendar.MONTH) : c.get(Calendar.MONTH)) +
+                    (c.get(Calendar.MONTH) < 10 ? "0" + c.get(Calendar.MONTH) : c.get(Calendar.MONTH)) +
                     "." + c.get(Calendar.YEAR);
         } else {
-            date =  c.get(Calendar.DAY_OF_MONTH) + "." +
-                    (c.get(Calendar.MONTH)<10 ? "0" + c.get(Calendar.MONTH) : c.get(Calendar.MONTH)) +
+            date = c.get(Calendar.DAY_OF_MONTH) + "." +
+                    (c.get(Calendar.MONTH) < 10 ? "0" + c.get(Calendar.MONTH) : c.get(Calendar.MONTH)) +
                     "." + c.get(Calendar.YEAR);
         }
 
         String time = "";
-        if(c.get(Calendar.MINUTE) < 10) {
+        if (c.get(Calendar.MINUTE) < 10) {
             time = "" + c.get(Calendar.HOUR_OF_DAY) + ":0" + c.get(Calendar.MINUTE);
         } else {
             time = "" + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
