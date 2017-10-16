@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<kucki.com.socketdemo.MessageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lfirst"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="">
+<RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layout_lfirst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="">
 
         <TextView
             android:id="@+id/vmessage"
@@ -44,4 +45,4 @@
             android:text="00.00.0000, 00:00"
             android:textSize="10sp" />
 
-</kucki.com.socketdemo.MessageView>
+</RelativeLayout>

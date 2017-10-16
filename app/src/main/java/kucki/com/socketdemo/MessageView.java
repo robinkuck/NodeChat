@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -41,43 +43,43 @@ public class MessageView extends RelativeLayout {
         this.isPersonal = isPersonal;
         this.message = message;
         this.name = name;
-        init();
+
+        init(ct);
     }
 
     public MessageView(Context ct, AttributeSet attrs) {
         super(ct, attrs);
+        init(ct);
     }
 
-    public void init() {
+    public void init(Context ct) {
+        /* Old configuration of Views
         createMessageText(getContext(), message);
         addDate(getContext());
         addName(getContext());
-        /*
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                WRAP_CONTENT,WRAP_CONTENT);
-        params.weight = 0;
-        params.setMargins((int)dpToPixel(5),0,
-                (int)dpToPixel(5),
-                (int)dpToPixel(2));
-        setLayoutParams(params);
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        setTypeface(Typeface.MONOSPACE);
-        setPadding((int)dpToPixel(6),
-                isGlobal ? (int)dpToPixel(18) : (int)dpToPixel(6),
-                (int)dpToPixel(12),
-                (int)dpToPixel(18));
-        setMinWidth((int)dpToPixel(110));
-        setMaxWidth(size);
-
-        setBackgroundResource(R.drawable.bgmessageview);
-
-        setTextColor(Color.BLACK);
-        setText(text);
         */
-        //this.setBackgroundDrawable(new BitmapDrawable(rbt));
+
+        LayoutInflater inflater = (LayoutInflater) ct
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.message_view, this, true);
+
+        TvMessage = (TextView) getChildAt(0);
+        TvName = (TextView) getChildAt(1);
+        TvDate = (TextView) getChildAt(2);
+
+        if(isGlobal&&!isPersonal) {
+            addName();
+        } else {
+            TvName.setText("");
+        }
+
+        createMessageText();
+        addDate();
     }
 
-    private void createMessageText(Context ct, String msg) {
+
+    private void createMessageText() {
+        /*
         TvMessage = new TextView(ct);
 
         TvMessage.setMaxWidth(size);
@@ -98,36 +100,23 @@ public class MessageView extends RelativeLayout {
         TvMessage.setTypeface(Typeface.MONOSPACE);
         TvMessage.setId(R.id.vmessage);
         addView(TvMessage, 0);
+        */
+        TvMessage.setText(this.message);
+        TvMessage.setMaxWidth(size);
+        TvMessage.setBackgroundResource(
+                isPersonal ? R.drawable.bgpersonalmessageview : R.drawable.bgmessageview);
+        TvMessage.setPadding((int) dpToPixel(6),
+                isPersonal ? (int) dpToPixel(6) : (isGlobal ? (int) dpToPixel(17) : (int) dpToPixel(6)),
+                (int) dpToPixel(12),
+                (int) dpToPixel(18));
     }
 
-    private void addDate(Context ct) {
-        TvDate = new TextView(ct);
-
-        LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, (int) dpToPixel(4), (int) dpToPixel(4));
-        params.addRule(ALIGN_BOTTOM, R.id.vmessage);
-        params.addRule(ALIGN_END, R.id.vmessage);
-        params.addRule(ALIGN_RIGHT, R.id.vmessage);
-        TvDate.setLayoutParams(params);
-        TvDate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
-        TvDate.setTextColor(getResources().getColor(R.color.date));
-        TvDate.setId(R.id.vdate);
+    private void addDate() {
         TvDate.setText(getCurrentTime());
-        addView(TvDate, 1);
     }
 
-    private void addName(Context ct) {
-        TvName = new TextView(ct);
-        LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT);
-        params.setMargins((int) dpToPixel(10), 0, 0, 0);
-        TvName.setLayoutParams(params);
-        TvName.setTextColor(getResources().getColor(R.color.nameHeader));
-        TvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        TvName.setText(name);
-        TvName.setTypeface(null,Typeface.BOLD);
-        addView(TvName, 2);
+    private void addName() {
+        TvName.setText(this.name);
     }
 
     public String getCurrentTime() {

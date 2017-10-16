@@ -88,6 +88,7 @@ public class NickFragment extends Fragment {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("[I] Button clicked!");
                 if(isOnline()) {
                     checkNick(editNick.getText().toString());
                 } else {

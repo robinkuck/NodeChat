@@ -118,7 +118,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void createPersonalMessageView(String msg) {
         LinearLayout l = new LinearLayout(this);
         l.setOrientation(HORIZONTAL);
-        l.setHorizontalGravity(Gravity.LEFT);
+        l.setHorizontalGravity(Gravity.RIGHT);
 
         MessageView mv = new MessageView(this, msg, "", false, true, ((x / 3) * 2));
         l.addView(mv);
@@ -128,7 +128,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void createPChatMessageView(String msg) {
         LinearLayout l = new LinearLayout(this);
         l.setOrientation(HORIZONTAL);
-        l.setHorizontalGravity(Gravity.RIGHT);
+        l.setHorizontalGravity(Gravity.LEFT);
 
         MessageView mv = new MessageView(this, msg, "", false, false, ((x / 3) * 2));
         l.addView(mv);
@@ -138,7 +138,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void createGChatMessageView(String msg, String name) {
         LinearLayout l = new LinearLayout(this);
         l.setOrientation(HORIZONTAL);
-        l.setHorizontalGravity(Gravity.RIGHT);
+        l.setHorizontalGravity(Gravity.LEFT);
 
         MessageView mv = new MessageView(this, msg, name, true, false, ((x / 3) * 2));
         l.addView(mv);
