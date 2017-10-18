@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -34,10 +35,10 @@ public class ChatlistEntry extends RelativeLayout {
 
     public Activity act;
 
-    public ChatlistEntry(Activity act, String nick) {
+    public ChatlistEntry(Context ct, Activity act, String nick) {
         super(act);
         this.act = act;
-        init(nick);
+        init(ct, nick);
     }
 
     public ChatlistEntry(Context ct, AttributeSet attrs) {
@@ -45,18 +46,14 @@ public class ChatlistEntry extends RelativeLayout {
     }
 
 
-    public void init(String nick) {
-        setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT,(int)dpToPixel(80)));
-        setBackgroundDrawable(getResources().getDrawable(R.drawable.bgchatlistentry));
+    public void init(Context ct, String nick) {
+        LayoutInflater inflater = (LayoutInflater) ct
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.chatlistentry_view_container, this, true);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                MATCH_PARENT,WRAP_CONTENT);
-        params.setMargins((int)dpToPixel(15),(int)dpToPixel(25),0,0);
-        tvtitle = new TextView(getContext());
-        tvtitle.setLayoutParams(params);
-        tvtitle.setTextColor(Color.BLACK);
-        tvtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-        addView(tvtitle);
+        RelativeLayout rl = (RelativeLayout) getChildAt(0);
+
+        tvtitle = (TextView)rl.getChildAt(0);
 
         if(nick.equals("global")) {
             isGlobal = true;
@@ -67,15 +64,5 @@ public class ChatlistEntry extends RelativeLayout {
             this.nick = nick;
             tvtitle.setText(this.nick);
         }
-    }
-
-    //DP to Pixel
-    private float dpToPixel(float dp) {
-        final float scale = getContext().getResources().getDisplayMetrics().density;
-        return (dp * scale + 0.5f);
-        /*
-        final float density = getResources().getDisplayMetrics().density;
-        return dp * (density == 1.0f || density == 1.5f || density == 2.0f ? 3.0f : density) + 0.5f;
-        */
     }
 }

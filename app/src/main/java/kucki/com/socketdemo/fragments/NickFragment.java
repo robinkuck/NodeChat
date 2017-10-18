@@ -64,7 +64,7 @@ public class NickFragment extends Fragment {
             public void call(Object... args) {
                 ((MainActivity)getActivity()).setNick(currentNick);
                 ((MainActivity)getActivity()).setChatlistFragment();
-                closeKeyboard();
+                App.closeKeyboard(getActivity());
             }
         }).on("nologin", new Emitter.Listener() {
             @Override
@@ -88,7 +88,6 @@ public class NickFragment extends Fragment {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("[I] Button clicked!");
                 if(isOnline()) {
                     checkNick(editNick.getText().toString());
                 } else {
@@ -135,23 +134,6 @@ public class NickFragment extends Fragment {
                 }
             });
         }
-    }
-
-    private void closeKeyboard() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    InputMethodManager inputManager = (InputMethodManager)
-                            getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                            InputMethodManager.HIDE_NOT_ALWAYS);
-                } catch(NullPointerException e) {
-
-                }
-            }
-        }).start();
     }
 
 }

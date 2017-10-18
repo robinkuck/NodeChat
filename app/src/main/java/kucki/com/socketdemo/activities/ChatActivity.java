@@ -69,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        App.closeKeyboard(this);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -79,6 +80,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        App.closeKeyboard(this);
         new Thread(new Runnable() {
             @Override
             public void run() {

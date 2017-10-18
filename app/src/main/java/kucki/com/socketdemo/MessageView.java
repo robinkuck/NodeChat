@@ -1,21 +1,11 @@
 package kucki.com.socketdemo;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -53,19 +43,15 @@ public class MessageView extends RelativeLayout {
     }
 
     public void init(Context ct) {
-        /* Old configuration of Views
-        createMessageText(getContext(), message);
-        addDate(getContext());
-        addName(getContext());
-        */
-
         LayoutInflater inflater = (LayoutInflater) ct
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.message_view, this, true);
+        inflater.inflate(R.layout.message_view_container, this, true);
 
-        TvMessage = (TextView) getChildAt(0);
-        TvName = (TextView) getChildAt(1);
-        TvDate = (TextView) getChildAt(2);
+        RelativeLayout rl = (RelativeLayout) getChildAt(0);
+
+        TvMessage = (TextView) rl.getChildAt(0);
+        TvName = (TextView) rl.getChildAt(1);
+        TvDate = (TextView) rl.getChildAt(2);
 
         if(isGlobal&&!isPersonal) {
             addName();
@@ -79,28 +65,6 @@ public class MessageView extends RelativeLayout {
 
 
     private void createMessageText() {
-        /*
-        TvMessage = new TextView(ct);
-
-        TvMessage.setMaxWidth(size);
-        LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT);
-        params.setMargins((int) dpToPixel(5), 0, (int) dpToPixel(5), (int) dpToPixel(5));
-        TvMessage.setLayoutParams(params);
-        TvMessage.setBackgroundResource(
-                isPersonal ? R.drawable.bgpersonalmessageview : R.drawable.bgmessageview);
-        TvMessage.setMinWidth((int) dpToPixel(110));
-        TvMessage.setPadding((int) dpToPixel(6),
-                isPersonal ? (int) dpToPixel(6) : (isGlobal ? (int) dpToPixel(17) : (int) dpToPixel(6)),
-                (int) dpToPixel(12),
-                (int) dpToPixel(18));
-        TvMessage.setText(msg);
-        TvMessage.setTextColor(Color.BLACK);
-        TvMessage.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        TvMessage.setTypeface(Typeface.MONOSPACE);
-        TvMessage.setId(R.id.vmessage);
-        addView(TvMessage, 0);
-        */
         TvMessage.setText(this.message);
         TvMessage.setMaxWidth(size);
         TvMessage.setBackgroundResource(

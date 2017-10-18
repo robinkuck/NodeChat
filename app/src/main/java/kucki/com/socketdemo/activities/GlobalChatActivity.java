@@ -87,17 +87,21 @@ public class GlobalChatActivity extends ChatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (App.getSocket().connected() && !editMsg.getText().toString().equals("")) {
-                    JSONObject data = new JSONObject();
-                    try {
-                        data.put("msg", editMsg.getText());
-                        App.getSocket().emit("new gmsg", data);
-                        GlobalChatActivity.super.createPersonalMessageView(editMsg.getText().toString());
-                        clearEditMsg();
-                        scrollDown();
-                        System.out.println("[I] Sending global message!");
-                    } catch (JSONException e) {
-                        System.out.println("Error sending data");
+                if (editMsg.getText().toString().trim().equals("")) {
+
+                } else {
+                    if (App.getSocket().connected() && !editMsg.getText().toString().equals("")) {
+                        JSONObject data = new JSONObject();
+                        try {
+                            data.put("msg", editMsg.getText().toString().trim());
+                            App.getSocket().emit("new gmsg", data);
+                            GlobalChatActivity.super.createPersonalMessageView(editMsg.getText().toString());
+                            clearEditMsg();
+                            scrollDown();
+                            System.out.println("[I] Sending global message!");
+                        } catch (JSONException e) {
+                            System.out.println("Error sending data");
+                        }
                     }
                 }
             }

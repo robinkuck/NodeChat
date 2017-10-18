@@ -55,7 +55,7 @@ public class ChatlistFragment extends Fragment {
         layout = (LinearLayout)v.findViewById(R.id.chatentrylist);
         privateChatListLayout = (LinearLayout)layout.findViewById(R.id.private_chat_list_layout);
         globalChatLayout = (LinearLayout)layout.findViewById(R.id.global_chat_layout);
-        final ChatlistEntry entry = new ChatlistEntry(getActivity(),"global");
+        final ChatlistEntry entry = new ChatlistEntry(getContext(),getActivity(),"global");
         addViewtoGlobalChatList(entry);
         entry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +84,7 @@ public class ChatlistFragment extends Fragment {
                         JSONObject current = users.getJSONObject(i);
                         final String nick = current.getString("name");
                         if(!nick.equalsIgnoreCase(currentNick)) {
-                            final ChatlistEntry entry = new ChatlistEntry(getActivity(), nick);
+                            final ChatlistEntry entry = new ChatlistEntry(getContext(),getActivity(), nick);
                             System.out.println("Adding User to list: " + nick);
 
                             addViewtoPrivateChatList(entry);

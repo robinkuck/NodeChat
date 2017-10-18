@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import io.socket.client.IO;
@@ -54,6 +55,24 @@ public class App extends Application {
         String txt = "Please check your Internet connection!";
         Toast t = Toast.makeText(ct,txt,Toast.LENGTH_SHORT);
         t.show();
+    }
+
+    public static void closeKeyboard(Activity act) {
+        final Activity activity = act;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InputMethodManager inputManager = (InputMethodManager)
+                            activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                    inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                } catch(NullPointerException e) {
+
+                }
+            }
+        }).start();
     }
 
 }

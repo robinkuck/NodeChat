@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<kucki.com.socketdemo.Views.ChatlistEntry xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_chatentry"
     android:layout_width="match_parent"
@@ -7,13 +7,36 @@
     android:background="@drawable/bgchatlistentry">
 
         <TextView
-            android:id="@+id/name_view"
+            android:id="@+id/vname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="25dp"
             android:text="-"
             android:textColor="#000000"
             android:textSize="17sp"
-            tools:context="kucki.com.socketdemo.Views.ChatlistEntry" />
-</kucki.com.socketdemo.Views.ChatlistEntry>
+            tools:context="kucki.com.socketdemo.Views.ChatlistEntry"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="22dp"
+            android:layout_marginStart="22dp" />
+
+        <!--
+        <TextView
+            android:id="@+id/vmessagecount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
+            android:background="@drawable/messagescountview"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="0"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+            -->
+</RelativeLayout>
