@@ -29,11 +29,12 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class ChatlistEntry extends RelativeLayout {
 
     public boolean isGlobal;
+    public Activity act;
 
     private String nick;
+    private int messages = 0;
     private TextView tvtitle;
-
-    public Activity act;
+    private TextView tvmessagesCount;
 
     public ChatlistEntry(Context ct, Activity act, String nick) {
         super(act);
@@ -54,6 +55,7 @@ public class ChatlistEntry extends RelativeLayout {
         RelativeLayout rl = (RelativeLayout) getChildAt(0);
 
         tvtitle = (TextView)rl.getChildAt(0);
+        tvmessagesCount = (TextView)rl.getChildAt(1);
 
         if(nick.equals("global")) {
             isGlobal = true;
@@ -64,5 +66,19 @@ public class ChatlistEntry extends RelativeLayout {
             this.nick = nick;
             tvtitle.setText(this.nick);
         }
+    }
+
+    public void setMessageCount(int messages) {
+        this.messages = messages;
+        if(messages>0) {
+            tvmessagesCount.setBackgroundResource(R.drawable.messagescountview2);
+        } else {
+            tvmessagesCount.setBackgroundResource(R.drawable.messagescountview);
+        }
+        tvmessagesCount.setText(messages);
+    }
+
+    public int getMessageCount() {
+        return messages;
     }
 }

@@ -1,20 +1,13 @@
 package kucki.com.socketdemo.activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-
-import com.readystatesoftware.viewbadger.BadgeView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.socket.emitter.Emitter;
 import kucki.com.socketdemo.App;
-import kucki.com.socketdemo.MessageView;
-import kucki.com.socketdemo.R;
 
 /**
  * Created by KuckR on 21.09.2017.
@@ -45,10 +38,6 @@ public class GlobalChatActivity extends ChatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            /*
-                            messages.setText(s1 + "\n\n" + s2);
-                            scrollDown();
-                            */
                             GlobalChatActivity.super.createGChatMessageView(s2,s1);
                             scrollDown();
                         }
@@ -67,10 +56,6 @@ public class GlobalChatActivity extends ChatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            /*
-                            messages.setText(s1 + "\n\n" + s2);
-                            scrollDown();
-                            */
                             GlobalChatActivity.super.createPersonalMessageView(msg);
                             scrollDown();
                             System.out.println("[I] !!!");
@@ -107,26 +92,4 @@ public class GlobalChatActivity extends ChatActivity {
             }
         });
     }
-
-    /*
-    //Messages from the server
-    public void addGlobalMessageView(String sender, String text) {
-        MessageView mv = super.createMessageView(text, true);
-        addNameHeader(mv, sender);
-        super.addDate(mv);
-    }
-    */
-
-    public void addNameHeader(MessageView message, String sender) {
-        BadgeView badgeView = new BadgeView(this, message);
-        badgeView.setText(sender);
-        badgeView.setTextColor(getResources().getColor(R.color.nameHeader));
-        badgeView.setTextSize((int) super.dpToPixel(5));
-        badgeView.setBadgeBackgroundColor(Color.TRANSPARENT);
-        badgeView.setBadgePosition(BadgeView.POSITION_TOP_LEFT);
-        //badgeView.setBackgroundDrawable(getResources().getDrawable(R.drawable.linemessageview));
-        //badgeView.setBadgeMargin((int)dpToPixel(3),(int)dpToPixel(3));
-        badgeView.show();
-    }
-
 }

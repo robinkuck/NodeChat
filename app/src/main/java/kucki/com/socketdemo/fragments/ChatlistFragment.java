@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import io.socket.emitter.Emitter;
 import kucki.com.socketdemo.ActivityManager;
 import kucki.com.socketdemo.App;
@@ -25,9 +27,11 @@ public class ChatlistFragment extends Fragment {
     public LinearLayout layout;
     public LinearLayout privateChatListLayout;
     public LinearLayout globalChatLayout;
-    public TextView global_chat;
 
     public String nick;
+
+    private HashMap<String, ChatlistEntry> entries;
+    private ChatlistEntry gEntry;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,22 +56,19 @@ public class ChatlistFragment extends Fragment {
     }
 
     private void configViews(View v) {
+        entries = new HashMap<>();
         layout = (LinearLayout)v.findViewById(R.id.chatentrylist);
         privateChatListLayout = (LinearLayout)layout.findViewById(R.id.private_chat_list_layout);
         globalChatLayout = (LinearLayout)layout.findViewById(R.id.global_chat_layout);
-        final ChatlistEntry entry = new ChatlistEntry(getContext(),getActivity(),"global");
-        addViewtoGlobalChatList(entry);
-        entry.setOnClickListener(new View.OnClickListener() {
+        gEntry = new ChatlistEntry(getContext(),getActivity(),"global");
+        addViewtoGlobalChatList(gEntry);
+        gEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityManager.startGlobalChatAcitity(getActivity(),nick);
                 System.out.println("[I] Global Chat started!");
             }
         });
-        /*
-        global_chat = (TextView)rl.findViewById(R.id.name_view);
-        global_chat.setText("Global Chat");
-        */
     }
 
     public void configSocketEvents() {
@@ -93,6 +94,16 @@ public class ChatlistFragment extends Fragment {
                 } catch(JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        }).on("globalmessage", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                //TODO: Implement global message event
+            }
+        }).on("privatemessage", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                //TODO: Implement private message event
             }
         });
     }

@@ -25,6 +25,9 @@ public class App extends Application {
     public static Socket socket;
     private static boolean debugMode = true;
 
+    private static final String ADDRESS = "robinkuck.de";
+    private static final String PORT = "8011";
+
     private static boolean online;
 
     public static void connectSocket() {
@@ -32,7 +35,7 @@ public class App extends Application {
                 socket.disconnect();
             }
             try {
-                socket = IO.socket("http://37.10.112.240:8011/");
+                socket = IO.socket("http://" + ADDRESS + ":" + PORT + "/");
                 socket.connect();
             } catch (Exception e) {
                 System.out.println(e);

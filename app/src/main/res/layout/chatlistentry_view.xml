@@ -13,13 +13,30 @@
             android:text="-"
             android:textColor="#000000"
             android:textSize="17sp"
-            tools:context="kucki.com.socketdemo.Views.ChatlistEntry"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="22dp"
             android:layout_marginStart="22dp" />
 
+        <TextView
+            android:id="@+id/vmessagecount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="0"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_marginLeft="158dp"
+            android:layout_marginStart="310dp"
+            android:layout_alignBaseline="@+id/vname"
+            android:layout_alignBottom="@+id/vname"
+            android:layout_alignLeft="@+id/vname"
+            android:layout_alignStart="@+id/vname"
+            android:background="@drawable/messagescountview"/>
         <!--
         <TextView
             android:id="@+id/vmessagecount"
