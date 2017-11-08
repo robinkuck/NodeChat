@@ -1,29 +1,16 @@
 package kucki.com.socketdemo.Views;
 
-import android.app.Activity;
+import  android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import kucki.com.socketdemo.R;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
 /**
  * Created by kuckr on 23.08.2017.
- *
- *
- *
  */
 
 public class ChatlistEntry extends RelativeLayout {
@@ -43,7 +30,7 @@ public class ChatlistEntry extends RelativeLayout {
     }
 
     public ChatlistEntry(Context ct, AttributeSet attrs) {
-        super(ct,attrs);
+        super(ct, attrs);
     }
 
 
@@ -54,10 +41,10 @@ public class ChatlistEntry extends RelativeLayout {
 
         RelativeLayout rl = (RelativeLayout) getChildAt(0);
 
-        tvtitle = (TextView)rl.getChildAt(0);
-        tvmessagesCount = (TextView)rl.getChildAt(1);
+        tvtitle = (TextView) rl.getChildAt(0);
+        tvmessagesCount = (TextView) rl.getChildAt(1);
 
-        if(nick.equals("global")) {
+        if (nick.equals("global")) {
             isGlobal = true;
             this.nick = "Global Chat";
             tvtitle.setText("Global Chat");
@@ -68,14 +55,25 @@ public class ChatlistEntry extends RelativeLayout {
         }
     }
 
-    public void setMessageCount(int messages) {
+    public void setMessageCount(final int messages) {
         this.messages = messages;
-        if(messages>0) {
-            tvmessagesCount.setBackgroundResource(R.drawable.messagescountview2);
-        } else {
-            tvmessagesCount.setBackgroundResource(R.drawable.messagescountview);
-        }
-        tvmessagesCount.setText(messages);
+
+        act.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (messages > 0) {
+                    tvmessagesCount.setBackgroundResource(R.drawable.messagescountview2);
+                } else {
+                    tvmessagesCount.setBackgroundResource(R.drawable.messagescountview);
+                }
+                if(messages>99) {
+                    tvmessagesCount.setText("99+");
+                } else {
+                    tvmessagesCount.setText(String.valueOf(messages));
+                }
+            }
+        });
+
     }
 
     public int getMessageCount() {

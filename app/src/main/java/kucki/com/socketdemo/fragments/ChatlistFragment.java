@@ -79,7 +79,7 @@ public class ChatlistFragment extends Fragment {
             public void call(Object... args) {
                 JSONArray users = (JSONArray) args[0];
                 System.out.println("[INFO] Updating Users online: " + users.length());
-                clearPrivateChatList();
+                //clearPrivateChatList();
                 try {
                     for(int i = 0; i<users.length(); i++) {
                         JSONObject current = users.getJSONObject(i);
@@ -99,6 +99,7 @@ public class ChatlistFragment extends Fragment {
             @Override
             public void call(Object... args) {
                 //TODO: Implement global message event
+                gEntry.setMessageCount(gEntry.getMessageCount()+1);
             }
         }).on("privatemessage", new Emitter.Listener() {
             @Override

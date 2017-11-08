@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_chatentry"
     android:layout_width="match_parent"
     android:layout_height="80dp"
@@ -21,39 +22,17 @@
 
         <TextView
             android:id="@+id/vmessagecount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:gravity="center"
             android:text="0"
             android:textColor="#000000"
             android:textSize="20sp"
-            android:layout_marginLeft="158dp"
-            android:layout_marginStart="310dp"
-            android:layout_alignBaseline="@+id/vname"
-            android:layout_alignBottom="@+id/vname"
-            android:layout_alignLeft="@+id/vname"
-            android:layout_alignStart="@+id/vname"
-            android:background="@drawable/messagescountview"/>
-        <!--
-        <TextView
-            android:id="@+id/vmessagecount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="36dp"
-            android:layout_marginRight="36dp"
             android:background="@drawable/messagescountview"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="0"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-            -->
+            android:layout_marginRight="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
