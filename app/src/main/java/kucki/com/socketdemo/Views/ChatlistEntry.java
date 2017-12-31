@@ -23,21 +23,15 @@ public class ChatlistEntry extends RelativeLayout {
     private TextView tvtitle;
     private TextView tvmessagesCount;
 
-    public ChatlistEntry(Context ct, Activity act, String nick) {
+    public ChatlistEntry(Activity act, String nick) {
         super(act);
         this.act = act;
-        init(ct, nick);
+        init(nick);
     }
 
-    public ChatlistEntry(Context ct, AttributeSet attrs) {
-        super(ct, attrs);
-    }
-
-
-    public void init(Context ct, String nick) {
-        LayoutInflater inflater = (LayoutInflater) ct
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.chatlistentry_view_container, this, true);
+    public void init(String nick) {
+        LayoutInflater inflater = (LayoutInflater) act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.chatlistentry_view, this, true);
 
         RelativeLayout rl = (RelativeLayout) getChildAt(0);
 

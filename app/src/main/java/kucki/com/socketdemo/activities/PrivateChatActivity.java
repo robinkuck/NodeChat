@@ -1,6 +1,8 @@
 package kucki.com.socketdemo.activities;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.LinearLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +10,9 @@ import org.json.JSONObject;
 import io.socket.emitter.Emitter;
 import kucki.com.socketdemo.App;
 import kucki.com.socketdemo.MessageView;
+import kucki.com.socketdemo.SocketManager;
+
+import static android.widget.LinearLayout.HORIZONTAL;
 
 /**
  * Created by D070264 on 21.09.2017.
@@ -20,8 +25,17 @@ public class PrivateChatActivity extends ChatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        App.getInstance().setCurrentActivity(this);
+
         setRecipient(getIntent().getStringExtra("chatwith"));
         configSocketEvents();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        App.getInstance().setCurrentActivity(this);
     }
 
     public void setRecipient(String pRecipient) {
@@ -29,7 +43,7 @@ public class PrivateChatActivity extends ChatActivity {
     }
 
     public void configSocketEvents() {
-        App.getSocket().on("privatemessage", new Emitter.Listener() {
+        SocketManager.getInstance().getSocket().on("privatemessage", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 JSONObject data = (JSONObject) args[0];
@@ -65,7 +79,7 @@ public class PrivateChatActivity extends ChatActivity {
                             messages.setText(s1 + "\n\n" + s2);
                             scrollDown();
                             */
-                            PrivateChatActivity.super.createPChatMessageView(s2);
+                            createPChatMessageView(s2);
                             scrollDown();
                         }
                     });
@@ -82,6 +96,16 @@ public class PrivateChatActivity extends ChatActivity {
 
     public String getRecipient() {
         return sRecipient;
+    }
+
+    private void createPChatMessageView(String msg) {
+        LinearLayout l = new LinearLayout(this);
+        l.setOrientation(HORIZONTAL);
+        l.setHorizontalGravity(Gravity.LEFT);
+
+        MessageView mv = new MessageView(this, msg, "", false, false, ((x / 3) * 2));
+        l.addView(mv);
+        msgs.addView(l);
     }
 
 }

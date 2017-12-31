@@ -1,23 +1,39 @@
 package kucki.com.socketdemo.activities;
 
+import android.content.IntentFilter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import kucki.com.socketdemo.App;
+import kucki.com.socketdemo.CheckInternetConnectionReceiver;
 import kucki.com.socketdemo.R;
 import kucki.com.socketdemo.fragments.ChatlistFragment;
 import kucki.com.socketdemo.fragments.NickFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static MainActivity INSTANCE;
+
     private String nick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        INSTANCE = this;
+
+        App.getInstance().setCurrentActivity(this);
+
         setContentView(R.layout.activity_main);
 
         setNickFragment();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        App.getInstance().setCurrentActivity(this);
     }
 
     public void setNickFragment() {
@@ -46,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public static MainActivity getInstance() {
+        return INSTANCE;
     }
 
 }

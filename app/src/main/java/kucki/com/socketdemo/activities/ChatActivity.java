@@ -2,6 +2,7 @@ package kucki.com.socketdemo.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -10,6 +11,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import android.widget.ScrollView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import kucki.com.socketdemo.App;
 import kucki.com.socketdemo.MessageView;
 import kucki.com.socketdemo.R;
@@ -28,8 +33,10 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        App.getInstance().setCurrentActivity(this);
+
         setContentView(R.layout.activity_chat);
-        App.current = this;
 
         configViews();
         msgs = (LinearLayout) findViewById(R.id.rel);
@@ -40,8 +47,13 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onBackPressed() {
-        App.closeKeyboard(this);
+        App.getInstance().closeKeyboard(this);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -52,7 +64,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        App.closeKeyboard(this);
+        App.getInstance().closeKeyboard(this);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -76,27 +88,6 @@ public class ChatActivity extends AppCompatActivity {
         MessageView mv = new MessageView(this, msg, "", false, true, ((x / 3) * 2));
         l.addView(mv);
         msgs.addView(l);
-    }
-
-    protected void createPChatMessageView(String msg) {
-        LinearLayout l = new LinearLayout(this);
-        l.setOrientation(HORIZONTAL);
-        l.setHorizontalGravity(Gravity.LEFT);
-
-        MessageView mv = new MessageView(this, msg, "", false, false, ((x / 3) * 2));
-        l.addView(mv);
-        msgs.addView(l);
-    }
-
-    protected void createGChatMessageView(String msg, String name) {
-        LinearLayout l = new LinearLayout(this);
-        l.setOrientation(HORIZONTAL);
-        l.setHorizontalGravity(Gravity.LEFT);
-
-        MessageView mv = new MessageView(this, msg, name, true, false, ((x / 3) * 2));
-        l.addView(mv);
-        msgs.addView(l);
-        System.out.println("[I] GChatMessageView created!");
     }
 
     //TODO: Add Writing Display

@@ -10,4 +10,5 @@
     <color name="date">#686868</color>
     <color name="nameHeader">#f20e0e</color>
     <color name="colornewmessage">#db304a</color>
+    <color name="offline_info_view">#d94e4e</color>
 </resources>

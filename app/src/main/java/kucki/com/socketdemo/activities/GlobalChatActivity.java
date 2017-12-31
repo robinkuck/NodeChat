@@ -1,13 +1,19 @@
 package kucki.com.socketdemo.activities;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.socket.emitter.Emitter;
 import kucki.com.socketdemo.App;
+import kucki.com.socketdemo.MessageView;
+import kucki.com.socketdemo.SocketManager;
+
+import static android.widget.LinearLayout.HORIZONTAL;
 
 /**
  * Created by KuckR on 21.09.2017.
@@ -20,6 +26,9 @@ public class GlobalChatActivity extends ChatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        App.getInstance().setCurrentActivity(this);
+
         configSocketEvents();
         configSendButton();
         setTitle("Global Chat");
@@ -27,8 +36,14 @@ public class GlobalChatActivity extends ChatActivity {
         nick = getIntent().getStringExtra("nick");
     }
 
-    public void configSocketEvents() {
-        App.getSocket().on("globalmessage", new Emitter.Listener() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        App.getInstance().setCurrentActivity(this);
+    }
+
+    private void configSocketEvents() {
+        SocketManager.getInstance().getSocket().on("globalmessage", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 JSONObject data = (JSONObject) args[0];
@@ -38,27 +53,8 @@ public class GlobalChatActivity extends ChatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            GlobalChatActivity.super.createGChatMessageView(s2,s1);
+                            createGChatMessageView(s2,s1);
                             scrollDown();
-                        }
-                    });
-                } catch (JSONException e) {
-                    System.out.println("Error getting new message!");
-                }
-            }
-        }).on("yourmessage", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                JSONObject data = (JSONObject) args[0];
-                try {
-                    final String msg = data.getString("msg");
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            GlobalChatActivity.super.createPersonalMessageView(msg);
-                            scrollDown();
-                            System.out.println("[I] !!!");
                         }
                     });
                 } catch (JSONException e) {
@@ -68,28 +64,32 @@ public class GlobalChatActivity extends ChatActivity {
         });
     }
 
-    public void configSendButton() {
+    private void configSendButton() {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (editMsg.getText().toString().trim().equals("")) {
 
                 } else {
-                    if (App.getSocket().connected() && !editMsg.getText().toString().equals("")) {
-                        JSONObject data = new JSONObject();
-                        try {
-                            data.put("msg", editMsg.getText().toString().trim());
-                            App.getSocket().emit("new gmsg", data);
-                            GlobalChatActivity.super.createPersonalMessageView(editMsg.getText().toString());
-                            clearEditMsg();
-                            scrollDown();
-                            System.out.println("[I] Sending global message!");
-                        } catch (JSONException e) {
-                            System.out.println("Error sending data");
-                        }
+                    if(App.getInstance().isOnline()) {
+                        SocketManager.getInstance().sendGlobalMessage(editMsg.getText().toString());
+                        createPersonalMessageView(editMsg.getText().toString());
+                        clearEditMsg();
+                        scrollDown();
                     }
                 }
             }
         });
+    }
+
+    private void createGChatMessageView(String msg, String name) {
+        LinearLayout l = new LinearLayout(this);
+        l.setOrientation(HORIZONTAL);
+        l.setHorizontalGravity(Gravity.LEFT);
+
+        MessageView mv = new MessageView(this, msg, name, true, false, ((x / 3) * 2));
+        l.addView(mv);
+        msgs.addView(l);
+        System.out.println("[I] GChatMessageView created!");
     }
 }

@@ -61,4 +61,7 @@
             android:textSize="25sp" />
 
     </LinearLayout>
+
+    <include layout="@layout/offline_info_view"
+        android:id="@+id/offine_info"/>
 </RelativeLayout>

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,8 +15,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import io.socket.emitter.Emitter;
-import kucki.com.socketdemo.ActivityManager;
+import kucki.com.socketdemo.ActivitySwitcher;
 import kucki.com.socketdemo.App;
+import kucki.com.socketdemo.SocketManager;
 import kucki.com.socketdemo.Views.ChatlistEntry;
 import kucki.com.socketdemo.activities.MainActivity;
 import kucki.com.socketdemo.R;
@@ -30,12 +30,17 @@ public class ChatlistFragment extends Fragment {
 
     public String nick;
 
+    private static ChatlistFragment INSTANCE;
+
     private HashMap<String, ChatlistEntry> entries;
     private ChatlistEntry gEntry;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        INSTANCE = this;
+
         return inflater.inflate(R.layout.fragment_chatlist, container, false);
     }
 
@@ -46,8 +51,7 @@ public class ChatlistFragment extends Fragment {
         nick = ((MainActivity)getActivity()).getNick();
         System.out.println("[I] Your name: " + nick);
 
-        configSocketEvents();
-        App.getSocket().emit("getPlayers");
+        SocketManager.getInstance().getSocket().emit("getUsers");
 
         View v = getView();
         if(v!=null) {
@@ -55,17 +59,21 @@ public class ChatlistFragment extends Fragment {
         }
     }
 
+    public static ChatlistFragment getInstance() {
+        return INSTANCE;
+    }
+
     private void configViews(View v) {
         entries = new HashMap<>();
         layout = (LinearLayout)v.findViewById(R.id.chatentrylist);
         privateChatListLayout = (LinearLayout)layout.findViewById(R.id.private_chat_list_layout);
         globalChatLayout = (LinearLayout)layout.findViewById(R.id.global_chat_layout);
-        gEntry = new ChatlistEntry(getContext(),getActivity(),"global");
+        gEntry = new ChatlistEntry(getActivity(),"global");
         addViewtoGlobalChatList(gEntry);
         gEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityManager.startGlobalChatAcitity(getActivity(),nick);
+                ActivitySwitcher.startGlobalChatAcitity(getActivity(),nick);
                 System.out.println("[I] Global Chat started!");
             }
         });
@@ -74,28 +82,7 @@ public class ChatlistFragment extends Fragment {
     public void configSocketEvents() {
         final Context ct = getContext();
         final String currentNick = this.nick;
-        App.getSocket().on("sendPlayers", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                JSONArray users = (JSONArray) args[0];
-                System.out.println("[INFO] Updating Users online: " + users.length());
-                //clearPrivateChatList();
-                try {
-                    for(int i = 0; i<users.length(); i++) {
-                        JSONObject current = users.getJSONObject(i);
-                        final String nick = current.getString("name");
-                        if(!nick.equalsIgnoreCase(currentNick)) {
-                            final ChatlistEntry entry = new ChatlistEntry(getContext(),getActivity(), nick);
-                            System.out.println("Adding User to list: " + nick);
-
-                            addViewtoPrivateChatList(entry);
-                        }
-                    }
-                } catch(JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).on("globalmessage", new Emitter.Listener() {
+        SocketManager.getInstance().getSocket().on("globalmessage", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 //TODO: Implement global message event
@@ -109,25 +96,29 @@ public class ChatlistFragment extends Fragment {
         });
     }
 
-    private void clearPrivateChatList() {
+    public void addViewtoPrivateChatList(final String nick, final ChatlistEntry chatlistEntry) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                privateChatListLayout.removeAllViews();
+                privateChatListLayout.addView(chatlistEntry);
+                entries.put(nick, chatlistEntry);
             }
         });
     }
 
-    private void addViewtoPrivateChatList(final View v) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                privateChatListLayout.addView(v);
-            }
-        });
+    public void removeViewFromPrivateChatList(final String nick) {
+        final ChatlistEntry chatlistEntry = entries.get(nick);
+        if(chatlistEntry!=null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    privateChatListLayout.removeView(chatlistEntry);
+                }
+            });
+        }
     }
 
-    private void addViewtoGlobalChatList(final View v) {
+    public void addViewtoGlobalChatList(final View v) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
