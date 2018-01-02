@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kucki.com.socketdemo.MainActivity"
+    tools:context="kucki.com.socketdemo.activities.MainActivity"
+    android:background="@color/background"
     android:id="@+id/container">
+
+    <include
+        android:id="@+id/offine_info"
+        layout="@layout/offline_info_view" />
 
 </FrameLayout>
