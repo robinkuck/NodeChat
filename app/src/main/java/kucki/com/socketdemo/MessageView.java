@@ -1,66 +1,108 @@
 package kucki.com.socketdemo;
 
-import android.app.Application;
-import android.app.Notification;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.shapes.Shape;
-import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
-import android.view.Display;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * Created by kuckr on 31.07.2017.
  */
 
-public class MessageView extends android.support.v7.widget.AppCompatTextView {
+public class MessageView extends RelativeLayout {
 
-    public int size;
+    private TextView TvMessage;
+    private TextView TvName;
+    private TextView TvDate;
 
-    public MessageView(Context ct, String text, int size) {
+    private String message;
+    private String name;
+    private boolean isGlobal;
+    private boolean isPersonal;
+    private int size;
+
+    public MessageView(Context ct, String message, String name, boolean isGlobal, boolean isPersonal, int size) {
         super(ct);
         this.size = size;
-        init(text);
+        this.isGlobal = isGlobal;
+        this.isPersonal = isPersonal;
+        this.message = message;
+        this.name = name;
+
+        init(ct);
     }
 
-    public void init(String text) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                WRAP_CONTENT,WRAP_CONTENT);
-        params.weight = 0;
-        params.setMargins((int)dpToPixel(5),0,
-                (int)dpToPixel(5),
-                (int)dpToPixel(2));
-        setLayoutParams(params);
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        setTypeface(Typeface.MONOSPACE);
-        setPadding((int)dpToPixel(6),
-                (int)dpToPixel(6),
-                (int)dpToPixel(12),
-                (int)dpToPixel(22));
-        setMinWidth((int)dpToPixel(110));
-        setMaxWidth(size);
-        setBackgroundResource(R.drawable.bgmessageview);
-        setTextColor(Color.BLACK);
-        setText(text);
-        //this.setBackgroundDrawable(new BitmapDrawable(rbt));
+    public MessageView(Context ct, AttributeSet attrs) {
+        super(ct, attrs);
+        init(ct);
+    }
+
+    public void init(Context ct) {
+        LayoutInflater inflater = (LayoutInflater) ct
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.message_view_container, this, true);
+
+        RelativeLayout rl = (RelativeLayout) getChildAt(0);
+
+        TvMessage = (TextView) rl.getChildAt(0);
+        TvName = (TextView) rl.getChildAt(1);
+        TvDate = (TextView) rl.getChildAt(2);
+
+        if(isGlobal&&!isPersonal) {
+            addName();
+        } else {
+            TvName.setText("");
+        }
+
+        createMessageText();
+        addDate();
+    }
+
+
+    private void createMessageText() {
+        TvMessage.setText(this.message);
+        TvMessage.setMaxWidth(size);
+        TvMessage.setBackgroundResource(
+                isPersonal ? R.drawable.bgpersonalmessageview : R.drawable.bgmessageview);
+        TvMessage.setPadding((int) dpToPixel(6),
+                isPersonal ? (int) dpToPixel(6) : (isGlobal ? (int) dpToPixel(17) : (int) dpToPixel(6)),
+                (int) dpToPixel(12),
+                (int) dpToPixel(18));
+    }
+
+    private void addDate() {
+        TvDate.setText(getCurrentTime());
+    }
+
+    private void addName() {
+        TvName.setText(this.name);
+    }
+
+    public String getCurrentTime() {
+        Calendar c = Calendar.getInstance(Locale.GERMANY);
+        String date = "";
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            date = "0" + c.get(Calendar.DAY_OF_MONTH) + "." +
+                    (c.get(Calendar.MONTH) < 10 ? "0" + c.get(Calendar.MONTH) : c.get(Calendar.MONTH)) +
+                    "." + c.get(Calendar.YEAR);
+        } else {
+            date = c.get(Calendar.DAY_OF_MONTH) + "." +
+                    (c.get(Calendar.MONTH) < 10 ? "0" + c.get(Calendar.MONTH) : c.get(Calendar.MONTH)) +
+                    "." + c.get(Calendar.YEAR);
+        }
+
+        String time = "";
+        if (c.get(Calendar.MINUTE) < 10) {
+            time = "" + c.get(Calendar.HOUR_OF_DAY) + ":0" + c.get(Calendar.MINUTE);
+        } else {
+            time = "" + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
+        }
+        return date + ", " + time;
     }
 
     //DP to Pixel
