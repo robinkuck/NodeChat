@@ -1,23 +1,24 @@
 package kucki.com.socketdemo.activities;
 
+import android.app.Service;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import kucki.com.socketdemo.App;
 import kucki.com.socketdemo.MessageView;
 import kucki.com.socketdemo.R;
+import kucki.com.socketdemo.api.SoftKeyboard;
 
 import static android.widget.LinearLayout.HORIZONTAL;
 
@@ -27,6 +28,8 @@ public class ChatActivity extends AppCompatActivity {
     public Button sendButton;
     public ScrollView scroller;
     public LinearLayout msgs;
+    private RelativeLayout rootLayout;
+    private SoftKeyboard softKeyboard;
 
     public int x, y;
 
@@ -53,7 +56,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        App.getInstance().closeKeyboard(this);
+        softKeyboard.closeSoftKeyboard();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -64,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        App.getInstance().closeKeyboard(this);
+        softKeyboard.closeSoftKeyboard();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -78,6 +81,35 @@ public class ChatActivity extends AppCompatActivity {
         editMsg = (EditText) findViewById(R.id.editMessage);
         scroller = (ScrollView) findViewById(R.id.scroller);
         sendButton = (Button) findViewById(R.id.sendButton);
+        rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
+        configKeyboard();
+    }
+
+    private void configKeyboard() {
+        InputMethodManager im = (InputMethodManager) getSystemService(Service.INPUT_METHOD_SERVICE);
+        softKeyboard = new SoftKeyboard(rootLayout, im);
+        softKeyboard.setSoftKeyboardCallback(new SoftKeyboard.SoftKeyboardChanged() {
+            @Override
+            public void onSoftKeyboardHide() {
+                //do nothing
+            }
+
+            @Override
+            public void onSoftKeyboardShow() {
+                System.out.println("SHOWING KEYBOARD!");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollDown();
+                            }
+                        }, 200);
+                    }
+                });
+            }
+        });
     }
 
     protected void createPersonalMessageView(String msg) {
@@ -105,15 +137,5 @@ public class ChatActivity extends AppCompatActivity {
 
     public void clearEditMsg() {
         editMsg.setText("");
-    }
-
-    //DP to Pixel
-    public float dpToPixel(float dp) {
-        final float scale = getResources().getDisplayMetrics().density;
-        return (dp * scale + 0.5f);
-        /*
-        final float density = getResources().getDisplayMetrics().density;
-        return dp * (density == 1.0f || density == 1.5f || density == 2.0f ? 3.0f : density) + 0.5f;
-        */
     }
 }
