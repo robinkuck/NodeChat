@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rootLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".activities.NickActivity">
+
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/AppToolbar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/app_name">
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/scroller"
+        android:layout_below="@id/activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="70dp"
+                android:fontFamily="sans-serif"
+                android:text="Choose your nickname:"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="25sp" />
+
+            <EditText
+                android:id="@+id/editNick"
+                android:layout_width="260dp"
+                android:layout_height="55dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:hint="Type here..."
+                android:textSize="20sp"
+                android:theme="@style/AppTheme"
+                android:imeOptions="actionDone"
+                android:maxLength="20"/>
+
+            <TextView
+                android:id="@+id/notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editNick"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif"
+                android:text="Nickname already taken!"
+                android:textAlignment="center"
+                android:textColor="#ff0000"
+                android:textSize="15sp"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/buttonEnter"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/background_button"
+                android:elevation="4dp"
+                android:text="Start" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

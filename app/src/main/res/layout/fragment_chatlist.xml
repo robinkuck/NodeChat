@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".fragments.ChatlistFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:id="@+id/chatentrylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--
+            <TextView
+                android:id="@+id/global_chat_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:paddingBottom="3dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="3dp"
+                android:text="Global chat"
+                android:textSize="17sp" /> -->
+
+            <!--
+            <include
+                layout="@layout/chatlistentry_view"
+                android:id="@+id/global_chat"
+                />-->
+
+            <LinearLayout
+            android:id="@+id/global_chat_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+
+            <!--
+            <TextView
+                android:id="@+id/online_users_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:paddingBottom="3dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="3dp"
+                android:text="Private chats"
+                android:textSize="17sp" /> -->
+
+            <LinearLayout
+                android:id="@+id/private_chat_list_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

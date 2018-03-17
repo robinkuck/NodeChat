@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".fragments.UserlistFragment">
+
+    <include
+        android:id="@+id/search_bar"
+        layout="@layout/user_search_bar"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        android:layout_below="@id/search_bar">
+
+        <LinearLayout
+            android:id="@+id/users_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--
+            <TextView
+                android:id="@+id/online_users_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:paddingBottom="3dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="3dp"
+                android:text="Online Users"
+                android:textSize="17sp" /> -->
+            <!--
+            <include
+                layout="@layout/chatlistentry_view"
+                android:id="@+id/global_chat"
+                />
+                -->
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

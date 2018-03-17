@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:theme="@style/AppTheme"
+    tools:context=".activities.ChatActivity">
+
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/AppToolbar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/app_name" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/linearLayout"
+        android:layout_below="@id/activity_toolbar"
+        android:foreground="?android:windowContentOverlay">
+
+        <ScrollView
+            android:id="@+id/scroller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/linearLayout"
+            android:layout_gravity="bottom"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <LinearLayout
+                android:id="@+id/rel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <!--<kucki.com.socketdemo.MessageView
+                    android:id="@+id/MessagesView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="monospace"
+                    android:textSize="18sp" />-->
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/background_light"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_weight="16"
+            android:hint="Type here..."
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            android:textColor="@android:color/black"
+            android:maxLength="150" />
+
+        <ImageButton
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_weight="0.5"
+            android:background="@android:color/transparent"
+            android:foreground="?attr/actionBarItemBackground"
+            android:src="@drawable/arrow"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+</RelativeLayout>

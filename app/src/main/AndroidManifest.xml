@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.robinkuck.nodechat.android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!--
+    backup key: AEdPqrEAAAAIxe_R9aWBeM4TM0MoZI89RWN_rUWJ-2pJbe9tBQ
+    -->
+
+    <application
+        android:name="de.robinkuck.nodechat.android.App"
+        android:icon="@mipmap/launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <receiver
+            android:name="de.robinkuck.nodechat.android.SocketServiceReceiver"
+            android:label="SocketServiceReceiver">
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            -->
+        </receiver>
+
+        <service android:name="de.robinkuck.nodechat.android.SocketServiceProvider" />
+
+        <activity
+            android:name="de.robinkuck.nodechat.android.activities.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="de.robinkuck.nodechat.android.activities.NickActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name="de.robinkuck.nodechat.android.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="de.robinkuck.nodechat.android.activities.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="de.robinkuck.nodechat.android.activities.GlobalChatActivity"
+            android:parentActivityName="de.robinkuck.nodechat.android.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme"
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.robinkuck.nodechat.android.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.robinkuck.nodechat.android.activities.PrivateChatActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.robinkuck.nodechat.android.activities.MainActivity" />
+        </activity>
+    </application>
+
+</manifest>

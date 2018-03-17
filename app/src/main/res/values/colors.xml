@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorButtons">#3c739f</color>
+    <color name="colorPrimary">#005986</color>#0088cc
+    <color name="colorPrimaryDark">#004263</color>
+    <color name="colorAccent">#747474</color>
+    <color name="colorAccentLight">#b3b3b3</color>
+    <color name="PersonalMessageView">#82c7ff</color>
+    <color name="background">#ecedf0</color>
+    <!-- #ecedf0 -->
+    <color name="date">#686868</color>
+    <color name="nameHeader">#f20e0e</color>
+    <color name="colornewmessage">#db304a</color>
+    <color name="offline_info_view">#b4d94e4e</color>
+</resources>
