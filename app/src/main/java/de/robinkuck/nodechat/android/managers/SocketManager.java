@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.App;
 import de.robinkuck.nodechat.android.GlobalMessage;
+import de.robinkuck.nodechat.android.Message;
 import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.GlobalChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
@@ -225,16 +226,22 @@ public class SocketManager {
             @Override
             public void call(Object... args) {
                 JSONObject dataObject = (JSONObject) args[0];
-                if (CustomActivityManager.getInstance().getCurrentActivity() instanceof ChatActivity &&
-                        ((ChatActivity) CustomActivityManager.getInstance().getCurrentActivity()).isActive()) {
+                try {
+                    String from = dataObject.getString("from");
+                    String message = dataObject.getString("msg");
+                    String date = dataObject.getString("date");
 
-                } else {
-                    try {
+                    if (CustomActivityManager.getInstance().getCurrentActivity() instanceof ChatActivity &&
+                            ((ChatActivity) CustomActivityManager.getInstance().getCurrentActivity()).isActive()) {
+
+                    } else {
                         new SimpleNotification(App.getInstance().getApplicationContext(), "New global message",
-                                dataObject.getString("from") + ": " + dataObject.getString("msg")).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                                from + ": " + message).show();
                     }
+                    ChatHistoryManager.getInstance().getGlobalChatHistory().addMessage(
+                            new GlobalMessage(false, date, from, message));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });

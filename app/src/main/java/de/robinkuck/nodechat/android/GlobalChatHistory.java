@@ -14,7 +14,6 @@ public class GlobalChatHistory extends ChatHistory<GlobalMessage> {
 
     public GlobalChatHistory() {
         super("Global Chat");
-        addMessage(new GlobalMessage("01", true, "07.03.2018 19:00", "test", "Hey there!"));
     }
 
     public GlobalChatHistory(final JSONArray messagesList, final int unreadMessagesCount) {
@@ -33,7 +32,7 @@ public class GlobalChatHistory extends ChatHistory<GlobalMessage> {
         try {
             for (int i = 0; i < messageList.length(); i++) {
                 JSONObject currentMessage = messageList.getJSONObject(i);
-                GlobalMessage message = new GlobalMessage(currentMessage.getString("uuid"), currentMessage.getBoolean("personal"),
+                GlobalMessage message = new GlobalMessage(currentMessage.getBoolean("personal"),
                         currentMessage.getString("dateString"), currentMessage.getString("nameString"),
                         currentMessage.getString("messageString"));
                 addMessage(message);

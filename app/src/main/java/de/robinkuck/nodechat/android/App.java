@@ -14,7 +14,7 @@ public class App extends Application {
         INSTANCE = this;
         //System.out.println("[I] Starting SocketServiceProvider from Application");
         //startService(new Intent(this,SocketServiceProvider.class));
-        ChatHistoryManager.getInstance();
+        ChatHistoryManager.getInstance().loadData();
     }
 
     public static App getInstance() {

@@ -1,13 +1,8 @@
 package de.robinkuck.nodechat.android.managers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.File;
-import java.io.IOException;
 
 import de.robinkuck.nodechat.android.App;
 import de.robinkuck.nodechat.android.ChatHistory;
@@ -25,6 +20,20 @@ public class ChatHistoryManager {
     private ChatHistoryManager() {
         System.out.println("[ChatHistoryManager] starting ChatHistoryManager");
         globalChatReaderAndWriter = new JSONReaderAndWriter("history_global.json");
+    }
+
+    public static ChatHistoryManager getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ChatHistoryManager();
+        }
+        return INSTANCE;
+    }
+
+    public GlobalChatHistory getGlobalChatHistory() {
+        return globalChatHistory;
+    }
+
+    public void loadData() {
         if (!historyFileExists("history_global.json")) {
             saveData();
         }
@@ -42,17 +51,6 @@ public class ChatHistoryManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public static ChatHistoryManager getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ChatHistoryManager();
-        }
-        return INSTANCE;
-    }
-
-    public ChatHistory getGlobalChatHistory() {
-        return globalChatHistory;
     }
 
     public void saveData() {

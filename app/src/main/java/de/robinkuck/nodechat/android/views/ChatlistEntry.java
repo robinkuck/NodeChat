@@ -9,12 +9,9 @@ import android.widget.TextView;
 
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
+import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.NickManager;
-
-/**
- * Created by kuckr on 23.08.2017.
- */
 
 public class ChatlistEntry extends RelativeLayout {
 
@@ -22,7 +19,7 @@ public class ChatlistEntry extends RelativeLayout {
     public Activity act;
 
     private String nick;
-    private int messages = 0;
+    private int UnreadMessagesCount;
     private TextView tvtitle;
     private TextView tvmessagesCount;
 
@@ -45,6 +42,8 @@ public class ChatlistEntry extends RelativeLayout {
             isGlobal = true;
             this.nick = "Global chat";
             tvtitle.setText("Global chat");
+
+            setMessageCount(ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount());
         } else {
             isGlobal = false;
             this.nick = nick;
@@ -68,21 +67,21 @@ public class ChatlistEntry extends RelativeLayout {
         });
     }
 
-    public void setMessageCount(final int messages) {
-        this.messages = messages;
-
+    public void setMessageCount(final int messagesCount) {
+        System.out.println("[I] updating unreadmessagescount");
+        this.UnreadMessagesCount = messagesCount;
         act.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (messages > 0) {
+                if (messagesCount > 0) {
                     tvmessagesCount.setBackgroundResource(R.drawable.background_messagecount2);
                 } else {
                     tvmessagesCount.setBackgroundResource(R.drawable.background_messagecount);
                 }
-                if (messages > 99) {
+                if (messagesCount > 99) {
                     tvmessagesCount.setText("99+");
                 } else {
-                    tvmessagesCount.setText(String.valueOf(messages));
+                    tvmessagesCount.setText(String.valueOf(messagesCount));
                 }
             }
         });
@@ -90,6 +89,6 @@ public class ChatlistEntry extends RelativeLayout {
     }
 
     public int getMessageCount() {
-        return messages;
+        return UnreadMessagesCount;
     }
 }

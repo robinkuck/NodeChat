@@ -8,6 +8,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
+import de.robinkuck.nodechat.android.views.ChatlistEntry;
+
 public abstract class ChatHistory<messageObj extends Message> {
 
     @JsonProperty("unreadMessagesCount")
@@ -16,6 +19,8 @@ public abstract class ChatHistory<messageObj extends Message> {
     protected String chatLabel;
     @JsonProperty("messages")
     private List<messageObj> messages;
+
+    private transient ChatlistEntry chatlistEntry;
 
     public ChatHistory() {
         messages = new ArrayList<>();
@@ -38,6 +43,12 @@ public abstract class ChatHistory<messageObj extends Message> {
 
     public void addMessage(final messageObj message) {
         messages.add(message);
+        incUnreadMessagesCount();
+        if (chatlistEntry != null) {
+            chatlistEntry.setMessageCount(getUnreadMessagesCount());
+        }
+        //save data
+        ChatHistoryManager.getInstance().saveData();
     }
 
     public void clearMessages() {
@@ -66,5 +77,14 @@ public abstract class ChatHistory<messageObj extends Message> {
 
     public void setChatLabel(String chatLabel) {
         this.chatLabel = chatLabel;
+    }
+
+    public void setChatlistEntry(final ChatlistEntry chatlistEntry) {
+        this.chatlistEntry = chatlistEntry;
+        chatlistEntry.setMessageCount(getUnreadMessagesCount());
+    }
+
+    private void incUnreadMessagesCount() {
+        unreadMessagesCount++;
     }
 }

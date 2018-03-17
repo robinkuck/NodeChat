@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import io.socket.emitter.Emitter;
 import de.robinkuck.nodechat.android.managers.SocketManager;
 import de.robinkuck.nodechat.android.views.ChatlistEntry;
@@ -58,6 +59,8 @@ public class ChatlistFragment extends Fragment {
         gEntry = new ChatlistEntry(getActivity(), "global");
         gEntry.setId(R.id.chatentry_global);
         addViewtoGlobalChatList(gEntry);
+
+        ChatHistoryManager.getInstance().getGlobalChatHistory().setChatlistEntry(gEntry);
     }
 
     public void configSocketEvents() {
