@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <!--
+
             <TextView
                 android:id="@+id/global_chat_textview"
                 android:layout_width="match_parent"
