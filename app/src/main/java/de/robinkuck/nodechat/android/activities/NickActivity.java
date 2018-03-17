@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import de.robinkuck.nodechat.android.GlobalUtils;
+import de.robinkuck.nodechat.android.UiUtils;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
@@ -105,7 +105,7 @@ public class NickActivity extends AppCompatActivity {
                         NickManager.getInstance().setCurrentNick(editNick.getText().toString().trim());
                         SocketManager.getInstance().connectSocket(getApplicationContext());
                     } else {
-                        GlobalUtils.showNoInternetConnectionToast(getApplicationContext());
+                        UiUtils.showNoInternetConnectionToast(getApplicationContext());
                     }
                 }
             }
@@ -141,7 +141,7 @@ public class NickActivity extends AppCompatActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                GlobalUtils.scrollDown((ScrollView) findViewById(R.id.scroller));
+                                UiUtils.scrollDown((ScrollView) findViewById(R.id.scroller));
                             }
                         }, 200);
                     }

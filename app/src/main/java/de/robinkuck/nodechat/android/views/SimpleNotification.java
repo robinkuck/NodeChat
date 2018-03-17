@@ -11,10 +11,6 @@ import android.support.v4.app.NotificationCompat;
 
 import de.robinkuck.nodechat.android.R;
 
-/**
- * Created by kuckr on 20.01.2018.
- */
-
 public class SimpleNotification {
 
     protected NotificationCompat.Builder builder;

@@ -6,11 +6,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-/**
- * Created by Robin on 11.01.18.
- */
-
-public class GlobalUtils {
+public class UiUtils {
 
     public static void showNoInternetConnectionToast(final Context ct) {
         String txt = "Please check your Internet connection!";

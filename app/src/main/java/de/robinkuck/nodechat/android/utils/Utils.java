@@ -11,10 +11,6 @@ import java.util.List;
 
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 
-/**
- * Created by kuckr on 20.01.2018.
- */
-
 public class Utils {
 
     public static boolean isMyAppRunning() {

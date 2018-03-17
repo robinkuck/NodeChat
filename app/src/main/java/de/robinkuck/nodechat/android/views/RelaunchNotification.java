@@ -7,10 +7,6 @@ import android.support.v4.app.NotificationCompat;
 
 import de.robinkuck.nodechat.android.activities.SplashActivity;
 
-/**
- * Created by D070264 on 27.02.2018.
- */
-
 public class RelaunchNotification extends SimpleNotification {
 
     public RelaunchNotification(final Context context, final String title, final String text) {

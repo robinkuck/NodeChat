@@ -7,10 +7,6 @@ import android.content.Intent;
 import de.robinkuck.nodechat.android.utils.Utils;
 import de.robinkuck.nodechat.android.views.RelaunchNotification;
 
-/**
- * Created by kuckr on 21.01.2018.
- */
-
 public class SocketServiceProvider extends IntentService {
 
     public SocketServiceProvider() {

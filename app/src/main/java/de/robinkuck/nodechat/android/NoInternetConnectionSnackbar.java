@@ -5,10 +5,6 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by D070264 on 06.02.2018.
- */
-
 public class NoInternetConnectionSnackbar {
 
     private Snackbar snackbar;

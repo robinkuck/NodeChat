@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import de.robinkuck.nodechat.android.GlobalUtils;
+import de.robinkuck.nodechat.android.UiUtils;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
 import de.robinkuck.nodechat.android.views.OwnMessageView;
@@ -24,6 +24,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
     public ScrollView scroller;
     public LinearLayout msgs;
     private RelativeLayout rootLayout;
+    private boolean isActive;
 
     protected int x, y;
 
@@ -40,6 +41,22 @@ public abstract class ChatActivity extends AbstractChildActivity {
         Display d = getWindowManager().getDefaultDisplay();
         x = d.getWidth();
         y = d.getHeight();
+
+        isActive = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("[I] ONRESUME");
+        isActive = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        System.out.println("[I] ONPAUSE");
+        isActive = false;
     }
 
     public void configViews() {
@@ -69,7 +86,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                GlobalUtils.scrollDown(scroller);
+                                UiUtils.scrollDown(scroller);
                             }
                         }, 200);
                     }
@@ -94,7 +111,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                GlobalUtils.scrollDown(scroller);
+                                UiUtils.scrollDown(scroller);
                             }
                         }, 200);
                     }
@@ -120,5 +137,9 @@ public abstract class ChatActivity extends AbstractChildActivity {
 
     public void clearEditMsg() {
         editMsg.setText("");
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }

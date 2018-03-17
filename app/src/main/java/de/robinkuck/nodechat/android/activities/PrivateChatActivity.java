@@ -6,7 +6,7 @@ import android.view.View;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.robinkuck.nodechat.android.GlobalUtils;
+import de.robinkuck.nodechat.android.UiUtils;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
 import de.robinkuck.nodechat.android.managers.SocketManager;
@@ -51,7 +51,7 @@ public class PrivateChatActivity extends ChatActivity {
                             scrollDown();
                             */
                             addPrivateMessageView(s1);
-                            GlobalUtils.scrollDown(scroller);
+                            UiUtils.scrollDown(scroller);
                         }
                     });
                 } catch (JSONException e) {
@@ -74,7 +74,7 @@ public class PrivateChatActivity extends ChatActivity {
                             scrollDown();
                             */
                             //createPChatMessageView(s2);
-                            GlobalUtils.scrollDown(scroller);
+                            UiUtils.scrollDown(scroller);
                         }
                     });
                 } catch (JSONException e) {
@@ -95,7 +95,7 @@ public class PrivateChatActivity extends ChatActivity {
                         SocketManager.getInstance().sendPrivateMessage(recipient, editMsg.getText().toString());
                         createPersonalMessageView(editMsg.getText().toString());
                         clearEditMsg();
-                        GlobalUtils.scrollDown(scroller);
+                        UiUtils.scrollDown(scroller);
                     }
                 }
             }

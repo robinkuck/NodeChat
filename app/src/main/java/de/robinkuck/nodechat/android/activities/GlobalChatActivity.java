@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.robinkuck.nodechat.android.GlobalUtils;
+import de.robinkuck.nodechat.android.UiUtils;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
 import de.robinkuck.nodechat.android.managers.SocketManager;
@@ -53,7 +53,7 @@ public class GlobalChatActivity extends ChatActivity {
                         @Override
                         public void run() {
                             createGChatMessageView(message, from);
-                            GlobalUtils.scrollDown(scroller);
+                            UiUtils.scrollDown(scroller);
                         }
                     });
                 } catch (JSONException e) {
@@ -81,7 +81,7 @@ public class GlobalChatActivity extends ChatActivity {
                                     }
                                 });
                         clearEditMsg();
-                        GlobalUtils.scrollDown(scroller);
+                        UiUtils.scrollDown(scroller);
                     }
                 }
             }

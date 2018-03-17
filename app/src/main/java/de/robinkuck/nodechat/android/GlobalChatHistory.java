@@ -10,10 +10,6 @@ import org.json.JSONString;
 
 import de.robinkuck.nodechat.android.json.JSONReaderAndWriter;
 
-/**
- * Created by kuckr on 03.03.2018.
- */
-
 public class GlobalChatHistory extends ChatHistory<GlobalMessage> {
 
     public GlobalChatHistory() {

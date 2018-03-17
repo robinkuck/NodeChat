@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.App;
 import de.robinkuck.nodechat.android.GlobalMessage;
+import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.GlobalChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
@@ -28,8 +29,11 @@ public class SocketManager {
     }
 
     public native int getTestPort();
+
     public native int getPort();
+
     public native String getHost();
+
     public native String getAuthKey();
 
     private static SocketManager INSTANCE;
@@ -66,7 +70,7 @@ public class SocketManager {
         initSocket();
         try {
             opts.query = "nick=" + NickManager.getInstance().getCurrentNick() + "&deviceid=" + Utils.getDeviceID(context)
-                + "&authkey=" + getAuthKey();
+                    + "&authkey=" + getAuthKey();
             //socket = IO.socket("http://" + HOST + ":" + PORT + "/", opts);
             System.out.println("[I] SocketManager: trying to connect...");
             socket.connect();
@@ -147,7 +151,6 @@ public class SocketManager {
             public void call(Object... args) {
                 if (Utils.isMyAppRunning()) {
                     CustomActivityManager.getInstance().startNickActivity(CustomActivityManager.getInstance().getCurrentActivity());
-                    //disconnectSocket();
                 }
             }
         }).on("nickname_taken", new Emitter.Listener() {
@@ -172,14 +175,10 @@ public class SocketManager {
                     JSONObject data = (JSONObject) args[0];
                     try {
                         final String nick = data.getString("name");
-                        System.out.println(nick);
-                    /*
-                    ChatlistFragment.getInstance().addViewtoPrivateChatList(nick,
-                            new ChatlistEntry(ChatlistFragment.getInstance().getActivity(), nick));*/
                         UserlistFragment.getInstance().addViewtoUserList(nick,
                                 new UserEntry(UserlistFragment.getInstance().getActivity(), nick));
                     } catch (JSONException e) {
-                        System.out.println("Error getting connected user!");
+                        e.printStackTrace();
                     }
                 }
             }
@@ -190,10 +189,9 @@ public class SocketManager {
                     JSONObject data = (JSONObject) args[0];
                     try {
                         final String nick = data.getString("name");
-                        //ChatlistFragment.getInstance().removeViewFromPrivateChatList(nick);
                         UserlistFragment.getInstance().removeViewFromUserList(nick);
                     } catch (JSONException e) {
-                        System.out.println("Error getting disconnected user!");
+                        e.printStackTrace();
                     }
                 }
             }
@@ -217,8 +215,7 @@ public class SocketManager {
 
                                 }
                             } catch (JSONException e) {
-                                System.out.println("Error getting all users!");
-
+                                e.printStackTrace();
                             }
                         }
                     }
@@ -227,19 +224,17 @@ public class SocketManager {
         }).on("globalmessage", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                System.out.println("global message!!!");
-                JSONObject dataObject = (JSONObject)args[0];
-
-                /*
-                ChatHistoryManager.getInstance().getGlobalChatHistory().addMessage(
-                        new GlobalMessage(false, dataObject.getString(), dataObject.getString("from"), dataObject.getString("msg"));
-                );
-                */
-
-                if(CustomActivityManager.getInstance().getCurrentActivity() instanceof GlobalChatActivity) {
+                JSONObject dataObject = (JSONObject) args[0];
+                if (CustomActivityManager.getInstance().getCurrentActivity() instanceof ChatActivity &&
+                        ((ChatActivity) CustomActivityManager.getInstance().getCurrentActivity()).isActive()) {
 
                 } else {
-                    new SimpleNotification(App.getInstance().getApplicationContext(),"New global message", "").show();
+                    try {
+                        new SimpleNotification(App.getInstance().getApplicationContext(), "New global message",
+                                dataObject.getString("from") + ": " + dataObject.getString("msg")).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
