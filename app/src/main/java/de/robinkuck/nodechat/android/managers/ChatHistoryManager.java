@@ -5,7 +5,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.App;
-import de.robinkuck.nodechat.android.ChatHistory;
 import de.robinkuck.nodechat.android.GlobalChatHistory;
 import de.robinkuck.nodechat.android.json.JSONReaderAndWriter;
 
@@ -35,6 +34,7 @@ public class ChatHistoryManager {
 
     public void loadData() {
         if (!historyFileExists("history_global.json")) {
+            System.out.println("[ChatHistoryManager] creating history_global.json");
             saveData();
         }
         try {

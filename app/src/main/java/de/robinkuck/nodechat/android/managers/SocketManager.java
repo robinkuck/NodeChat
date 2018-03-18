@@ -9,14 +9,11 @@ import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.App;
 import de.robinkuck.nodechat.android.GlobalMessage;
-import de.robinkuck.nodechat.android.Message;
 import de.robinkuck.nodechat.android.activities.ChatActivity;
-import de.robinkuck.nodechat.android.activities.GlobalChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.fragments.UserlistFragment;
 import de.robinkuck.nodechat.android.utils.Utils;
-import de.robinkuck.nodechat.android.views.MessageView;
 import de.robinkuck.nodechat.android.views.SimpleNotification;
 import de.robinkuck.nodechat.android.views.UserEntry;
 import io.socket.client.Ack;
@@ -230,16 +227,17 @@ public class SocketManager {
                     String from = dataObject.getString("from");
                     String message = dataObject.getString("msg");
                     String date = dataObject.getString("date");
-
+                    boolean isReading;
                     if (CustomActivityManager.getInstance().getCurrentActivity() instanceof ChatActivity &&
                             ((ChatActivity) CustomActivityManager.getInstance().getCurrentActivity()).isActive()) {
-
+                        isReading = true;
                     } else {
                         new SimpleNotification(App.getInstance().getApplicationContext(), "New global message",
                                 from + ": " + message).show();
+                        isReading = false;
                     }
-                    ChatHistoryManager.getInstance().getGlobalChatHistory().addMessage(
-                            new GlobalMessage(false, date, from, message));
+                    ChatHistoryManager.getInstance().getGlobalChatHistory().addIncomingMessage(
+                            new GlobalMessage(false, date, from, message), isReading);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

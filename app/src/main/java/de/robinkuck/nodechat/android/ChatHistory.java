@@ -41,14 +41,18 @@ public abstract class ChatHistory<messageObj extends Message> {
 
     public abstract JSONObject toJSONObject();
 
-    public void addMessage(final messageObj message) {
+    public void addIncomingMessage(final messageObj message, final boolean isReading) {
         messages.add(message);
-        incUnreadMessagesCount();
-        if (chatlistEntry != null) {
+        if (chatlistEntry != null && !isReading) {
+            incUnreadMessagesCount();
             chatlistEntry.setMessageCount(getUnreadMessagesCount());
         }
         //save data
         ChatHistoryManager.getInstance().saveData();
+    }
+
+    public void loadHistoryMessage(final messageObj message) {
+        messages.add(message);
     }
 
     public void clearMessages() {

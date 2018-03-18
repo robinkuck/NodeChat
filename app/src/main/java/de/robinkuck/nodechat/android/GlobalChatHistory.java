@@ -6,9 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONString;
-
-import de.robinkuck.nodechat.android.json.JSONReaderAndWriter;
 
 public class GlobalChatHistory extends ChatHistory<GlobalMessage> {
 
@@ -18,13 +15,14 @@ public class GlobalChatHistory extends ChatHistory<GlobalMessage> {
 
     public GlobalChatHistory(final JSONArray messagesList, final int unreadMessagesCount) {
         super("Global Chat");
+        System.out.println("[ChatHistoryManager] creating GlobalChatHistory " + messagesList + " " + unreadMessagesCount);
         setUnreadMessagesCount(unreadMessagesCount);
         loadMessages(messagesList);
     }
 
     @Override
-    public void addMessage(final GlobalMessage message) {
-        super.addMessage(message);
+    public void addIncomingMessage(final GlobalMessage message, final boolean isReading) {
+        super.addIncomingMessage(message, isReading);
     }
 
     @Override
@@ -35,7 +33,7 @@ public class GlobalChatHistory extends ChatHistory<GlobalMessage> {
                 GlobalMessage message = new GlobalMessage(currentMessage.getBoolean("personal"),
                         currentMessage.getString("dateString"), currentMessage.getString("nameString"),
                         currentMessage.getString("messageString"));
-                addMessage(message);
+                loadHistoryMessage(message);
             }
         } catch (JSONException e) {
 
