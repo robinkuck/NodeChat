@@ -17,6 +17,7 @@ import android.widget.TextView;
 import de.robinkuck.nodechat.android.UiUtils;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
+import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
 import de.robinkuck.nodechat.android.managers.NickManager;
 import de.robinkuck.nodechat.android.managers.SocketManager;
@@ -37,6 +38,7 @@ public class NickActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         INSTANCE = this;
         setContentView(R.layout.activity_nick);
+        CustomActivityManager.getInstance().setCurrentActivity(this);
         configViews();
     }
 

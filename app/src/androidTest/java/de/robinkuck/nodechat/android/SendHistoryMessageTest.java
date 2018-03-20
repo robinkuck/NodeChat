@@ -3,6 +3,7 @@ package de.robinkuck.nodechat.android;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.media.session.PlaybackStateCompat;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,8 +22,11 @@ public class SendHistoryMessageTest {
 
     @Rule
     public ActivityTestRule<NickActivity> nickActivityActivityTestRule = new ActivityTestRule<>(NickActivity.class);
+    @Rule
+    public RepeatRule repeatRule = new RepeatRule();
 
     @Test
+    @RepeatRule.Repeat(times = 100)
     public void sendGlobalMessageTest() {
         final String message = "Hello there!";
         simpleLogin("Bill");
@@ -32,6 +36,7 @@ public class SendHistoryMessageTest {
     }
 
     @Test
+    @RepeatRule.Repeat(times = 100)
     public void sendGlobalMessageTest2() {
         final String message = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore";
         simpleLogin("Bill");
@@ -53,7 +58,7 @@ public class SendHistoryMessageTest {
     }
     */
     private void simpleLogin(final String nickName) {
-        onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.editNick)).perform(clearText(), typeText(nickName), closeSoftKeyboard());
+        onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.editNick)).perform(clearText(), typeText(nickName));
         onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.buttonEnter)).perform(click());
         wait(1000);
     }
