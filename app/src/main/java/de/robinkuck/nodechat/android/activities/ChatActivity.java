@@ -93,32 +93,6 @@ public abstract class ChatActivity extends AbstractChildActivity {
                 });
             }
         });
-        /*
-        InputMethodManager im = (InputMethodManager) getSystemService(Service.INPUT_METHOD_SERVICE);
-        softKeyboard = new SoftKeyboard(rootLayout, im);
-        softKeyboard.setSoftKeyboardCallback(new SoftKeyboard.SoftKeyboardChanged() {
-            @Override
-            public void onSoftKeyboardHide() {
-                //do nothing
-            }
-
-            @Override
-            public void onSoftKeyboardShow() {
-                System.out.println("SHOWING KEYBOARD!");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                UiUtils.scrollDown(scroller);
-                            }
-                        }, 200);
-                    }
-                });
-            }
-        });
-        */
     }
 
     protected OwnMessageView createPersonalMessageView(final String message) {

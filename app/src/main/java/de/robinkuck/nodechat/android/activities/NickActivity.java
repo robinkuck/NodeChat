@@ -80,13 +80,6 @@ public class NickActivity extends AppCompatActivity {
     private void configViews() {
         notificationText = (TextView) findViewById(R.id.notification);
         editNick = (EditText) findViewById(R.id.editNick);
-        /*
-        if(NickManager.getInstance().getCurrentNick().equals("")) {
-
-        } else {
-            editNick.setText(NickManager.getInstance().getCurrentNick());
-        }
-        */
         if (!NickManager.getInstance().getCurrentNick().equals("")) {
             editNick.setText(NickManager.getInstance().getCurrentNick());
         }
@@ -97,12 +90,6 @@ public class NickActivity extends AppCompatActivity {
                 if (editNick.getText().toString().trim().equals("")) {
                     setNotification("Invalid nick name!", true);
                 } else {
-                    /*if(NickManager.getInstance().getCurrentNick().equals(editNick.getText().toString().trim())) {
-                        CustomActivityManager.getInstance().startMainActivity(NickActivity.this);
-                        return;
-                    } else {
-                        NickManager.getInstance().setCurrentNick(editNick.getText().toString().trim());
-                    }*/
                     if (InternetConnectionManager.getInstance().isOnline()) {
                         NickManager.getInstance().setCurrentNick(editNick.getText().toString().trim());
                         SocketManager.getInstance().connectSocket(getApplicationContext());

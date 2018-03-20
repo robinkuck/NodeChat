@@ -11,10 +11,6 @@ import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 
-/**
- * Created by D070264 on 20.02.2018.
- */
-
 public class AbstractActivity extends AppCompatActivity {
 
     public SoftKeyboard softKeyboard;
@@ -28,18 +24,6 @@ public class AbstractActivity extends AppCompatActivity {
     public void configKeyboard(final ViewGroup rootLayout) {
         InputMethodManager im = (InputMethodManager) getSystemService(Service.INPUT_METHOD_SERVICE);
         softKeyboard = new SoftKeyboard(rootLayout, im);
-        /*
-        softKeyboard.setSoftKeyboardCallback(new SoftKeyboard.SoftKeyboardChanged() {
-            @Override
-            public void onSoftKeyboardHide() {
-                System.out.println("HIDING KEYBOARD!");
-            }
-            @Override
-            public void onSoftKeyboardShow() {
-                System.out.println("SHOWING KEYBOARD!");
-            }
-        });
-        */
     }
 
     @Override

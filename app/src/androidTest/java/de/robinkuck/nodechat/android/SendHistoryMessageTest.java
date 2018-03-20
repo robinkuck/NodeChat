@@ -3,7 +3,6 @@ package de.robinkuck.nodechat.android;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.media.session.PlaybackStateCompat;
 
 import org.junit.Rule;
 import org.junit.Test;

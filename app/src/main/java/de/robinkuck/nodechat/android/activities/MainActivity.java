@@ -40,17 +40,7 @@ public class MainActivity extends AbstractActivity {
 
         System.out.println("DEVICEID: " + Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID));
-        //setNickFragment();
     }
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return true;
-    }
-    */
 
     @Override
     public void onResume() {
@@ -62,39 +52,12 @@ public class MainActivity extends AbstractActivity {
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
-        } else {
-            //super.onBackPressed();
         }
     }
 
     public void onSettings(final View view) {
         CustomActivityManager.getInstance().startSettingsActivity(this);
     }
-
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuSettings:
-                //TODO Switch to App Settings
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-    */
-
-    /*
-    public void setNickFragment() {
-        NickFragment fragment = new NickFragment();
-        fragment.setArguments(getIntent().getExtras());
-
-        FragmentTransaction transac = getSupportFragmentManager().beginTransaction();
-        transac.replace(R.id.container,fragment);
-        transac.addToBackStack("nick");
-        transac.commit();
-    }
-    */
 
     public void setChatlistFragment() {
         ChatlistFragment fragment = new ChatlistFragment();

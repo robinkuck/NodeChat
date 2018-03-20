@@ -18,17 +18,10 @@ public class SplashActivity extends AbstractActivity {
         startService(new Intent(this, SocketServiceProvider.class));
         Utils.wait(2500);
         switchActivity();
-        //CustomActivityManager.getInstance().startMainActivity(this);
         finish();
     }
 
     private void switchActivity() {
-        /*
-        if(SocketManager.getInstance().getStatus() == SocketManager.Status.AUTHORIZED) {
-            CustomActivityManager.getInstance().startMainActivity(this);
-        } else {
-            CustomActivityManager.getInstance().startNickActivity(this);
-        }*/
         CustomActivityManager.getInstance().startNickActivity(SplashActivity.this);
     }
 
@@ -36,8 +29,6 @@ public class SplashActivity extends AbstractActivity {
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
-        } else {
-            //super.onBackPressed();
         }
     }
 }

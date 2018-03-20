@@ -46,10 +46,6 @@ public class PrivateChatActivity extends ChatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            /*
-                            messages.setText(s1 + "\n\n" + s2);
-                            scrollDown();
-                            */
                             addPrivateMessageView(s1);
                             UiUtils.scrollDown(scroller);
                         }
@@ -63,17 +59,11 @@ public class PrivateChatActivity extends ChatActivity {
             public void call(Object... args) {
                 JSONObject data = (JSONObject) args[0];
                 try {
-                    //final String s1 = messages.getText().toString();
                     final String s2 = data.getString("text");
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            /*
-                            messages.setText(s1 + "\n\n" + s2);
-                            scrollDown();
-                            */
-                            //createPChatMessageView(s2);
                             UiUtils.scrollDown(scroller);
                         }
                     });
@@ -109,17 +99,5 @@ public class PrivateChatActivity extends ChatActivity {
     public String getRecipient() {
         return recipient;
     }
-
-    /*
-    private void createPChatMessageView(String msg) {
-        LinearLayout l = new LinearLayout(this);
-        l.setOrientation(HORIZONTAL);
-        l.setHorizontalGravity(Gravity.LEFT);
-
-        MessageView mv = new MessageView(this, msg, "", false, false, ((x / 3) * 2));
-        l.addView(mv);
-        msgs.addView(l);
-    }
-    */
 
 }
