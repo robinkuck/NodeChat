@@ -1,4 +1,4 @@
-package de.robinkuck.nodechat.android;
+package de.robinkuck.nodechat.android.history;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.views.ChatlistEntry;
 
-public abstract class ChatHistory<messageObj extends Message> {
+public abstract class ChatHistory<messageObj extends HistoryMessage> {
 
     @JsonProperty("unreadMessagesCount")
     protected int unreadMessagesCount;
@@ -48,6 +48,11 @@ public abstract class ChatHistory<messageObj extends Message> {
             chatlistEntry.setMessageCount(getUnreadMessagesCount());
         }
         //save data
+        ChatHistoryManager.getInstance().saveData();
+    }
+
+    public void addSentMessage(final messageObj message) {
+        messages.add(message);
         ChatHistoryManager.getInstance().saveData();
     }
 

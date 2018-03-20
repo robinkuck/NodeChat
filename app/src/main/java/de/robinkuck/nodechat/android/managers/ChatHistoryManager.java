@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.App;
-import de.robinkuck.nodechat.android.GlobalChatHistory;
+import de.robinkuck.nodechat.android.history.GlobalChatHistory;
 import de.robinkuck.nodechat.android.json.JSONReaderAndWriter;
 
 public class ChatHistoryManager {

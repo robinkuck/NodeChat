@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.App;
-import de.robinkuck.nodechat.android.GlobalMessage;
+import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
 import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
@@ -237,7 +237,7 @@ public class SocketManager {
                         isReading = false;
                     }
                     ChatHistoryManager.getInstance().getGlobalChatHistory().addIncomingMessage(
-                            new GlobalMessage(false, date, from, message), isReading);
+                            new GlobalHistoryMessage(false, date, from, message), isReading);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -121,12 +121,23 @@ public abstract class ChatActivity extends AbstractChildActivity {
         */
     }
 
-    protected OwnMessageView createPersonalMessageView(String message) {
+    protected OwnMessageView createPersonalMessageView(final String message) {
         LinearLayout l = new LinearLayout(this);
         l.setOrientation(HORIZONTAL);
         l.setHorizontalGravity(Gravity.RIGHT);
 
-        OwnMessageView mv = new OwnMessageView(this, message.trim(), ((x / 3) * 2));
+        OwnMessageView mv = new OwnMessageView(this, message.trim(), getMessageViewWidth());
+        l.addView(mv);
+        msgs.addView(l);
+        return mv;
+    }
+
+    protected OwnMessageView createPersonalHistoryMessageView(final String message, final String date) {
+        LinearLayout l = new LinearLayout(this);
+        l.setOrientation(HORIZONTAL);
+        l.setHorizontalGravity(Gravity.RIGHT);
+
+        OwnMessageView mv = new OwnMessageView(this, message, date, getMessageViewWidth());
         l.addView(mv);
         msgs.addView(l);
         return mv;
@@ -141,5 +152,9 @@ public abstract class ChatActivity extends AbstractChildActivity {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    protected int getMessageViewWidth() {
+        return ((x / 3) * 2);
     }
 }

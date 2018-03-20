@@ -28,7 +28,7 @@ public class MessageView extends RelativeLayout {
         this.size = size;
         this.message = message;
         this.isSent = false;
-        init(ct);
+        init(ct, true);
     }
 
     public MessageView(final Context ct, final String message, final String date, final int size) {
@@ -37,16 +37,16 @@ public class MessageView extends RelativeLayout {
         this.message = message;
         this.date = date;
         this.isSent = false;
-        init(ct);
+        init(ct,false);
     }
 
 
     public MessageView(Context ct, AttributeSet attrs) {
         super(ct, attrs);
-        init(ct);
+        init(ct, false);
     }
 
-    protected void init(Context ct) {
+    protected void init(Context ct, final boolean createDate) {
         LayoutInflater inflater = (LayoutInflater) ct
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.message_view_container, this, true);
@@ -57,13 +57,17 @@ public class MessageView extends RelativeLayout {
         TvName = (TextView) rl.getChildAt(1);
         TvDate = (TextView) rl.getChildAt(2);
         getTvName().setText("");
-        addDate();
+        if(createDate) {
+            addDate();
+        } else {
+            setDate(this.date);
+        }
     }
 
     public void setSuccessfullSent(final boolean isSent) {
         this.isSent = isSent;
         if (isSent) {
-
+            //TODO add sent checkmark
         } else {
 
         }
@@ -79,6 +83,11 @@ public class MessageView extends RelativeLayout {
 
     public String getDate() {
         return date;
+    }
+
+    public void setDate(final String dateString) {
+        date = dateString;
+        getTvDate().setText(date);
     }
 
     protected TextView getTvMessage() {

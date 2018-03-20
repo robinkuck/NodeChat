@@ -1,14 +1,14 @@
-package de.robinkuck.nodechat.android;
+package de.robinkuck.nodechat.android.history;
 
 import java.io.Serializable;
 
-public abstract class Message implements Serializable{
+public abstract class HistoryMessage implements Serializable {
 
     private boolean personal;
     private String dateString, nameString, messageString;
 
-    public Message(final boolean isPersonal, final String dateString,
-                   final String nameString, final String messageString) {
+    public HistoryMessage(final boolean isPersonal, final String dateString,
+                          final String nameString, final String messageString) {
         this.personal = isPersonal;
         this.dateString = dateString;
         this.nameString = nameString;

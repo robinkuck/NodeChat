@@ -9,8 +9,13 @@ public class GlobalChatForeignMessageView extends ForeignMessageView {
         createMessageText();
     }
 
+    public GlobalChatForeignMessageView(final Context ct, final String message, final String name, final String date, final int size) {
+        super(ct, message, name, date, size);
+        createMessageText();
+    }
+
     @Override
-    protected  void createMessageText() {
+    protected void createMessageText() {
         super.createMessageText();
         super.addName();
     }

@@ -13,9 +13,9 @@ public abstract class ForeignMessageView extends MessageView {
         this.name = name;
     }
 
-    @Override
-    protected void init(final Context ct) {
-        super.init(ct);
+    public ForeignMessageView(final Context ct, final String message, final String name, final String date, final int size) {
+        super(ct, message, date, size);
+        this.name = name;
     }
 
     protected void addName() {

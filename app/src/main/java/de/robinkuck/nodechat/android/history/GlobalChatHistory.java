@@ -1,4 +1,4 @@
-package de.robinkuck.nodechat.android;
+package de.robinkuck.nodechat.android.history;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GlobalChatHistory extends ChatHistory<GlobalMessage> {
+public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
 
     public GlobalChatHistory() {
         super("Global Chat");
@@ -21,7 +21,7 @@ public class GlobalChatHistory extends ChatHistory<GlobalMessage> {
     }
 
     @Override
-    public void addIncomingMessage(final GlobalMessage message, final boolean isReading) {
+    public void addIncomingMessage(final GlobalHistoryMessage message, final boolean isReading) {
         super.addIncomingMessage(message, isReading);
     }
 
@@ -30,7 +30,7 @@ public class GlobalChatHistory extends ChatHistory<GlobalMessage> {
         try {
             for (int i = 0; i < messageList.length(); i++) {
                 JSONObject currentMessage = messageList.getJSONObject(i);
-                GlobalMessage message = new GlobalMessage(currentMessage.getBoolean("personal"),
+                GlobalHistoryMessage message = new GlobalHistoryMessage(currentMessage.getBoolean("personal"),
                         currentMessage.getString("dateString"), currentMessage.getString("nameString"),
                         currentMessage.getString("messageString"));
                 loadHistoryMessage(message);

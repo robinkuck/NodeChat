@@ -11,6 +11,11 @@ public class OwnMessageView extends MessageView {
         createMessageText();
     }
 
+    public OwnMessageView(final Context ct, final String message, final String date, final int size) {
+        super(ct, message, date, size);
+        createMessageText();
+    }
+
     @Override
     protected void createMessageText() {
         super.createMessageText();
