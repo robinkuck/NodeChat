@@ -80,6 +80,11 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> {
         this.unreadMessagesCount = unreadMessagesCount;
     }
 
+    public void resetUnreadMessagesCount() {
+        setUnreadMessagesCount(0);
+        ChatHistoryManager.getInstance().saveData();
+    }
+
     public String getChatLabel() {
         return chatLabel;
     }

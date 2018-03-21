@@ -57,6 +57,7 @@ public class ChatlistEntry extends RelativeLayout {
                 if(isGlobal) {
                     CustomActivityManager.getInstance().startGlobalChatAcitity(ChatlistFragment.getInstance().getActivity(),
                             NickManager.getInstance().getCurrentNick());
+                    ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
                     System.out.println("[I] Global chat started!");
                 } else {
                     CustomActivityManager.getInstance().startPrivateChatActivity(ChatlistFragment.getInstance().getActivity(),
