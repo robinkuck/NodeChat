@@ -42,21 +42,17 @@ public class SocketServiceProvider extends IntentService {
     @Override
     public void onTaskRemoved(final Intent intent) {
         System.out.println("[I] SocketServiceProvider task removed!");
-        Utils.wait(1500);
-        new RelaunchNotification(getApplicationContext(),"Click to reopen","You will not receive any messages now!").show();
+        Utils.waitUntil(1500, new Runnable() {
+            @Override
+            public void run() {
+                new RelaunchNotification(getApplicationContext(), "Click to reopen", "You will not receive any messages now!").show();
+            }
+        });
     }
 
     private void startSocketConnection() {
         String savedNick = getApplicationContext().getSharedPreferences("chatapp", Context.MODE_PRIVATE).getString("nickName", "");
         System.out.println("[I] SocketServiceProvider: Saved Nick: " + savedNick);
-                /*
-                if (!savedNick.equals("")) {
-                    if (!SocketManager.getInstance().getSocket().connected()) {
-                        SocketManager.getInstance().connectSocket(savedNick, SocketServiceProvider.this);
-                    }
-                }
-                */
-        //SocketManager.getInstance().connectSocket(SocketServiceProvider.this);
     }
 
 }

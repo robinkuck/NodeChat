@@ -2,6 +2,7 @@ package de.robinkuck.nodechat.android.utils;
 
 import android.app.*;
 import android.content.Context;
+import android.os.Handler;
 import android.provider.Settings;
 
 import java.io.IOException;
@@ -14,15 +15,15 @@ import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 public class Utils {
 
     public static boolean isMyAppRunning() {
-        return CustomActivityManager.getInstance().getCurrentActivity()!=null;
+        return CustomActivityManager.getInstance().getCurrentActivity() != null;
     }
 
     public static boolean isAppRunning(final Context context, final String packageName) {
         final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         final List<ActivityManager.RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
-        if(procInfos != null) {
-            for(final ActivityManager.RunningAppProcessInfo processInfo : procInfos) {
-                if(processInfo.processName.equals(packageName)) {
+        if (procInfos != null) {
+            for (final ActivityManager.RunningAppProcessInfo processInfo : procInfos) {
+                if (processInfo.processName.equals(packageName)) {
                     return true;
                 }
             }
@@ -30,12 +31,8 @@ public class Utils {
         return false;
     }
 
-    public static void wait(final int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch(InterruptedException e) {
-            e.printStackTrace();
-        }
+    public static void waitUntil(final int millis, final Runnable runnable) {
+        new Handler().postDelayed(runnable, millis);
     }
 
     public static String getDeviceID(final Context context) {

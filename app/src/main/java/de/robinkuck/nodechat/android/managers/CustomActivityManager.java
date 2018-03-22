@@ -3,6 +3,7 @@ package de.robinkuck.nodechat.android.managers;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.widget.TextView;
 
 import de.robinkuck.nodechat.android.CheckInternetConnectionReceiver;
 import de.robinkuck.nodechat.android.SocketServiceProvider;
@@ -11,10 +12,6 @@ import de.robinkuck.nodechat.android.activities.MainActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.activities.PrivateChatActivity;
 import de.robinkuck.nodechat.android.activities.SettingsActivity;
-
-/**
- * Created by kuckr on 23.08.2017.
- */
 
 public class CustomActivityManager {
 

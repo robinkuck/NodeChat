@@ -51,9 +51,9 @@ public class SendHistoryMessageTest {
         simpleLogin("Maria");
         WifiManager wifiManager = (WifiManager)ActivityManager.getInstance().getCurrentActivity().getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(false);
-        wait(3000);
+        waitUntil(3000);
         wifiManager.setWifiEnabled(true);
-        wait(3000);
+        waitUntil(3000);
     }
     */
     private void simpleLogin(final String nickName) {

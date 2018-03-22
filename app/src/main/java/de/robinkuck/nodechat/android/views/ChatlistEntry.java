@@ -2,6 +2,7 @@ package de.robinkuck.nodechat.android.views;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -19,9 +20,9 @@ public class ChatlistEntry extends RelativeLayout {
     public Activity act;
 
     private String nick;
-    private int UnreadMessagesCount;
+    private int unreadMessagesCount;
     private TextView tvtitle;
-    private TextView tvmessagesCount;
+    private TextView tvUnreadMessagesCount;
 
     public ChatlistEntry(Activity act, String nick) {
         super(act);
@@ -36,7 +37,7 @@ public class ChatlistEntry extends RelativeLayout {
         RelativeLayout rl = (RelativeLayout) getChildAt(0);
 
         tvtitle = (TextView) rl.getChildAt(0);
-        tvmessagesCount = (TextView) rl.getChildAt(1);
+        tvUnreadMessagesCount = (TextView) rl.getChildAt(1);
 
         if (nick.equals("global")) {
             isGlobal = true;
@@ -57,7 +58,11 @@ public class ChatlistEntry extends RelativeLayout {
                 if(isGlobal) {
                     CustomActivityManager.getInstance().startGlobalChatAcitity(ChatlistFragment.getInstance().getActivity(),
                             NickManager.getInstance().getCurrentNick());
-                    ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
+
+                    if(ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount()>0) {
+                        ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
+                        resetTVUnreadMessagesCount();
+                    }
                     System.out.println("[I] Global chat started!");
                 } else {
                     CustomActivityManager.getInstance().startPrivateChatActivity(ChatlistFragment.getInstance().getActivity(),
@@ -70,19 +75,19 @@ public class ChatlistEntry extends RelativeLayout {
 
     public void setMessageCount(final int messagesCount) {
         System.out.println("[I] updating unreadmessagescount");
-        this.UnreadMessagesCount = messagesCount;
+        this.unreadMessagesCount = messagesCount;
         act.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (messagesCount > 0) {
-                    tvmessagesCount.setBackgroundResource(R.drawable.background_messagecount2);
+                    tvUnreadMessagesCount.setBackgroundResource(R.drawable.background_messagecount2);
                 } else {
-                    tvmessagesCount.setBackgroundResource(R.drawable.background_messagecount);
+                    tvUnreadMessagesCount.setBackgroundResource(R.drawable.background_messagecount);
                 }
                 if (messagesCount > 99) {
-                    tvmessagesCount.setText("99+");
+                    tvUnreadMessagesCount.setText("99+");
                 } else {
-                    tvmessagesCount.setText(String.valueOf(messagesCount));
+                    tvUnreadMessagesCount.setText(String.valueOf(messagesCount));
                 }
             }
         });
@@ -90,6 +95,16 @@ public class ChatlistEntry extends RelativeLayout {
     }
 
     public int getMessageCount() {
-        return UnreadMessagesCount;
+        return unreadMessagesCount;
+    }
+
+    private void resetTVUnreadMessagesCount() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setMessageCount(0);
+                tvUnreadMessagesCount.setBackgroundResource(R.drawable.background_messagecount);
+            }
+        }, 200);
     }
 }

@@ -1,4 +1,4 @@
-package de.robinkuck.nodechat.android;
+package de.robinkuck.nodechat.android.utils;
 
 import android.app.Activity;
 import android.content.Context;

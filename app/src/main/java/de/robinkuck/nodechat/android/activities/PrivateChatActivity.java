@@ -6,7 +6,7 @@ import android.view.View;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.robinkuck.nodechat.android.UiUtils;
+import de.robinkuck.nodechat.android.utils.UiUtils;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
 import de.robinkuck.nodechat.android.managers.SocketManager;

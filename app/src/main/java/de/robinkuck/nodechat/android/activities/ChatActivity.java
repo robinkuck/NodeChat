@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import de.robinkuck.nodechat.android.UiUtils;
+import de.robinkuck.nodechat.android.utils.UiUtils;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
 import de.robinkuck.nodechat.android.views.OwnMessageView;
@@ -48,14 +48,12 @@ public abstract class ChatActivity extends AbstractChildActivity {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("[I] ONRESUME");
         isActive = true;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        System.out.println("[I] ONPAUSE");
         isActive = false;
     }
 

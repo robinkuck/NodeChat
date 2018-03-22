@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.managers.SocketManager;
-import de.robinkuck.nodechat.android.utils.Utils;
 import de.robinkuck.nodechat.android.views.UserEntry;
 
 public class UserlistFragment extends Fragment {
@@ -26,17 +25,10 @@ public class UserlistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         INSTANCE = this;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Utils.wait(1000);
-                if (SocketManager.getInstance().getSocket()!=null) {
-                    SocketManager.getInstance().getSocket().emit("getUsers");
-                }
-            }
-        }).start();
+        if (SocketManager.getInstance().getSocket()!=null) {
+            SocketManager.getInstance().getSocket().emit("getUsers");
+        }
         return inflater.inflate(R.layout.fragment_users, container, false);
     }
 

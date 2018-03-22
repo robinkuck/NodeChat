@@ -46,6 +46,13 @@ public class MainActivity extends AbstractActivity {
     public void onResume() {
         super.onResume();
         CustomActivityManager.getInstance().setCurrentActivity(this);
+        System.out.println("[I] ONRESUME");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        System.out.println("[I] ONPAUSE");
     }
 
     @Override

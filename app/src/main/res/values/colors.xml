@@ -10,6 +10,6 @@
     <!-- #ecedf0 -->
     <color name="date">#686868</color>
     <color name="nameHeader">#f20e0e</color>
-    <color name="colornewmessage">#e330db58</color>
+    <color name="colornewmessage">#e6f20e0e</color>
     <color name="offline_info_view">#b4d94e4e</color>
 </resources>
