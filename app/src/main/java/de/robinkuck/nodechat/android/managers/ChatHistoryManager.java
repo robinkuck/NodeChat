@@ -38,7 +38,7 @@ public class ChatHistoryManager {
             saveData();
         }
         try {
-            JSONObject chatObject = globalChatReaderAndWriter.readJSONObject(App.getInstance());
+            JSONObject chatObject = globalChatReaderAndWriter.readJSONObject();
             if (chatObject != null) {
                 JSONArray messagesArray = chatObject.getJSONArray("messages");
                 int unreadCount = chatObject.getInt("unreadMessagesCount");
@@ -59,7 +59,7 @@ public class ChatHistoryManager {
         }
         JSONObject globalChatJSONObject = globalChatHistory.toJSONObject();
         System.out.println("[ChatHistoryManager] " + globalChatJSONObject.toString());
-        globalChatReaderAndWriter.writeJSONObject(globalChatJSONObject, App.getInstance());
+        globalChatReaderAndWriter.writeJSONObject(globalChatJSONObject);
     }
 
     private boolean historyFileExists(final String fileName) {

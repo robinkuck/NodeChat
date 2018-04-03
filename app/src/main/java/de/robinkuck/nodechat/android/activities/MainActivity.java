@@ -32,27 +32,27 @@ public class MainActivity extends AbstractActivity {
         if (NickManager.getInstance().getCurrentNick().equals("")) {
             CustomActivityManager.getInstance().startNickActivity(this);
         }
-
+        /*
         //TODO check this in splashActivity
         if (SocketManager.getInstance().getStatus() != SocketManager.Status.CONNECTED) {
             CustomActivityManager.getInstance().startNickActivity(this);
         }
-
+        */
+        /*
         System.out.println("DEVICEID: " + Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID));
+                */
     }
 
     @Override
     public void onResume() {
         super.onResume();
         CustomActivityManager.getInstance().setCurrentActivity(this);
-        System.out.println("[I] ONRESUME");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        System.out.println("[I] ONPAUSE");
     }
 
     @Override

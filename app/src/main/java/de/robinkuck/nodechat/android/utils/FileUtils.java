@@ -10,12 +10,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import de.robinkuck.nodechat.android.App;
+
 public class FileUtils {
 
-    public static String readFromFile(final String fileName, final Context context) {
+    public static String readFromFile(final String fileName) {
         String result = "";
         try {
-            InputStream inputStream = context.openFileInput(fileName);
+            InputStream inputStream = App.getInstance().getApplicationContext().openFileInput(fileName);
             if (inputStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -36,10 +38,10 @@ public class FileUtils {
         return result;
     }
 
-    public static void writeToFile(final String fileName, final String data, final Context context, final boolean append) {
+    public static void writeToFile(final String fileName, final String data, final boolean append) {
         try {
             OutputStreamWriter outputStreamWriter =
-                    new OutputStreamWriter(context.openFileOutput(fileName,
+                    new OutputStreamWriter(App.getInstance().getApplicationContext().openFileOutput(fileName,
                             (append) ? Context.MODE_PRIVATE | Context.MODE_APPEND : Context.MODE_PRIVATE));
             System.out.println("[FileUtils] writing data: " + data);
             outputStreamWriter.write(data);

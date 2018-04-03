@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
+
 public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
 
     public GlobalChatHistory() {
@@ -23,6 +25,9 @@ public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
     @Override
     public void addIncomingMessage(final GlobalHistoryMessage message, final boolean isReading) {
         super.addIncomingMessage(message, isReading);
+        if (ChatlistFragment.getInstance().getGlobalChatlistEntry() != null && !isReading) {
+            ChatlistFragment.getInstance().getGlobalChatlistEntry().setMessageCount(getUnreadMessagesCount());
+        }
     }
 
     @Override
@@ -47,9 +52,9 @@ public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
             ObjectMapper mapper = new ObjectMapper();
             result = new JSONObject(mapper.writeValueAsString(this));
         } catch (JSONException e) {
-
+            e.printStackTrace();
         } catch (JsonProcessingException e) {
-
+            e.printStackTrace();
         }
         return result;
     }

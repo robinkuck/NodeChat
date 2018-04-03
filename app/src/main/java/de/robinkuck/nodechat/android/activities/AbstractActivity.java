@@ -11,7 +11,7 @@ import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 
-public class AbstractActivity extends AppCompatActivity {
+public abstract class AbstractActivity extends AppCompatActivity {
 
     public SoftKeyboard softKeyboard;
 
@@ -39,5 +39,4 @@ public class AbstractActivity extends AppCompatActivity {
             softKeyboard.closeSoftKeyboard();
         }
     }
-
 }

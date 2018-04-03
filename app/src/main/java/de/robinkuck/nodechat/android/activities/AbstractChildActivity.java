@@ -6,7 +6,7 @@ public abstract class AbstractChildActivity extends AbstractActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        onStop();
     }
 
 

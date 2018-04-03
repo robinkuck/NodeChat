@@ -33,6 +33,9 @@ public class UiUtils {
     }
 
     public static void scrollDown(final ScrollView scrollView) {
+        if(scrollView.isSmoothScrollingEnabled()) {
+            scrollView.setSmoothScrollingEnabled(false);
+        }
         scrollView.post(new Runnable() {
             @Override
             public void run() {

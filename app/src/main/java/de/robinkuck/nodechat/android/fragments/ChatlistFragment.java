@@ -11,11 +11,10 @@ import android.widget.LinearLayout;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
-import io.socket.emitter.Emitter;
+import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.managers.SocketManager;
 import de.robinkuck.nodechat.android.views.ChatlistEntry;
-import de.robinkuck.nodechat.android.R;
+import io.socket.emitter.Emitter;
 
 public class ChatlistFragment extends Fragment {
 
@@ -26,19 +25,17 @@ public class ChatlistFragment extends Fragment {
     private static ChatlistFragment INSTANCE;
 
     private Map<String, ChatlistEntry> entries;
-    private ChatlistEntry gEntry;
+    private ChatlistEntry globalChatlistEntry;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         INSTANCE = this;
-
         return inflater.inflate(R.layout.fragment_chatlist, container, false);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         View v = getView();
@@ -51,16 +48,18 @@ public class ChatlistFragment extends Fragment {
         return INSTANCE;
     }
 
-    private void configViews(View v) {
+    public ChatlistEntry getGlobalChatlistEntry() {
+        return globalChatlistEntry;
+    }
+
+    private void configViews(final View v) {
         entries = new HashMap<>();
         layout = (LinearLayout) v.findViewById(R.id.chatentrylist);
         privateChatListLayout = (LinearLayout) layout.findViewById(R.id.private_chat_list_layout);
         globalChatLayout = (LinearLayout) layout.findViewById(R.id.global_chat_layout);
-        gEntry = new ChatlistEntry(getActivity(), "global");
-        gEntry.setId(R.id.chatentry_global);
-        addViewtoGlobalChatList(gEntry);
-
-        ChatHistoryManager.getInstance().getGlobalChatHistory().setChatlistEntry(gEntry);
+        globalChatlistEntry = new ChatlistEntry(getActivity(), "global");
+        globalChatlistEntry.setId(R.id.chatentry_global);
+        addViewtoGlobalChatList(globalChatlistEntry);
     }
 
     public void configSocketEvents() {
@@ -69,7 +68,7 @@ public class ChatlistFragment extends Fragment {
             @Override
             public void call(Object... args) {
                 //TODO: Implement global message event
-                gEntry.setMessageCount(gEntry.getMessageCount() + 1);
+                globalChatlistEntry.setMessageCount(globalChatlistEntry.getMessageCount() + 1);
             }
         }).on("privatemessage", new Emitter.Listener() {
             @Override
@@ -111,7 +110,7 @@ public class ChatlistFragment extends Fragment {
         });
     }
 
-    public void removeUserFromChatList(String name) {
+    public void removeUserFromChatList(final String name) {
         if(isUserAddedToChatList(name)) {
             final ChatlistEntry chatlistEntry = entries.get(name);
             getActivity().runOnUiThread(new Runnable() {

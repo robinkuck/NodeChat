@@ -20,8 +20,6 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> {
     @JsonProperty("messages")
     private List<messageObj> messages;
 
-    private transient ChatlistEntry chatlistEntry;
-
     public ChatHistory() {
         messages = new ArrayList<>();
     }
@@ -43,11 +41,8 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> {
 
     public void addIncomingMessage(final messageObj message, final boolean isReading) {
         messages.add(message);
-        if (chatlistEntry != null && !isReading) {
-            incUnreadMessagesCount();
-            chatlistEntry.setMessageCount(getUnreadMessagesCount());
-        }
         //save data
+        incUnreadMessagesCount();
         ChatHistoryManager.getInstance().saveData();
     }
 
@@ -91,11 +86,6 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> {
 
     public void setChatLabel(String chatLabel) {
         this.chatLabel = chatLabel;
-    }
-
-    public void setChatlistEntry(final ChatlistEntry chatlistEntry) {
-        this.chatlistEntry = chatlistEntry;
-        chatlistEntry.setMessageCount(getUnreadMessagesCount());
     }
 
     private void incUnreadMessagesCount() {

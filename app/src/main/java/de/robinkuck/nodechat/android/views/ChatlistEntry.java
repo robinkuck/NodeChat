@@ -2,7 +2,6 @@ package de.robinkuck.nodechat.android.views;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -13,6 +12,7 @@ import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.NickManager;
+import de.robinkuck.nodechat.android.utils.Utils;
 
 public class ChatlistEntry extends RelativeLayout {
 
@@ -43,7 +43,6 @@ public class ChatlistEntry extends RelativeLayout {
             isGlobal = true;
             this.nick = "Global chat";
             tvtitle.setText("Global chat");
-
             setMessageCount(ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount());
         } else {
             isGlobal = false;
@@ -58,11 +57,6 @@ public class ChatlistEntry extends RelativeLayout {
                 if(isGlobal) {
                     CustomActivityManager.getInstance().startGlobalChatAcitity(ChatlistFragment.getInstance().getActivity(),
                             NickManager.getInstance().getCurrentNick());
-
-                    if(ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount()>0) {
-                        ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
-                        resetTVUnreadMessagesCount();
-                    }
                     System.out.println("[I] Global chat started!");
                 } else {
                     CustomActivityManager.getInstance().startPrivateChatActivity(ChatlistFragment.getInstance().getActivity(),
@@ -98,13 +92,13 @@ public class ChatlistEntry extends RelativeLayout {
         return unreadMessagesCount;
     }
 
-    private void resetTVUnreadMessagesCount() {
-        new Handler().postDelayed(new Runnable() {
+    public void resetTVUnreadMessagesCount() {
+        Utils.waitUntil(300, new Runnable() {
             @Override
             public void run() {
                 setMessageCount(0);
                 tvUnreadMessagesCount.setBackgroundResource(R.drawable.background_messagecount);
             }
-        }, 200);
+        });
     }
 }

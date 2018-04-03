@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.utils.UiUtils;
 import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
@@ -38,6 +39,10 @@ public class GlobalChatActivity extends ChatActivity {
 
         nick = getIntent().getStringExtra("nick");
         loadHistory();
+        ChatlistFragment.getInstance().getGlobalChatlistEntry().resetTVUnreadMessagesCount();
+        if(ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount()>0) {
+            ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
+        }
     }
 
     @Override
@@ -123,15 +128,10 @@ public class GlobalChatActivity extends ChatActivity {
     }
 
     private void loadHistory() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (GlobalHistoryMessage message : ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages()) {
-                    createGlobalChatHistoryMessageView(message.getMessageString(), message.getNameString(), message.getDateString(), message.isPersonal());
-                }
-                System.out.println("[GlobalChatActivity] history successfully loaded!");
-                UiUtils.scrollDown(scroller);
-            }
-        });
+        for (GlobalHistoryMessage message : ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages()) {
+            createGlobalChatHistoryMessageView(message.getMessageString(), message.getNameString(), message.getDateString(), message.isPersonal());
+        }
+        System.out.println("[GlobalChatActivity] history successfully loaded!");
+        UiUtils.scrollDown(scroller);
     }
 }

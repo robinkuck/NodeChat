@@ -51,6 +51,7 @@ public class CustomActivityManager {
 
     public void startGlobalChatAcitity(final Activity current, final String nick) {
         final Intent intent = new Intent(current, GlobalChatActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("nick", nick);
         new Thread(new Runnable() {
             @Override
