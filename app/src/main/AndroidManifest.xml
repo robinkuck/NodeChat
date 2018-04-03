@@ -50,8 +50,7 @@
             android:parentActivityName="de.robinkuck.nodechat.android.activities.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
-            android:theme="@style/AppTheme"
-            android:launchMode="singleInstance">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.robinkuck.nodechat.android.activities.MainActivity" />

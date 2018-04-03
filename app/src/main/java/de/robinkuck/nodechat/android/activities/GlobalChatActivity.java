@@ -128,10 +128,14 @@ public class GlobalChatActivity extends ChatActivity {
     }
 
     private void loadHistory() {
-        for (GlobalHistoryMessage message : ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages()) {
-            createGlobalChatHistoryMessageView(message.getMessageString(), message.getNameString(), message.getDateString(), message.isPersonal());
+        for (final GlobalHistoryMessage message : ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages()) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    createGlobalChatHistoryMessageView(message.getMessageString(), message.getNameString(), message.getDateString(), message.isPersonal());
+                }
+            });
         }
-        System.out.println("[GlobalChatActivity] history successfully loaded!");
         UiUtils.scrollDown(scroller);
     }
 }

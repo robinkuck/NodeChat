@@ -28,7 +28,7 @@
         <ScrollView
             android:id="@+id/scroller"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/linearLayout"
             android:layout_gravity="bottom"
             android:stackFromBottom="true"
