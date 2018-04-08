@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
-import de.robinkuck.nodechat.android.views.ChatlistEntry;
-import de.robinkuck.nodechat.android.views.MessageView;
 
 public abstract class ChatHistory<messageObj extends HistoryMessage> {
 
@@ -21,11 +19,8 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> {
     @JsonProperty("messages")
     private List<messageObj> messages;
 
-    private transient List<MessageView> messageViews;
-
     public ChatHistory() {
         messages = new ArrayList<>();
-        messageViews = new ArrayList<>();
     }
 
     public ChatHistory(final String chatLabel) {

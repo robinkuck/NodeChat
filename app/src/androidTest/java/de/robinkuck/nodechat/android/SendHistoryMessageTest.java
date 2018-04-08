@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.robinkuck.nodechat.android.activities.NickActivity;
+import de.robinkuck.nodechat.android.activities.SplashActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
@@ -25,7 +26,7 @@ public class SendHistoryMessageTest {
     public RepeatRule repeatRule = new RepeatRule();
 
     @Test
-    @RepeatRule.Repeat(times = 100)
+    //@RepeatRule.Repeat(times = 100)
     public void sendGlobalMessageTest() {
         final String message = "Hello there!";
         simpleLogin("Bill");
@@ -35,7 +36,7 @@ public class SendHistoryMessageTest {
     }
 
     @Test
-    @RepeatRule.Repeat(times = 100)
+    //@RepeatRule.Repeat(times = 100)
     public void sendGlobalMessageTest2() {
         final String message = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore";
         simpleLogin("Bill");
@@ -44,18 +45,6 @@ public class SendHistoryMessageTest {
         onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.sendButton)).perform(click());
     }
 
-
-    /*
-    @Test
-    public void goOfflineAndOnlineTest() {
-        simpleLogin("Maria");
-        WifiManager wifiManager = (WifiManager)ActivityManager.getInstance().getCurrentActivity().getSystemService(Context.WIFI_SERVICE);
-        wifiManager.setWifiEnabled(false);
-        waitUntil(3000);
-        wifiManager.setWifiEnabled(true);
-        waitUntil(3000);
-    }
-    */
     private void simpleLogin(final String nickName) {
         onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.editNick)).perform(clearText(), typeText(nickName));
         onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.buttonEnter)).perform(click());

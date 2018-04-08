@@ -4,12 +4,14 @@ import android.app.*;
 import android.content.Context;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Pair;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import de.robinkuck.nodechat.android.App;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 
 public class Utils {
@@ -51,6 +53,12 @@ public class Utils {
             System.out.println(ex.toString());
         }
         return result;
+    }
+
+    //DP to Pixel
+    public static float dpToPixel(float dp) {
+        final float density = App.getInstance().getResources().getDisplayMetrics().density;
+        return dp * density + 0.5f;
     }
 
 }

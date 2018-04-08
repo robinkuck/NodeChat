@@ -39,7 +39,7 @@ public class ChatHistoryManager {
         }
         try {
             JSONObject chatObject = globalChatReaderAndWriter.readJSONObject();
-            if (chatObject != null) {
+            if (chatObject != null && !chatObject.toString().equals("{}")) {
                 JSONArray messagesArray = chatObject.getJSONArray("messages");
                 int unreadCount = chatObject.getInt("unreadMessagesCount");
                 globalChatHistory = new GlobalChatHistory(messagesArray, unreadCount);
@@ -47,6 +47,8 @@ public class ChatHistoryManager {
                 System.out.println("[ChatHistoryManager] " + globalChatHistory.getChatLabel() + ", " + globalChatHistory.getUnreadMessagesCount());
                 System.out.println("[ChatHistoryManager] globalChatHistory successfully loaded");
                 System.out.println("[ChatHistoryManager] " + globalChatHistory.getMessages().size());
+            } else {
+                saveData();
             }
         } catch (JSONException e) {
             e.printStackTrace();

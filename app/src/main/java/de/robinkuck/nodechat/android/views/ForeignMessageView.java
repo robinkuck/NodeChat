@@ -3,6 +3,7 @@ package de.robinkuck.nodechat.android.views;
 import android.content.Context;
 
 import de.robinkuck.nodechat.android.R;
+import de.robinkuck.nodechat.android.utils.Utils;
 
 public abstract class ForeignMessageView extends MessageView {
 
@@ -27,7 +28,7 @@ public abstract class ForeignMessageView extends MessageView {
         super.createMessageText();
         getTvName().setText(name);
         getTvMessage().setBackgroundResource(R.drawable.background_messageview);
-        getTvMessage().setPadding(getTvMessage().getPaddingLeft(), (int) dpToPixel(17),
+        getTvMessage().setPadding(getTvMessage().getPaddingLeft(), (int) Utils.dpToPixel(17),
                 getTvMessage().getPaddingRight(), getTvMessage().getPaddingBottom());
     }
 

@@ -3,6 +3,9 @@ package de.robinkuck.nodechat.android.managers;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import de.robinkuck.nodechat.android.CheckInternetConnectionReceiver;
@@ -51,14 +54,8 @@ public class CustomActivityManager {
 
     public void startGlobalChatAcitity(final Activity current, final String nick) {
         final Intent intent = new Intent(current, GlobalChatActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("nick", nick);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                current.startActivityIfNeeded(intent, 0);
-            }
-        }).start();
+        current.startActivityIfNeeded(intent, 0);
     }
 
     public void startPrivateChatActivity(final Activity currentActivity, final String receipient) {
@@ -107,6 +104,16 @@ public class CustomActivityManager {
         Intent i = new Intent(Intent.ACTION_SYNC, null, startActivity.getBaseContext(), SocketServiceProvider.class);
         i.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         startActivity.getBaseContext().startService(i);
+    }
+
+    public void startGlobalChatActivityFromMainThread(final Activity currentActivity, final String nick) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                startGlobalChatAcitity(currentActivity, nick);
+            }
+        });
     }
 
 }

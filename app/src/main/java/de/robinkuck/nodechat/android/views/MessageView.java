@@ -49,7 +49,7 @@ public class MessageView extends RelativeLayout {
     protected void init(Context ct, final boolean createDate) {
         LayoutInflater inflater = (LayoutInflater) ct
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.message_view_container, this, true);
+        //inflater.inflate(R.layout.message_view_container, this, true);
 
         RelativeLayout rl = (RelativeLayout) getChildAt(0);
 
@@ -145,11 +145,5 @@ public class MessageView extends RelativeLayout {
             time = "" + HOUR + ":" + MINUTE;
         }
         return date + ", " + time;
-    }
-
-    //DP to Pixel
-    protected float dpToPixel(float dp) {
-        final float density = getResources().getDisplayMetrics().density;
-        return dp * density + 0.5f;
     }
 }

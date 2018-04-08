@@ -47,7 +47,7 @@ public class PrivateChatActivity extends ChatActivity {
                         @Override
                         public void run() {
                             addPrivateMessageView(s1);
-                            UiUtils.scrollDown(scroller);
+                            //UiUtils.scrollDown(scroller);
                         }
                     });
                 } catch (JSONException e) {
@@ -64,7 +64,7 @@ public class PrivateChatActivity extends ChatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            UiUtils.scrollDown(scroller);
+                            //UiUtils.scrollDown(scroller);
                         }
                     });
                 } catch (JSONException e) {
@@ -85,7 +85,7 @@ public class PrivateChatActivity extends ChatActivity {
                         SocketManager.getInstance().sendPrivateMessage(recipient, editMsg.getText().toString());
                         createPersonalMessageView(editMsg.getText().toString());
                         clearEditMsg();
-                        UiUtils.scrollDown(scroller);
+                        //UiUtils.scrollDown(scroller);
                     }
                 }
             }

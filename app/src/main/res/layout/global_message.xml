@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lfirst"
-    android:layout_width="wrap_content"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
@@ -12,7 +12,7 @@
         android:id="@+id/vmessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_messageview"
+        android:background="@drawable/bgmessageview"
         android:minWidth="110sp"
         android:paddingBottom="18dp"
         android:paddingLeft="6dp"
@@ -21,7 +21,8 @@
         android:text="message"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:typeface="monospace" />
+        android:typeface="monospace"
+        android:layout_alignParentLeft="true"/>
 
     <TextView
         android:id="@+id/vname"
@@ -31,7 +32,10 @@
         android:text="name"
         android:textColor="@color/nameHeader"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignTop="@+id/vmessage"
+        android:layout_alignStart="@+id/vmessage"
+        android:layout_alignLeft="@+id/vmessage"/>
 
     <TextView
         android:id="@+id/vdate"

@@ -1,8 +1,10 @@
 package de.robinkuck.nodechat.android.views;
 
 import android.content.Context;
+import android.view.Gravity;
 
 import de.robinkuck.nodechat.android.R;
+import de.robinkuck.nodechat.android.utils.Utils;
 
 public class OwnMessageView extends MessageView {
 
@@ -20,8 +22,9 @@ public class OwnMessageView extends MessageView {
     protected void createMessageText() {
         super.createMessageText();
         getTvMessage().setBackgroundResource(R.drawable.bgpersonalmessageview);
-        getTvMessage().setPadding(getTvMessage().getPaddingLeft(), (int) dpToPixel(6),
+        getTvMessage().setPadding(getTvMessage().getPaddingLeft(), (int) Utils.dpToPixel(6),
                 getTvMessage().getPaddingRight(), getTvMessage().getPaddingBottom());
+        setGravity(Gravity.RIGHT);
     }
 
 }

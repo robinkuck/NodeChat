@@ -42,6 +42,12 @@ public class NickActivity extends AppCompatActivity {
         configViews();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        INSTANCE = null;
+    }
+
     public static NickActivity getInstance() {
         return INSTANCE;
     }
