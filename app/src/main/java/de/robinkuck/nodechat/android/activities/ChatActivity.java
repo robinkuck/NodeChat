@@ -20,14 +20,11 @@ import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
 import de.robinkuck.nodechat.android.history.HistoryMessage;
 import de.robinkuck.nodechat.android.utils.Utils;
-import de.robinkuck.nodechat.android.views.OwnMessageView;
 
-public abstract class ChatActivity<messageObj extends HistoryMessage> extends AbstractChildActivity {
+public abstract class ChatActivity extends AbstractChildActivity {
 
     public EditText editMsg;
     public ImageButton sendButton;
-    //public ScrollView scroller;
-    //public LinearLayout msgs;
     private RelativeLayout rootLayout;
     private boolean isActive;
 
@@ -36,7 +33,6 @@ public abstract class ChatActivity<messageObj extends HistoryMessage> extends Ab
     protected RecyclerView recyclerView;
     protected RecyclerView.Adapter adapter;
     protected RecyclerView.LayoutManager layoutManager;
-    protected List<messageObj> messageDataSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +124,7 @@ public abstract class ChatActivity<messageObj extends HistoryMessage> extends Ab
     }
 
     protected void addMessage() {
-        adapter.notifyItemInserted(messageDataSet.size() - 1);
+        adapter.notifyItemInserted(recyclerView.getAdapter().getItemCount() - 1);
         scrollToBottom();
     }
 

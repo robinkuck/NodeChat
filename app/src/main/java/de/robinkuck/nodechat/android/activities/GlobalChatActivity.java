@@ -12,8 +12,6 @@ import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
 import de.robinkuck.nodechat.android.managers.SocketManager;
-import de.robinkuck.nodechat.android.views.GlobalChatForeignMessageView;
-import de.robinkuck.nodechat.android.views.MessageView;
 import io.socket.client.Ack;
 import io.socket.emitter.Emitter;
 
@@ -35,8 +33,7 @@ public class GlobalChatActivity extends ChatActivity {
             ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
         }
 
-        messageDataSet = ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages();
-        super.adapter = new ListViewAdapter(messageDataSet);
+        super.adapter = new ListViewAdapter(ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages());
         super.recyclerView.setAdapter(super.adapter);
         scrollToBottom();
 
