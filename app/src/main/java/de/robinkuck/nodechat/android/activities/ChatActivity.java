@@ -12,7 +12,9 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
@@ -20,7 +22,7 @@ import de.robinkuck.nodechat.android.history.HistoryMessage;
 import de.robinkuck.nodechat.android.utils.Utils;
 import de.robinkuck.nodechat.android.views.OwnMessageView;
 
-public abstract class ChatActivity extends AbstractChildActivity {
+public abstract class ChatActivity<messageObj extends HistoryMessage> extends AbstractChildActivity {
 
     public EditText editMsg;
     public ImageButton sendButton;
@@ -34,6 +36,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
     protected RecyclerView recyclerView;
     protected RecyclerView.Adapter adapter;
     protected RecyclerView.LayoutManager layoutManager;
+    protected List<messageObj> messageDataSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +71,6 @@ public abstract class ChatActivity extends AbstractChildActivity {
         super.configViews();
         editMsg = (EditText) findViewById(R.id.editMessage);
         editMsg.setFocusableInTouchMode(true);
-        //editMsg.setOnFocusChangeListener(new MyFocusChangeCloseKeyboardListener(super.softKeyboard));
-        //scroller = (ScrollView) findViewById(R.id.scroller);
         sendButton = (ImageButton) findViewById(R.id.sendButton);
         rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
 
@@ -94,7 +95,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Utils.waitUntil(150, new Runnable(){
+                        Utils.waitUntil(150, new Runnable() {
                             @Override
                             public void run() {
                                 scrollToBottom();
@@ -105,20 +106,6 @@ public abstract class ChatActivity extends AbstractChildActivity {
                 });
             }
         });
-    }
-
-    protected OwnMessageView createPersonalMessageView(final String message) {
-        OwnMessageView mv = new OwnMessageView(this, message.trim(), getMessageViewWidth());
-
-        //msgs.addView(mv);
-        return mv;
-    }
-
-    protected OwnMessageView createPersonalHistoryMessageView(final String message, final String date) {
-        OwnMessageView mv = new OwnMessageView(this, message, date, getMessageViewWidth());
-
-        //msgs.addView(mv);
-        return mv;
     }
 
     //TODO: Add Writing Display
@@ -137,7 +124,39 @@ public abstract class ChatActivity extends AbstractChildActivity {
     }
 
     protected void scrollToBottom() {
-        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount()-1);
+        recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
+    }
+
+    protected void addMessage() {
+        adapter.notifyItemInserted(messageDataSet.size() - 1);
+        scrollToBottom();
+    }
+
+    protected String getCurrentDateString() {
+        Calendar c = Calendar.getInstance(Locale.GERMANY);
+        final int MINUTE = c.get(Calendar.MINUTE);
+        final int HOUR = c.get(Calendar.HOUR_OF_DAY);
+        final int DAY = c.get(Calendar.DAY_OF_MONTH);
+        final int MONTH = c.get(Calendar.MONTH) + 1;
+        final int YEAR = c.get(Calendar.YEAR);
+        String date = "";
+        if (DAY < 10) {
+            date = "0" + DAY + "." +
+                    (MONTH < 10 ? "0" + MONTH : MONTH) +
+                    "." + YEAR;
+        } else {
+            date = DAY + "." +
+                    (MONTH < 10 ? "0" + MONTH : MONTH) +
+                    "." + YEAR;
+        }
+
+        String time = "";
+        if (MINUTE < 10) {
+            time = "" + HOUR + ":0" + MINUTE;
+        } else {
+            time = "" + HOUR + ":" + MINUTE;
+        }
+        return date + ", " + time;
     }
 
     public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.MessageViewHolder> {
@@ -173,10 +192,8 @@ public abstract class ChatActivity extends AbstractChildActivity {
                     holder = new GlobalForeignMessageViewHolder(view);
                     break;
             }
-            //recyclerView.setScrollBarSize();
             return holder;
         }
-
 
 
         @Override

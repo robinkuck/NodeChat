@@ -47,7 +47,6 @@ public class PrivateChatActivity extends ChatActivity {
                         @Override
                         public void run() {
                             addPrivateMessageView(s1);
-                            //UiUtils.scrollDown(scroller);
                         }
                     });
                 } catch (JSONException e) {
@@ -83,7 +82,6 @@ public class PrivateChatActivity extends ChatActivity {
                 } else {
                     if (InternetConnectionManager.getInstance().isOnline()) {
                         SocketManager.getInstance().sendPrivateMessage(recipient, editMsg.getText().toString());
-                        createPersonalMessageView(editMsg.getText().toString());
                         clearEditMsg();
                         //UiUtils.scrollDown(scroller);
                     }

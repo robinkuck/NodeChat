@@ -27,34 +27,13 @@
         android:layout_below="@id/activity_toolbar"
         android:foreground="?android:windowContentOverlay">
 
-        <!--
-        <ScrollView
-            android:id="@+id/scroller"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/linearLayout"
-            android:layout_gravity="bottom"
-            android:overScrollMode="always"
-            android:scrollbars="vertical"
-            android:stackFromBottom="true">
-
-            <LinearLayout
-                android:id="@+id/rel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="1"></LinearLayout>
-        </ScrollView>
-        -->
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
             android:scrollbarSize="1dp"
-            android:scrollbarThumbVertical="@color/colorAccentLight"
-            tools:listitem="@layout/own_message" />
+            android:scrollbarThumbVertical="@color/colorAccentLight" />
 
     </FrameLayout>
 

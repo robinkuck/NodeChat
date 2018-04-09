@@ -14,7 +14,6 @@ import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
 import de.robinkuck.nodechat.android.managers.SocketManager;
 import de.robinkuck.nodechat.android.views.GlobalChatForeignMessageView;
 import de.robinkuck.nodechat.android.views.MessageView;
-import de.robinkuck.nodechat.android.views.OwnMessageView;
 import io.socket.client.Ack;
 import io.socket.emitter.Emitter;
 
@@ -31,18 +30,18 @@ public class GlobalChatActivity extends ChatActivity {
         getSupportActionBar().setTitle("Global chat");
 
         nick = getIntent().getStringExtra("nick");
-        //loadHistory();
         ChatlistFragment.getInstance().getGlobalChatlistEntry().resetTVUnreadMessagesCount();
-        if(ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount()>0) {
+        if (ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount() > 0) {
             ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
         }
 
-        super.adapter = new ListViewAdapter(ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages());
+        messageDataSet = ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages();
+        super.adapter = new ListViewAdapter(messageDataSet);
         super.recyclerView.setAdapter(super.adapter);
         scrollToBottom();
 
         ChatlistFragment.getInstance().getGlobalChatlistEntry().resetTVUnreadMessagesCount();
-        if(ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount()>0) {
+        if (ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount() > 0) {
             ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
         }
     }
@@ -62,13 +61,12 @@ public class GlobalChatActivity extends ChatActivity {
                     final String from = data.getString("from");
                     final String message = data.getString("msg");
                     final String date = data.getString("date");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            createGlobalChatForeignMessageView(message, from);
-                            //UiUtils.scrollDown(scroller);
-                        }
-                    });
+
+                    GlobalHistoryMessage historyMessage = new GlobalHistoryMessage(false, date, from, message);
+                    ChatHistoryManager.getInstance().getGlobalChatHistory().addIncomingMessage(
+                            historyMessage, false);
+                    addMessage();
+                    GlobalChatActivity.super.scrollToBottom();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -84,68 +82,22 @@ public class GlobalChatActivity extends ChatActivity {
 
                 } else {
                     if (InternetConnectionManager.getInstance().isOnline()) {
-                        final OwnMessageView messageView = createPersonalMessageView(editMsg.getText().toString());
-                        SocketManager.getInstance().sendGlobalMessage(messageView.getMessage(), messageView.getDate(),
+                        final String message = editMsg.getText().toString().trim();
+                        final String date = GlobalChatActivity.super.getCurrentDateString();
+                        SocketManager.getInstance().sendGlobalMessage(message, date,
                                 new Ack() {
                                     @Override
                                     public void call(Object... args) {
                                         System.out.println("[I] Global Message was sent successfully!");
-                                        messageView.setSuccessfullSent(true);
                                     }
                                 });
                         clearEditMsg();
-                        //UiUtils.scrollDown(scroller);
-                        ChatHistoryManager.getInstance().getGlobalChatHistory().addSentMessage(
-                                new GlobalHistoryMessage(true,messageView.getDate(),"", messageView.getMessage())
-                        );
+                        GlobalHistoryMessage historyMessage = new GlobalHistoryMessage(true, date, "", message);
+                        ChatHistoryManager.getInstance().getGlobalChatHistory().addSentMessage(historyMessage);
+                        addMessage();
                     }
                 }
             }
         });
     }
-
-    private void createGlobalChatForeignMessageView(final String msg, final String name) {
-        /*
-        LinearLayout l = new LinearLayout(this);
-        l.setOrientation(HORIZONTAL);
-        l.setHorizontalGravity(Gravity.LEFT);
-        */
-
-        GlobalChatForeignMessageView mv = new GlobalChatForeignMessageView(this, msg, name, super.getMessageViewWidth());
-        /*
-        l.addView(mv);
-        msgs.addView(l);
-        */
-        //msgs.addView(mv);
-        System.out.println("[I] GChatMessageView created!");
-    }
-
-    private void createGlobalChatHistoryMessageView(final String msg, final String name, final String date, final boolean isPersonal) {
-        /*
-        LinearLayout l = new LinearLayout(this);
-        l.setOrientation(HORIZONTAL);
-        l.setHorizontalGravity(Gravity.LEFT);
-        */
-        if (isPersonal) {
-            super.createPersonalHistoryMessageView(msg, date);
-        } else {
-            MessageView mv = new GlobalChatForeignMessageView(this, msg, name, date, super.getMessageViewWidth());
-            //msgs.addView(mv);
-            //l.addView(mv);
-        }
-    }
-
-    private void loadHistory() {
-        for (final GlobalHistoryMessage message : ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages()) {
-            createGlobalChatHistoryMessageView(message.getMessageString(), message.getNameString(), message.getDateString(), message.isPersonal());
-        }
-        //UiUtils.scrollDown(scroller);
-    }
-
-    /*
-    private void loadHistory2() {
-        ArrayAdapter<MessageView> messageViewArrayAdapter = new ArrayAdapter<>(
-                getCallingActivity(), R.layout.activity_chat, R.layout.message_view, )
-    }
-    */
 }
