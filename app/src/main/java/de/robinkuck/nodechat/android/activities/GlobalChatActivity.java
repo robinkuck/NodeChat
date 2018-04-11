@@ -81,6 +81,10 @@ public class GlobalChatActivity extends ChatActivity {
                     if (InternetConnectionManager.getInstance().isOnline()) {
                         final String message = editMsg.getText().toString().trim();
                         final String date = GlobalChatActivity.super.getCurrentDateString();
+                        clearEditMsg();
+                        GlobalHistoryMessage historyMessage = new GlobalHistoryMessage(true, date, "", message);
+                        ChatHistoryManager.getInstance().getGlobalChatHistory().addSentMessage(historyMessage);
+                        addMessage();
                         SocketManager.getInstance().sendGlobalMessage(message, date,
                                 new Ack() {
                                     @Override
@@ -89,9 +93,6 @@ public class GlobalChatActivity extends ChatActivity {
                                     }
                                 });
                         clearEditMsg();
-                        GlobalHistoryMessage historyMessage = new GlobalHistoryMessage(true, date, "", message);
-                        ChatHistoryManager.getInstance().getGlobalChatHistory().addSentMessage(historyMessage);
-                        addMessage();
                     }
                 }
             }

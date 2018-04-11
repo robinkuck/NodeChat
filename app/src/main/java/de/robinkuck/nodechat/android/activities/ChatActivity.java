@@ -42,7 +42,6 @@ public abstract class ChatActivity extends AbstractChildActivity {
 
         configViews();
         configKeyboard();
-        //msgs = (LinearLayout) findViewById(R.id.rel);
 
         Display d = getWindowManager().getDefaultDisplay();
         x = d.getWidth();
@@ -103,9 +102,6 @@ public abstract class ChatActivity extends AbstractChildActivity {
             }
         });
     }
-
-    //TODO: Add Writing Display
-    //TODO: Add reading checkmark
 
     public void clearEditMsg() {
         editMsg.setText("");

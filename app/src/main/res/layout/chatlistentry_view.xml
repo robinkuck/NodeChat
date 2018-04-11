@@ -43,8 +43,5 @@
             android:minWidth="20sp"
             android:minHeight="20sp"/>
 
-        <!-- android:layout_width="23sp"
-            android:layout_height="23sp" -->
-
     </RelativeLayout>
 </merge>

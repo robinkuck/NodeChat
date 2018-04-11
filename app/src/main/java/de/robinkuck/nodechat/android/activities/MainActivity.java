@@ -1,7 +1,6 @@
 package de.robinkuck.nodechat.android.activities;
 
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,7 +15,6 @@ import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.fragments.UserlistFragment;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.NickManager;
-import de.robinkuck.nodechat.android.managers.SocketManager;
 
 public class MainActivity extends AbstractActivity {
 
@@ -32,16 +30,6 @@ public class MainActivity extends AbstractActivity {
         if (NickManager.getInstance().getCurrentNick().equals("")) {
             CustomActivityManager.getInstance().startNickActivity(this);
         }
-        /*
-        //TODO check this in splashActivity
-        if (SocketManager.getInstance().getStatus() != SocketManager.Status.CONNECTED) {
-            CustomActivityManager.getInstance().startNickActivity(this);
-        }
-        */
-        /*
-        System.out.println("DEVICEID: " + Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID));
-                */
     }
 
     @Override

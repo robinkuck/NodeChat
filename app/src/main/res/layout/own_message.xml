@@ -37,4 +37,16 @@
         android:textSize="12sp"
         android:textStyle="bold" />
 
+    <!--
+    <ImageView
+        android:id="@+id/checkmark"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_margin="3dp"
+        android:src=""
+        android:layout_alignTop="@+id/vmessage"
+        android:layout_alignEnd="@+id/vmessage"
+        android:layout_alignRight="@+id/vmessage" />
+        -->
+
 </RelativeLayout>

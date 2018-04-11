@@ -15,7 +15,7 @@ public class SplashActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         CustomActivityManager.getInstance().setCurrentActivity(this);
-        startService(new Intent(this, SocketServiceProvider.class));
+        //startService(new Intent(this, SocketServiceProvider.class));
         Utils.waitUntil(2500, new Runnable() {
             @Override
             public void run() {

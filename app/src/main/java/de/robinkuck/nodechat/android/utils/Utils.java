@@ -46,7 +46,7 @@ public class Utils {
         boolean result = false;
         try {
             InetAddress target = InetAddress.getByName(targetIp);
-            result = target.isReachable(5000);  //timeout 5sec
+            result = target.isReachable(5000);
         } catch (UnknownHostException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
