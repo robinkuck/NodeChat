@@ -18,7 +18,22 @@
         android:elevation="4dp"
         android:theme="@style/AppToolbar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="@string/app_name" />
+        app:title="@string/app_name">
+
+        <ImageButton
+            android:id="@+id/settings_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
+            android:background="@android:color/transparent"
+            android:cropToPadding="true"
+            android:foreground="?attr/actionBarItemBackground"
+            android:onClick="onOpenSettings"
+            android:src="@drawable/settings" />
+    </android.support.v7.widget.Toolbar>
+
+
 
     <FrameLayout
         android:layout_width="match_parent"

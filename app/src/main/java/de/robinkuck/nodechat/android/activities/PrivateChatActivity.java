@@ -31,6 +31,11 @@ public class PrivateChatActivity extends ChatActivity {
         CustomActivityManager.getInstance().setCurrentActivity(this);
     }
 
+    @Override
+    public void onOpenSettings(final View view) {
+
+    }
+
     public void setRecipient(String recipient) {
         this.recipient = recipient;
     }

@@ -50,7 +50,7 @@ public class MainActivity extends AbstractActivity {
         }
     }
 
-    public void onSettings(final View view) {
+    public void onOpenSettings(final View view) {
         CustomActivityManager.getInstance().startSettingsActivity(this);
     }
 

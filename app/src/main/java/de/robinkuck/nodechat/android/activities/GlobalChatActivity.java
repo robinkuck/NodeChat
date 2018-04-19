@@ -49,6 +49,11 @@ public class GlobalChatActivity extends ChatActivity {
         CustomActivityManager.getInstance().setCurrentActivity(this);
     }
 
+    @Override
+    public void onOpenSettings(final View view) {
+
+    }
+
     private void configSocketEvents() {
         SocketManager.getInstance().getSocket().on("globalmessage", new Emitter.Listener() {
             @Override

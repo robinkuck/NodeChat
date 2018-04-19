@@ -19,6 +19,7 @@ import java.util.Locale;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
 import de.robinkuck.nodechat.android.history.HistoryMessage;
+import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.utils.Utils;
 
 public abstract class ChatActivity extends AbstractChildActivity {
@@ -33,6 +34,8 @@ public abstract class ChatActivity extends AbstractChildActivity {
     protected RecyclerView recyclerView;
     protected RecyclerView.Adapter adapter;
     protected RecyclerView.LayoutManager layoutManager;
+
+    public abstract void onOpenSettings(final View view);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
