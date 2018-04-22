@@ -5,17 +5,16 @@ import android.view.View;
 
 import de.robinkuck.nodechat.android.R;
 
-public class SettingsActivity extends AbstractChildActivity {
+public class ChatSettingsActivity extends AbstractChildActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_chatsettings);
         super.configViews();
     }
 
-    public void onNickChange(View v) {
-        System.out.println("[I] Try to change nick!");
-    }
+    public void onClearHistory(final View view) {
 
+    }
 }

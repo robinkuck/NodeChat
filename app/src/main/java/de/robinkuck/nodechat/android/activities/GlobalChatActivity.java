@@ -51,7 +51,7 @@ public class GlobalChatActivity extends ChatActivity {
 
     @Override
     public void onOpenSettings(final View view) {
-
+        CustomActivityManager.getInstance().startChatSettingsActivity(this);
     }
 
     private void configSocketEvents() {

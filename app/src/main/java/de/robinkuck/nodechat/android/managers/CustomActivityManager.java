@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import de.robinkuck.nodechat.android.CheckInternetConnectionReceiver;
 import de.robinkuck.nodechat.android.SocketServiceProvider;
+import de.robinkuck.nodechat.android.activities.ChatSettingsActivity;
 import de.robinkuck.nodechat.android.activities.GlobalChatActivity;
 import de.robinkuck.nodechat.android.activities.MainActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
@@ -94,6 +95,19 @@ public class CustomActivityManager {
         }).start();
     }
 
+    public void startChatSettingsActivity(final Activity currentActivity) {
+        final Intent intent = new Intent(currentActivity, ChatSettingsActivity.class);
+        /*
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.startActivityIfNeeded(intent, 0);
+            }
+        }).start();
+        */
+        currentActivity.startActivityIfNeeded(intent, 0);
+    }
+
     private void addInternetConnectionReceiver(final Activity startActivity) {
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -104,16 +118,6 @@ public class CustomActivityManager {
         Intent i = new Intent(Intent.ACTION_SYNC, null, startActivity.getBaseContext(), SocketServiceProvider.class);
         i.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         startActivity.getBaseContext().startService(i);
-    }
-
-    public void startGlobalChatActivityFromMainThread(final Activity currentActivity, final String nick) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                startGlobalChatAcitity(currentActivity, nick);
-            }
-        });
     }
 
 }

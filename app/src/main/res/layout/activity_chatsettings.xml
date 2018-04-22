@@ -34,12 +34,12 @@
                 android:orientation="vertical">
 
                 <include
-                    android:id="@+id/settings_general"
-                    layout="@layout/settings_general" />
-
-                <include
                     android:id="@+id/settings_notification"
                     layout="@layout/settings_notifications"/>
+
+                <include
+                    android:id="@+id/settings_clearhistory"
+                    layout="@layout/settings_clearhistory"/>
 
             </LinearLayout>
         </ScrollView>

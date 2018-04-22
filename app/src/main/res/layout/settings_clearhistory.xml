@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="General"
+        android:text="History"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp" />
 
@@ -20,17 +20,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="?android:attr/selectableItemBackground"
-        android:onClick="onNickChange">
+        android:onClick="onClearHistory">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change nickname"
+            android:text="Clear history"
             android:textSize="18sp"
             android:textColor="@android:color/black"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Click here to change your nickname"
+            android:text="Click here to clear the chat history"
             android:textSize="12sp"/>
     </LinearLayout>
 

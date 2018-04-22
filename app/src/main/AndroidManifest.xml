@@ -7,21 +7,20 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
-        android:name="de.robinkuck.nodechat.android.App"
+        android:name=".App"
         android:icon="@mipmap/launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-
         <receiver
-            android:name="de.robinkuck.nodechat.android.SocketServiceReceiver"
-            android:label="SocketServiceReceiver">
-        </receiver>
+            android:name=".SocketServiceReceiver"
+            android:label="SocketServiceReceiver"></receiver>
 
-        <service android:name="de.robinkuck.nodechat.android.SocketServiceProvider" />
+        <service android:name=".SocketServiceProvider" />
 
         <activity
-            android:name="de.robinkuck.nodechat.android.activities.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -31,35 +30,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="de.robinkuck.nodechat.android.activities.NickActivity"
+            android:name=".activities.NickActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name="de.robinkuck.nodechat.android.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name="de.robinkuck.nodechat.android.activities.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="de.robinkuck.nodechat.android.activities.GlobalChatActivity"
-            android:parentActivityName="de.robinkuck.nodechat.android.activities.MainActivity"
+            android:name=".activities.ChatSettingsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.GlobalChatActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.robinkuck.nodechat.android.activities.MainActivity" />
         </activity>
         <activity
-            android:name="de.robinkuck.nodechat.android.activities.PrivateChatActivity"
+            android:name=".activities.PrivateChatActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.robinkuck.nodechat.android.activities.MainActivity" />
