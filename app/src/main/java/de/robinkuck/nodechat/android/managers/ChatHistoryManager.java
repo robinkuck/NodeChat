@@ -4,21 +4,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import de.robinkuck.nodechat.android.App;
+import de.robinkuck.nodechat.android.history.ChatHistory;
 import de.robinkuck.nodechat.android.history.GlobalChatHistory;
+import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
+import de.robinkuck.nodechat.android.history.HistoryMessage;
 import de.robinkuck.nodechat.android.json.JSONReaderAndWriter;
 
 public class ChatHistoryManager {
 
     private static ChatHistoryManager INSTANCE;
 
-    private GlobalChatHistory globalChatHistory;
+    private HashMap<Integer, ChatHistory<? extends HistoryMessage>> chatHistoryMap;
 
     private JSONReaderAndWriter globalChatReaderAndWriter;
 
     private ChatHistoryManager() {
         System.out.println("[ChatHistoryManager] starting ChatHistoryManager");
         globalChatReaderAndWriter = new JSONReaderAndWriter("history_global.json");
+        chatHistoryMap = new HashMap<>();
     }
 
     public static ChatHistoryManager getInstance() {
@@ -28,8 +34,12 @@ public class ChatHistoryManager {
         return INSTANCE;
     }
 
-    public GlobalChatHistory getGlobalChatHistory() {
-        return globalChatHistory;
+    public ChatHistory<? extends HistoryMessage> getChatHistory(final int chatID) {
+        return chatHistoryMap.get(chatID);
+    }
+
+    public ChatHistory<GlobalHistoryMessage> getGlobalChatHistory() {
+        return (ChatHistory<GlobalHistoryMessage>) getChatHistory(0);
     }
 
     public void loadData() {
@@ -42,11 +52,7 @@ public class ChatHistoryManager {
             if (chatObject != null && !chatObject.toString().equals("{}")) {
                 JSONArray messagesArray = chatObject.getJSONArray("messages");
                 int unreadCount = chatObject.getInt("unreadMessagesCount");
-                globalChatHistory = new GlobalChatHistory(messagesArray, unreadCount);
-                System.out.println("[ChatHistoryManager] " + chatObject.toString());
-                System.out.println("[ChatHistoryManager] " + globalChatHistory.getChatLabel() + ", " + globalChatHistory.getUnreadMessagesCount());
-                System.out.println("[ChatHistoryManager] globalChatHistory successfully loaded");
-                System.out.println("[ChatHistoryManager] " + globalChatHistory.getMessages().size());
+                chatHistoryMap.put(0, new GlobalChatHistory(messagesArray, unreadCount));
             } else {
                 saveData();
             }
@@ -56,12 +62,10 @@ public class ChatHistoryManager {
     }
 
     public void saveData() {
-        if (globalChatHistory == null) {
-            globalChatHistory = new GlobalChatHistory();
+        if (chatHistoryMap.get(0) == null) {
+            chatHistoryMap.put(0, new GlobalChatHistory());
         }
-        JSONObject globalChatJSONObject = globalChatHistory.toJSONObject();
-        System.out.println("[ChatHistoryManager] " + globalChatJSONObject.toString());
-        globalChatReaderAndWriter.writeJSONObject(globalChatJSONObject);
+        globalChatReaderAndWriter.writeJSONObject(chatHistoryMap.get(0).toJSONObject());
     }
 
     private boolean historyFileExists(final String fileName) {

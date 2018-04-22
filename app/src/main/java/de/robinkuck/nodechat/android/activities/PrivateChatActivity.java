@@ -6,6 +6,7 @@ import android.view.View;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.robinkuck.nodechat.android.history.ChatHistory;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
 import de.robinkuck.nodechat.android.managers.SocketManager;
@@ -34,6 +35,11 @@ public class PrivateChatActivity extends ChatActivity {
     @Override
     public void onOpenSettings(final View view) {
 
+    }
+
+    @Override
+    public ChatHistory<?> getHistory() {
+        return null;
     }
 
     public void setRecipient(String recipient) {

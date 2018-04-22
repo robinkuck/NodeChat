@@ -18,7 +18,9 @@ import java.util.Locale;
 
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
+import de.robinkuck.nodechat.android.history.ChatHistory;
 import de.robinkuck.nodechat.android.history.HistoryMessage;
+import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.utils.Utils;
 
@@ -30,12 +32,15 @@ public abstract class ChatActivity extends AbstractChildActivity {
     private boolean isActive;
 
     protected int x, y;
+    protected int ID;
 
     protected RecyclerView recyclerView;
     protected RecyclerView.Adapter adapter;
     protected RecyclerView.LayoutManager layoutManager;
 
     public abstract void onOpenSettings(final View view);
+
+    public abstract ChatHistory<?> getHistory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +56,14 @@ public abstract class ChatActivity extends AbstractChildActivity {
         y = d.getHeight();
 
         isActive = true;
+        ID = getIntent().getIntExtra("id", -1);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onRestart() {
+        super.onRestart();
         isActive = true;
+        reloadHistory();
     }
 
     @Override
@@ -72,6 +79,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
         sendButton = (ImageButton) findViewById(R.id.sendButton);
         rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
 
+        adapter = new ListViewAdapter(ChatHistoryManager.getInstance().getChatHistory(getID()).getMessages());
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -104,6 +112,14 @@ public abstract class ChatActivity extends AbstractChildActivity {
                 });
             }
         });
+    }
+
+    public void reloadHistory() {
+        adapter = new ListViewAdapter(ChatHistoryManager.getInstance().getChatHistory(getID()).getMessages());
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public void clearEditMsg() {

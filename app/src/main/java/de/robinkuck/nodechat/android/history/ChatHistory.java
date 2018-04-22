@@ -5,12 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 
-public abstract class ChatHistory<messageObj extends HistoryMessage> {
+public abstract class ChatHistory<messageObj extends HistoryMessage> implements Serializable{
 
     @JsonProperty("unreadMessagesCount")
     protected int unreadMessagesCount;
@@ -36,7 +37,7 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> {
         messages.add(message);
         //save data
         incUnreadMessagesCount();
-        ChatHistoryManager.getInstance().saveData();
+        save();
     }
 
     public void addSentMessage(final messageObj message) {
@@ -50,10 +51,12 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> {
 
     public void clearMessages() {
         messages.clear();
+        save();
     }
 
     public void setMessages(final List<messageObj> messages) {
         this.messages = messages;
+        save();
     }
 
     public List<messageObj> getMessages() {
@@ -83,5 +86,9 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> {
 
     private void incUnreadMessagesCount() {
         unreadMessagesCount++;
+    }
+
+    private void save() {
+        ChatHistoryManager.getInstance().saveData();
     }
 }

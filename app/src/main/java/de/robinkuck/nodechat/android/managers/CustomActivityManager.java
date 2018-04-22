@@ -16,6 +16,7 @@ import de.robinkuck.nodechat.android.activities.MainActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.activities.PrivateChatActivity;
 import de.robinkuck.nodechat.android.activities.SettingsActivity;
+import de.robinkuck.nodechat.android.history.ChatHistory;
 
 public class CustomActivityManager {
 
@@ -95,16 +96,9 @@ public class CustomActivityManager {
         }).start();
     }
 
-    public void startChatSettingsActivity(final Activity currentActivity) {
+    public void startChatSettingsActivity(final Activity currentActivity, final int chatID) {
         final Intent intent = new Intent(currentActivity, ChatSettingsActivity.class);
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                currentActivity.startActivityIfNeeded(intent, 0);
-            }
-        }).start();
-        */
+        intent.putExtra("id", chatID);
         currentActivity.startActivityIfNeeded(intent, 0);
     }
 

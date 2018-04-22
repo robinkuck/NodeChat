@@ -7,7 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
+import de.robinkuck.nodechat.android.history.ChatHistory;
 import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
+import de.robinkuck.nodechat.android.history.HistoryMessage;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
@@ -33,14 +35,13 @@ public class GlobalChatActivity extends ChatActivity {
             ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
         }
 
-        super.adapter = new ListViewAdapter(ChatHistoryManager.getInstance().getGlobalChatHistory().getMessages());
-        super.recyclerView.setAdapter(super.adapter);
         scrollToBottom();
 
         ChatlistFragment.getInstance().getGlobalChatlistEntry().resetTVUnreadMessagesCount();
         if (ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount() > 0) {
             ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
         }
+        super.ID = 0;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class GlobalChatActivity extends ChatActivity {
 
     @Override
     public void onOpenSettings(final View view) {
-        CustomActivityManager.getInstance().startChatSettingsActivity(this);
+        CustomActivityManager.getInstance().startChatSettingsActivity(this, getID());
     }
 
     private void configSocketEvents() {
@@ -102,5 +103,10 @@ public class GlobalChatActivity extends ChatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public ChatHistory<? extends HistoryMessage> getHistory() {
+        return ChatHistoryManager.getInstance().getGlobalChatHistory();
     }
 }
