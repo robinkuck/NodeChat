@@ -1,34 +1,43 @@
 package de.robinkuck.nodechat.android.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import de.robinkuck.nodechat.android.ConfirmationDialog;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
 import de.robinkuck.nodechat.android.history.ChatHistory;
 import de.robinkuck.nodechat.android.history.HistoryMessage;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
-import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.utils.Utils;
 
 public abstract class ChatActivity extends AbstractChildActivity {
 
-    public EditText editMsg;
-    public ImageButton sendButton;
-    private RelativeLayout rootLayout;
+    protected EditText editMsg;
+    protected ImageButton sendButton;
+    protected RelativeLayout rootLayout;
+    protected Spinner settingsSpinner;
     private boolean isActive;
 
     protected int x, y;
@@ -63,14 +72,45 @@ public abstract class ChatActivity extends AbstractChildActivity {
     public void onRestart() {
         super.onRestart();
         isActive = true;
-        reloadHistory();
-        System.out.println("[I] ONRESTART");
     }
 
     @Override
     public void onPause() {
         super.onPause();
         isActive = false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.chat, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuMuteChat:
+                //TODO implement mute function
+                break;
+            case R.id.menuClearHistory:
+                new ConfirmationDialog(
+                        this,
+                        getResources().getString(R.string.confirm_clear_chat_title),
+                        getResources().getString(R.string.confirm_clear_chat_msg),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getHistory().clearMessages();
+                                reloadHistory();
+                            }
+                        }, null)
+                        .show();
+                break;
+            default:
+                finish();
+                break;
+        }
+        return true;
     }
 
     public void configViews() {
@@ -117,7 +157,8 @@ public abstract class ChatActivity extends AbstractChildActivity {
 
     public void reloadHistory() {
         adapter = new ListViewAdapter(ChatHistoryManager.getInstance().getChatHistory(getID()).getMessages());
-        recyclerView.invalidate();
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
     }
 
     public int getID() {

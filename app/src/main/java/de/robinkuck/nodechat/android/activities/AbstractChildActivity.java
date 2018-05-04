@@ -2,6 +2,8 @@ package de.robinkuck.nodechat.android.activities;
 
 import android.view.MenuItem;
 
+import de.robinkuck.nodechat.android.R;
+
 public abstract class AbstractChildActivity extends AbstractActivity {
 
     @Override
@@ -11,10 +13,10 @@ public abstract class AbstractChildActivity extends AbstractActivity {
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item){
         finish();
         return true;
-    }
+    };
 
     public void configViews() {
         super.configViews();

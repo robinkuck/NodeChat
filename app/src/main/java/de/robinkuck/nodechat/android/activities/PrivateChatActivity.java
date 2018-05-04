@@ -33,7 +33,7 @@ public class PrivateChatActivity extends ChatActivity {
     }
 
     @Override
-    public void onOpenSettings(final View view) {
+    public void onOpenSettings(View view) {
 
     }
 

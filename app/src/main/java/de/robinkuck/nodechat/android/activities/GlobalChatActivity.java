@@ -52,7 +52,8 @@ public class GlobalChatActivity extends ChatActivity {
 
     @Override
     public void onOpenSettings(final View view) {
-        CustomActivityManager.getInstance().startChatSettingsActivity(this, getID());
+        super.settingsSpinner.performClick();
+        //CustomActivityManager.getInstance().startChatSettingsActivity(this, getID());
     }
 
     private void configSocketEvents() {
