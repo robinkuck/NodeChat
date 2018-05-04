@@ -9,17 +9,17 @@ import android.widget.TextView;
 
 import de.robinkuck.nodechat.android.R;
 
-public class UserEntry extends RelativeLayout {
+public class UserEntryView extends RelativeLayout {
 
     private TextView tv_name;
     private String receipient;
 
-    public UserEntry(Activity activity, String receipient) {
+    public UserEntryView(Activity activity, String receipient) {
         super(activity);
         configViews(activity, receipient);
     }
 
-    private void configViews(Activity activity, final String receipient) {
+    private void configViews(Activity activity, final String recipient) {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.userentry_view, this, true);
 
@@ -27,7 +27,7 @@ public class UserEntry extends RelativeLayout {
 
         tv_name = (TextView) rl.getChildAt(0);
 
-        this.receipient = receipient;
+        this.receipient = recipient;
         tv_name.setText(this.receipient);
 
         setOnClickListener(new OnClickListener() {

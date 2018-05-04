@@ -1,4 +1,4 @@
-package de.robinkuck.nodechat.android.views;
+package de.robinkuck.nodechat.android;
 
 import android.app.PendingIntent;
 import android.content.Context;

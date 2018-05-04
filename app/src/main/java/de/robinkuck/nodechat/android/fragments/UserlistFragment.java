@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.managers.SocketManager;
-import de.robinkuck.nodechat.android.views.UserEntry;
+import de.robinkuck.nodechat.android.views.UserEntryView;
 
 public class UserlistFragment extends Fragment {
 
@@ -20,7 +20,7 @@ public class UserlistFragment extends Fragment {
 
     private static UserlistFragment INSTANCE;
 
-    private HashMap<String, UserEntry> entries;
+    private HashMap<String, UserEntryView> entries;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +56,7 @@ public class UserlistFragment extends Fragment {
         });
     }
 
-    public void addViewtoUserList(final String nick, final UserEntry userEntry) {
+    public void addViewtoUserList(final String nick, final UserEntryView userEntry) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -67,7 +67,7 @@ public class UserlistFragment extends Fragment {
     }
 
     public void removeViewFromUserList(final String nick) {
-        final UserEntry userEntry = entries.get(nick);
+        final UserEntryView userEntry = entries.get(nick);
         if (userEntry != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override

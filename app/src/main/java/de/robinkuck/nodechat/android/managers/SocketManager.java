@@ -14,8 +14,8 @@ import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.fragments.UserlistFragment;
 import de.robinkuck.nodechat.android.utils.Utils;
-import de.robinkuck.nodechat.android.views.SimpleNotification;
-import de.robinkuck.nodechat.android.views.UserEntry;
+import de.robinkuck.nodechat.android.SimpleNotification;
+import de.robinkuck.nodechat.android.views.UserEntryView;
 import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -174,7 +174,7 @@ public class SocketManager {
                     try {
                         final String nick = data.getString("name");
                         UserlistFragment.getInstance().addViewtoUserList(nick,
-                                new UserEntry(UserlistFragment.getInstance().getActivity(), nick));
+                                new UserEntryView(UserlistFragment.getInstance().getActivity(), nick));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -209,7 +209,7 @@ public class SocketManager {
                                     String nick = user.getString("name");
                                     System.out.println("User: " + nick);
                                     UserlistFragment.getInstance().addViewtoUserList(nick,
-                                            new UserEntry(ChatlistFragment.getInstance().getActivity(), nick));
+                                            new UserEntryView(ChatlistFragment.getInstance().getActivity(), nick));
 
                                 }
                             } catch (JSONException e) {

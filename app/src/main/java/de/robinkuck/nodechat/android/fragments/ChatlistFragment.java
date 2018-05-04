@@ -13,7 +13,7 @@ import java.util.Map;
 
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.managers.SocketManager;
-import de.robinkuck.nodechat.android.views.ChatlistEntry;
+import de.robinkuck.nodechat.android.views.ChatlistEntryView;
 import io.socket.emitter.Emitter;
 
 public class ChatlistFragment extends Fragment {
@@ -24,8 +24,8 @@ public class ChatlistFragment extends Fragment {
 
     private static ChatlistFragment INSTANCE;
 
-    private Map<String, ChatlistEntry> entries;
-    private ChatlistEntry globalChatlistEntry;
+    private Map<String, ChatlistEntryView> entries;
+    private ChatlistEntryView globalChatlistEntry;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -48,7 +48,7 @@ public class ChatlistFragment extends Fragment {
         return INSTANCE;
     }
 
-    public ChatlistEntry getGlobalChatlistEntry() {
+    public ChatlistEntryView getGlobalChatlistEntry() {
         return globalChatlistEntry;
     }
 
@@ -57,7 +57,7 @@ public class ChatlistFragment extends Fragment {
         layout = (LinearLayout) v.findViewById(R.id.chatentrylist);
         privateChatListLayout = (LinearLayout) layout.findViewById(R.id.private_chat_list_layout);
         globalChatLayout = (LinearLayout) layout.findViewById(R.id.global_chat_layout);
-        globalChatlistEntry = new ChatlistEntry(getActivity(), "global");
+        globalChatlistEntry = new ChatlistEntryView(getActivity(), "global");
         globalChatlistEntry.setId(R.id.chatentry_global);
         addViewtoGlobalChatList(globalChatlistEntry);
     }
@@ -79,7 +79,7 @@ public class ChatlistFragment extends Fragment {
     }
 
     public void addViewtoPrivateChatList(final String receipient) {
-        final ChatlistEntry chatlistEntry = new ChatlistEntry(getActivity(), receipient);
+        final ChatlistEntryView chatlistEntry = new ChatlistEntryView(getActivity(), receipient);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -90,7 +90,7 @@ public class ChatlistFragment extends Fragment {
     }
 
     public void removeViewFromPrivateChatList(final String nick) {
-        final ChatlistEntry chatlistEntry = entries.get(nick);
+        final ChatlistEntryView chatlistEntry = entries.get(nick);
         if (chatlistEntry != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -112,7 +112,7 @@ public class ChatlistFragment extends Fragment {
 
     public void removeUserFromChatList(final String name) {
         if(isUserAddedToChatList(name)) {
-            final ChatlistEntry chatlistEntry = entries.get(name);
+            final ChatlistEntryView chatlistEntry = entries.get(name);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

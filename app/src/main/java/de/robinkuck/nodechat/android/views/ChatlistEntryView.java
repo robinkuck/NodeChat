@@ -14,7 +14,7 @@ import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.NickManager;
 import de.robinkuck.nodechat.android.utils.Utils;
 
-public class ChatlistEntry extends RelativeLayout {
+public class ChatlistEntryView extends RelativeLayout {
 
     public boolean isGlobal;
     public Activity act;
@@ -24,7 +24,7 @@ public class ChatlistEntry extends RelativeLayout {
     private TextView tvtitle;
     private TextView tvUnreadMessagesCount;
 
-    public ChatlistEntry(Activity act, String nick) {
+    public ChatlistEntryView(Activity act, String nick) {
         super(act);
         this.act = act;
         init(nick);

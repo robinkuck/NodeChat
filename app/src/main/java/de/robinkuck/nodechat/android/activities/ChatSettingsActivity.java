@@ -1,8 +1,10 @@
 package de.robinkuck.nodechat.android.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
+import de.robinkuck.nodechat.android.ConfirmationDialog;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.history.ChatHistory;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
@@ -21,6 +23,16 @@ public class ChatSettingsActivity extends AbstractChildActivity {
     }
 
     public void onClearHistory(final View view) {
-        chatHistory.clearMessages();
+        new ConfirmationDialog(
+                this,
+                getResources().getString(R.string.confirm_clear_chat_title),
+                getResources().getString(R.string.confirm_clear_chat_msg),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        chatHistory.clearMessages();
+                    }
+                }, null)
+                .show();
     }
 }

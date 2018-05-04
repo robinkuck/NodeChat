@@ -64,6 +64,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
         super.onRestart();
         isActive = true;
         reloadHistory();
+        System.out.println("[I] ONRESTART");
     }
 
     @Override
@@ -116,6 +117,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
 
     public void reloadHistory() {
         adapter = new ListViewAdapter(ChatHistoryManager.getInstance().getChatHistory(getID()).getMessages());
+        recyclerView.invalidate();
     }
 
     public int getID() {
