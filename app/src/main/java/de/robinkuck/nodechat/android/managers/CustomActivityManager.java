@@ -3,20 +3,14 @@ package de.robinkuck.nodechat.android.managers;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 import de.robinkuck.nodechat.android.CheckInternetConnectionReceiver;
 import de.robinkuck.nodechat.android.SocketServiceProvider;
-import de.robinkuck.nodechat.android.activities.ChatSettingsActivity;
 import de.robinkuck.nodechat.android.activities.GlobalChatActivity;
 import de.robinkuck.nodechat.android.activities.MainActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.activities.PrivateChatActivity;
 import de.robinkuck.nodechat.android.activities.SettingsActivity;
-import de.robinkuck.nodechat.android.history.ChatHistory;
 
 public class CustomActivityManager {
 
@@ -94,12 +88,6 @@ public class CustomActivityManager {
                 currentActivity.startActivityIfNeeded(intent, 0);
             }
         }).start();
-    }
-
-    public void startChatSettingsActivity(final Activity currentActivity, final int chatID) {
-        final Intent intent = new Intent(currentActivity, ChatSettingsActivity.class);
-        intent.putExtra("id", chatID);
-        currentActivity.startActivityIfNeeded(intent, 0);
     }
 
     private void addInternetConnectionReceiver(final Activity startActivity) {

@@ -45,10 +45,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.ChatSettingsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".activities.GlobalChatActivity"
             android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
