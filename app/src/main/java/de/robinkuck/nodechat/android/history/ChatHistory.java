@@ -90,16 +90,12 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> implements 
         this.chatLabel = chatLabel;
     }
 
-    public void updateMuted() {
+    public void muteOrUnmute() {
         if (isMuted()) {
-            setMuted(false);
+            isMuted = false;
         } else {
-            setMuted(true);
+            isMuted = true;
         }
-    }
-
-    public void setMuted(final boolean isMuted) {
-        this.isMuted = isMuted;
         save();
     }
 

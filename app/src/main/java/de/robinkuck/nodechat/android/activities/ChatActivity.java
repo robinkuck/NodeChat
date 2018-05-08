@@ -91,7 +91,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuMuteChat:
-                ChatHistoryManager.getInstance().getChatHistory(getID()).updateMuted();
+                ChatHistoryManager.getInstance().getChatHistory(getID()).muteOrUnmute();
                 break;
             case R.id.menuClearHistory:
                 new ConfirmationDialog(
