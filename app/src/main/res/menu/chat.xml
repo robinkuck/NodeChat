@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/menuMuteChat"
-        android:title="Mute chat"/>
+        android:title="Mute"/>
     <item
         android:id="@+id/menuClearHistory"
         android:title="Clear history"/>

@@ -33,11 +33,6 @@ public class PrivateChatActivity extends ChatActivity {
     }
 
     @Override
-    public void onOpenSettings(View view) {
-
-    }
-
-    @Override
     public ChatHistory<?> getHistory() {
         return null;
     }

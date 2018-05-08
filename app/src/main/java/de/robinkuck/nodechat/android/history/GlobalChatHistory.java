@@ -12,11 +12,11 @@ import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
 
     public GlobalChatHistory() {
-        super("Global Chat");
+        super("Global Chat", 0, false);
     }
 
-    public GlobalChatHistory(final JSONArray messagesList, final int unreadMessagesCount) {
-        super("Global Chat");
+    public GlobalChatHistory(final JSONArray messagesList, final int unreadMessagesCount, final boolean isMuted) {
+        super("Global Chat", unreadMessagesCount, isMuted);
         System.out.println("[ChatHistoryManager] creating GlobalChatHistory " + messagesList + " " + unreadMessagesCount);
         setUnreadMessagesCount(unreadMessagesCount);
         loadMessages(messagesList);

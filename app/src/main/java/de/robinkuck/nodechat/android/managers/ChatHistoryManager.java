@@ -52,7 +52,8 @@ public class ChatHistoryManager {
             if (chatObject != null && !chatObject.toString().equals("{}")) {
                 JSONArray messagesArray = chatObject.getJSONArray("messages");
                 int unreadCount = chatObject.getInt("unreadMessagesCount");
-                chatHistoryMap.put(0, new GlobalChatHistory(messagesArray, unreadCount));
+                boolean isMuted = chatObject.getBoolean("isMuted");
+                chatHistoryMap.put(0, new GlobalChatHistory(messagesArray, unreadCount, isMuted));
             } else {
                 saveData();
             }

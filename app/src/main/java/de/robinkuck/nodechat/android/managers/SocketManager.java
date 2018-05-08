@@ -232,8 +232,12 @@ public class SocketManager {
                             ((ChatActivity) CustomActivityManager.getInstance().getCurrentActivity()).isActive()) {
                         isReading = true;
                     } else {
-                        new SimpleNotification(App.getInstance().getApplicationContext(), "New global message",
-                                from + ": " + message).show();
+                        if (ChatHistoryManager.getInstance().getGlobalChatHistory().isMuted()) {
+
+                        } else {
+                            new SimpleNotification(App.getInstance().getApplicationContext(), "New global message",
+                                    from + ": " + message).show();
+                        }
                         isReading = false;
                     }
                     ChatHistoryManager.getInstance().getGlobalChatHistory().addIncomingMessage(

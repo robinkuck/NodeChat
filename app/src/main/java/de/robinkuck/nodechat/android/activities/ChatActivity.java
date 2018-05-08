@@ -47,7 +47,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
     protected RecyclerView.Adapter adapter;
     protected RecyclerView.LayoutManager layoutManager;
 
-    public abstract void onOpenSettings(final View view);
+    protected MenuItem muteMenuItem;
 
     public abstract ChatHistory<?> getHistory();
 
@@ -83,6 +83,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.chat, menu);
+        muteMenuItem = menu.findItem(R.id.menuMuteChat);
         return true;
     }
 
@@ -90,7 +91,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuMuteChat:
-                //TODO implement mute function
+                ChatHistoryManager.getInstance().getChatHistory(getID()).updateMuted();
                 break;
             case R.id.menuClearHistory:
                 new ConfirmationDialog(
@@ -111,6 +112,17 @@ public abstract class ChatActivity extends AbstractChildActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (ChatHistoryManager.getInstance().getChatHistory(getID()).isMuted()) {
+            muteMenuItem.setTitle("Unmute");
+        } else {
+            muteMenuItem.setTitle("Mute");
+        }
+        System.out.println("ONPREPARE");
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public void configViews() {
@@ -181,9 +193,14 @@ public abstract class ChatActivity extends AbstractChildActivity {
         recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
     }
 
-    protected void addMessage() {
-        adapter.notifyItemInserted(recyclerView.getAdapter().getItemCount() - 1);
-        scrollToBottom();
+    protected void notifyRecylerView() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyItemInserted(recyclerView.getAdapter().getItemCount() - 1);
+                scrollToBottom();
+            }
+        });
     }
 
     protected String getCurrentDateString() {

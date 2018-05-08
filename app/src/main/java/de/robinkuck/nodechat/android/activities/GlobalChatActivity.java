@@ -50,30 +50,11 @@ public class GlobalChatActivity extends ChatActivity {
         CustomActivityManager.getInstance().setCurrentActivity(this);
     }
 
-    @Override
-    public void onOpenSettings(final View view) {
-        super.settingsSpinner.performClick();
-        //CustomActivityManager.getInstance().startChatSettingsActivity(this, getID());
-    }
-
     private void configSocketEvents() {
         SocketManager.getInstance().getSocket().on("globalmessage", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                JSONObject data = (JSONObject) args[0];
-                try {
-                    final String from = data.getString("from");
-                    final String message = data.getString("msg");
-                    final String date = data.getString("date");
-
-                    GlobalHistoryMessage historyMessage = new GlobalHistoryMessage(false, date, from, message);
-                    ChatHistoryManager.getInstance().getGlobalChatHistory().addIncomingMessage(
-                            historyMessage, false);
-                    addMessage();
-                    GlobalChatActivity.super.scrollToBottom();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                notifyRecylerView();
             }
         });
     }
@@ -91,7 +72,7 @@ public class GlobalChatActivity extends ChatActivity {
                         clearEditMsg();
                         GlobalHistoryMessage historyMessage = new GlobalHistoryMessage(true, date, "", message);
                         ChatHistoryManager.getInstance().getGlobalChatHistory().addSentMessage(historyMessage);
-                        addMessage();
+                        notifyRecylerView();
                         SocketManager.getInstance().sendGlobalMessage(message, date,
                                 new Ack() {
                                     @Override

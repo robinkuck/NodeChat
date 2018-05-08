@@ -11,12 +11,14 @@ import java.util.List;
 
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 
-public abstract class ChatHistory<messageObj extends HistoryMessage> implements Serializable{
+public abstract class ChatHistory<messageObj extends HistoryMessage> implements Serializable {
 
     @JsonProperty("unreadMessagesCount")
     protected int unreadMessagesCount;
     @JsonProperty("chatLabel")
     protected String chatLabel;
+    @JsonProperty
+    protected boolean isMuted;
     @JsonProperty("messages")
     private List<messageObj> messages;
 
@@ -24,9 +26,12 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> implements 
         messages = new ArrayList<>();
     }
 
-    public ChatHistory(final String chatLabel) {
+    public ChatHistory(final String chatLabel, final int unreadMessagesCount, final boolean isMuted) {
         this();
         this.chatLabel = chatLabel;
+        this.isMuted = isMuted;
+        setUnreadMessagesCount(unreadMessagesCount);
+
     }
 
     public abstract void loadMessages(final JSONArray jsonObject);
@@ -35,8 +40,9 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> implements 
 
     public void addIncomingMessage(final messageObj message, final boolean isReading) {
         messages.add(message);
-        //save data
-        incUnreadMessagesCount();
+        if (!isReading) {
+            incUnreadMessagesCount();
+        }
         save();
     }
 
@@ -82,6 +88,23 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> implements 
 
     public void setChatLabel(String chatLabel) {
         this.chatLabel = chatLabel;
+    }
+
+    public void updateMuted() {
+        if (isMuted()) {
+            setMuted(false);
+        } else {
+            setMuted(true);
+        }
+    }
+
+    public void setMuted(final boolean isMuted) {
+        this.isMuted = isMuted;
+        save();
+    }
+
+    public boolean isMuted() {
+        return isMuted;
     }
 
     private void incUnreadMessagesCount() {
