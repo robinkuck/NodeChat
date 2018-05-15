@@ -9,7 +9,6 @@
     <string name="app_name">NodeChat</string>
     <id name="chatentry_global">chatentry_global</id>
     <string name="title_activity_settings">Settings</string>
-    <string name="title_activity_settings2">Settings</string>
 
     <!-- Strings related to Settings -->
 

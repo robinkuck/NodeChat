@@ -114,7 +114,7 @@ public class SocketManager {
                 jsonObject.put("date", date);
                 getSocket().emit("new_globalmessage", jsonObject, ack);
             } catch (JSONException e) {
-                System.out.println("Error sending global message");
+                e.printStackTrace();
             }
         }
     }
@@ -125,9 +125,27 @@ public class SocketManager {
             try {
                 jsonObject.put("receiver", receiver);
                 jsonObject.put("msg", message.trim());
-                SocketManager.getInstance().getSocket().emit("new_privatemessage", jsonObject);
+                getSocket().emit("new_privatemessage", jsonObject);
             } catch (JSONException e) {
-                System.out.println("Error sending private message");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void changeNick(final String newNick) {
+        if(getSocket().connected()) {
+            final Ack ack = new Ack() {
+                @Override
+                public void call(Object... args) {
+                    NickManager.getInstance().setCurrentNick(newNick);
+                }
+            };
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("nick", newNick);
+                getSocket().emit("change_nick", jsonObject, ack);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -141,7 +159,7 @@ public class SocketManager {
                     NickManager.getInstance().setCurrentNick(NickManager.getInstance().getCurrentNick());
                     CustomActivityManager.getInstance().startMainActivity(NickActivity.getInstance());
                 }
-                SocketManager.getInstance().setStatus(Status.CONNECTED);
+                setStatus(Status.CONNECTED);
                 System.out.println("[I] SocketManager: successful login!");
             }
         }).on("nologin", new Emitter.Listener() {

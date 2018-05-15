@@ -37,7 +37,6 @@ public abstract class ChatActivity extends AbstractChildActivity {
     protected EditText editMsg;
     protected ImageButton sendButton;
     protected RelativeLayout rootLayout;
-    protected Spinner settingsSpinner;
     private boolean isActive;
 
     protected int x, y;
