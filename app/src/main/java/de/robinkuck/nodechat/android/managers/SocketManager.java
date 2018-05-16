@@ -1,7 +1,9 @@
 package de.robinkuck.nodechat.android.managers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -132,12 +134,19 @@ public class SocketManager {
         }
     }
 
-    public void changeNick(final String newNick) {
-        if(getSocket().connected()) {
+    public void changeNick(final Activity activity, final String newNick) {
+        if (getSocket().connected()) {
             final Ack ack = new Ack() {
                 @Override
                 public void call(Object... args) {
                     NickManager.getInstance().setCurrentNick(newNick);
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast toast = Toast.makeText(activity, "Nick successfully changed!", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    });
                 }
             };
             JSONObject jsonObject = new JSONObject();

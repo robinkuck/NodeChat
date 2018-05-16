@@ -28,7 +28,7 @@ public class ChangeNickDialog extends DialogFragment {
                 EditText editText = (EditText) inputView.findViewById(R.id.nickInput);
                 final String input = editText.getText().toString().trim();
                 if (!input.equals("") && !input.equals(NickManager.getInstance().getCurrentNick())) {
-                    SocketManager.getInstance().changeNick(input);
+                    SocketManager.getInstance().changeNick(getActivity(), input);
                 } else {
                     System.out.println("[I] ---");
                 }
