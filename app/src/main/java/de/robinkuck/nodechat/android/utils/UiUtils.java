@@ -22,7 +22,6 @@ public class UiUtils {
                 try {
                     InputMethodManager inputManager = (InputMethodManager)
                             activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-
                     inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
                 } catch (NullPointerException e) {
@@ -30,6 +29,16 @@ public class UiUtils {
                 }
             }
         }).start();
+    }
+
+    public static void showToast(final Activity activity, final String message, final int duration) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = Toast.makeText(activity, message, duration);
+                toast.show();
+            }
+        });
     }
 
     public static void scrollDown(final ScrollView scrollView) {

@@ -15,6 +15,7 @@ import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.fragments.UserlistFragment;
+import de.robinkuck.nodechat.android.utils.UiUtils;
 import de.robinkuck.nodechat.android.utils.Utils;
 import de.robinkuck.nodechat.android.SimpleNotification;
 import de.robinkuck.nodechat.android.views.UserEntryView;
@@ -140,13 +141,7 @@ public class SocketManager {
                 @Override
                 public void call(Object... args) {
                     NickManager.getInstance().setCurrentNick(newNick);
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast toast = Toast.makeText(activity, "Nick successfully changed!", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    });
+                    UiUtils.showToast(activity, "Nick successfully changed!", Toast.LENGTH_SHORT);
                 }
             };
             JSONObject jsonObject = new JSONObject();
