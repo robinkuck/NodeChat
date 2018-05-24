@@ -1,8 +1,11 @@
 package de.robinkuck.nodechat.android.managers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -10,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.App;
+import de.robinkuck.nodechat.android.ChangeNickDialog;
 import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
 import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
@@ -134,19 +138,31 @@ public class SocketManager {
         }
     }
 
-    public void changeNick(final Activity activity, final String newNick) {
+    public void changeNick(final Activity activity, final String newNick, final ChangeNickDialog dialog) {
         if (getSocket().connected()) {
             final Ack ack = new Ack() {
                 @Override
                 public void call(Object... args) {
-                    NickManager.getInstance().setCurrentNick(newNick);
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast toast = Toast.makeText(activity, "Nick successfully changed!", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    });
+                    //check weather nick is taken (false = nick is not taken)
+                    //if ((boolean)args[0]) {
+                    if(false) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.setErrorMsg("Nick already taken!");
+                            }
+                        });
+                    } else {
+                        NickManager.getInstance().setCurrentNick(newNick);
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast toast = Toast.makeText(activity, "Nick successfully changed!", Toast.LENGTH_SHORT);
+                                toast.show();
+                                dialog.dismiss();
+                            }
+                        });
+                    }
                 }
             };
             JSONObject jsonObject = new JSONObject();
@@ -190,6 +206,14 @@ public class SocketManager {
                             }
                         });
                     }
+                }
+                disconnectSocket();
+            }
+        }).on("change_nickname_taken", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                if (Utils.isMyAppRunning()) {
+
                 }
                 disconnectSocket();
             }

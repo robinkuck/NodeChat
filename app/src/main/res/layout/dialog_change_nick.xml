@@ -11,5 +11,19 @@
         android:layout_marginTop="4dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="2dp" />
+
+    <TextView
+        android:id="@+id/notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editNick"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="sans-serif"
+        android:text="Nickname already taken!"
+        android:textAlignment="center"
+        android:textColor="#ff0000"
+        android:textSize="15sp"
+        android:visibility="invisible" />
 </LinearLayout>

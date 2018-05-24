@@ -69,7 +69,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif"
-                android:text="Nickname already taken!"
+                android:text="Nick already taken!"
                 android:textAlignment="center"
                 android:textColor="#ff0000"
                 android:textSize="15sp"
