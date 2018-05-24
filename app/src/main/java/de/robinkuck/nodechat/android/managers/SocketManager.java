@@ -19,6 +19,7 @@ import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.fragments.UserlistFragment;
+import de.robinkuck.nodechat.android.utils.UiUtils;
 import de.robinkuck.nodechat.android.utils.Utils;
 import de.robinkuck.nodechat.android.SimpleNotification;
 import de.robinkuck.nodechat.android.views.UserEntryView;
