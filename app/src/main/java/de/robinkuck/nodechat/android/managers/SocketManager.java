@@ -144,16 +144,7 @@ public class SocketManager {
             final Ack ack = new Ack() {
                 @Override
                 public void call(Object... args) {
-                    //check weather nick is taken (false = nick is not taken)
-                    //if ((boolean)args[0]) {
-                    if(false) {
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.setErrorMsg("Nick already taken!");
-                            }
-                        });
-                    } else {
+                    if ((boolean) args[0]) {
                         NickManager.getInstance().setCurrentNick(newNick);
                         activity.runOnUiThread(new Runnable() {
                             @Override
@@ -161,6 +152,14 @@ public class SocketManager {
                                 Toast toast = Toast.makeText(activity, "Nick successfully changed!", Toast.LENGTH_SHORT);
                                 toast.show();
                                 dialog.dismiss();
+                            }
+                        });
+                        ;
+                    } else {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.setErrorMsg("Nick already taken!");
                             }
                         });
                     }
