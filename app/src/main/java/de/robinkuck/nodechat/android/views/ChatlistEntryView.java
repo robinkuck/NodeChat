@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
+import de.robinkuck.nodechat.android.history.ChatHistory;
+import de.robinkuck.nodechat.android.history.GlobalChatHistory;
+import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.NickManager;
@@ -23,6 +27,7 @@ public class ChatlistEntryView extends RelativeLayout {
     private int unreadMessagesCount;
     private TextView tvtitle;
     private TextView tvUnreadMessagesCount;
+    private ImageView imgVolume;
 
     public ChatlistEntryView(Activity act, String nick) {
         super(act);
@@ -38,12 +43,15 @@ public class ChatlistEntryView extends RelativeLayout {
 
         tvtitle = (TextView) rl.getChildAt(0);
         tvUnreadMessagesCount = (TextView) rl.getChildAt(1);
+        imgVolume = (ImageView) rl.findViewById(R.id.imgvolume);
 
         if (nick.equals("global")) {
             isGlobal = true;
             this.nick = "Global chat";
             tvtitle.setText("Global chat");
-            setMessageCount(ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount());
+            ChatHistory<GlobalHistoryMessage> globalChatHistory = ChatHistoryManager.getInstance().getGlobalChatHistory();
+            setMessageCount(globalChatHistory.getUnreadMessagesCount());
+            setVolumeIcon(globalChatHistory.isMuted());
         } else {
             isGlobal = false;
             this.nick = nick;
@@ -100,5 +108,13 @@ public class ChatlistEntryView extends RelativeLayout {
                 tvUnreadMessagesCount.setBackgroundResource(R.drawable.background_messagecount);
             }
         });
+    }
+
+    public void setVolumeIcon(final boolean isMuted) {
+        if(isMuted) {
+            imgVolume.setVisibility(VISIBLE);
+        } else {
+            imgVolume.setVisibility(INVISIBLE);
+        }
     }
 }

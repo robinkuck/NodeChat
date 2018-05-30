@@ -45,10 +45,11 @@
             android:id="@+id/imgvolume"
             android:layout_width="25sp"
             android:layout_height="25sp"
-            android:src="@drawable/volume_on"
+            android:src="@drawable/volume_off"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="2dp"/>
+            android:layout_margin="2dp"
+            android:visibility="invisible"/>
 
     </RelativeLayout>
 </merge>

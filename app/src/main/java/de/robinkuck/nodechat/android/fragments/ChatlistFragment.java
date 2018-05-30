@@ -24,7 +24,7 @@ public class ChatlistFragment extends Fragment {
 
     private static ChatlistFragment INSTANCE;
 
-    private Map<String, ChatlistEntryView> entries;
+    private Map<Integer, ChatlistEntryView> entries;
     private ChatlistEntryView globalChatlistEntry;
 
     @Override
@@ -52,6 +52,10 @@ public class ChatlistFragment extends Fragment {
         return globalChatlistEntry;
     }
 
+    public ChatlistEntryView getChatlistEntry(final int chatID) {
+        return entries.get(chatID);
+    }
+
     private void configViews(final View v) {
         entries = new HashMap<>();
         layout = (LinearLayout) v.findViewById(R.id.chatentrylist);
@@ -60,6 +64,7 @@ public class ChatlistFragment extends Fragment {
         globalChatlistEntry = new ChatlistEntryView(getActivity(), "global");
         globalChatlistEntry.setId(R.id.chatentry_global);
         addViewtoGlobalChatList(globalChatlistEntry);
+        entries.put(0, globalChatlistEntry);
     }
 
     public void configSocketEvents() {
@@ -78,13 +83,13 @@ public class ChatlistFragment extends Fragment {
         });
     }
 
-    public void addViewtoPrivateChatList(final String receipient) {
+    public void addViewtoPrivateChatList(final int chatID, final String receipient) {
         final ChatlistEntryView chatlistEntry = new ChatlistEntryView(getActivity(), receipient);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 privateChatListLayout.addView(chatlistEntry);
-                entries.put(receipient, chatlistEntry);
+                entries.put(chatID, chatlistEntry);
             }
         });
     }
