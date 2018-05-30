@@ -31,9 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="20sp"
             android:padding="2dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="2dp"
+            android:layout_margin="2dp"
             android:background="@drawable/background_messagecount"
             android:gravity="center"
             android:text="0"
@@ -42,6 +40,15 @@
             android:elevation="7dp"
             android:minWidth="20sp"
             android:minHeight="20sp"/>
+
+        <ImageView
+            android:id="@+id/imgvolume"
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@drawable/volume_on"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="2dp"/>
 
     </RelativeLayout>
 </merge>
