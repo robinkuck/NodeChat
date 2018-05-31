@@ -9,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
@@ -17,6 +18,8 @@ import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.NickManager;
 
 public class MainActivity extends AbstractActivity {
+
+    private ImageButton settingsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +57,9 @@ public class MainActivity extends AbstractActivity {
         CustomActivityManager.getInstance().startSettingsActivity(this);
     }
 
-    public void setChatlistFragment() {
-        ChatlistFragment fragment = new ChatlistFragment();
-        fragment.setArguments(getIntent().getExtras());
-
-        FragmentTransaction transac = getSupportFragmentManager().beginTransaction();
-        transac.replace(R.id.container, fragment);
-        transac.addToBackStack("chatlist");
-        transac.commit();
-    }
-
     private void configTabs() {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
-        ViewPager pager = (ViewPager) findViewById(R.id.tabpager);
+        TabLayout tabLayout = findViewById(R.id.tablayout);
+        ViewPager pager = findViewById(R.id.tabpager);
         PagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

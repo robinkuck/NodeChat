@@ -2,6 +2,7 @@ package de.robinkuck.nodechat.android.managers;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.view.View;
@@ -182,7 +183,7 @@ public class SocketManager {
             public void call(Object... args) {
                 if (Utils.isMyAppRunning()) {
                     NickManager.getInstance().setCurrentNick(NickManager.getInstance().getCurrentNick());
-                    CustomActivityManager.getInstance().startMainActivity(NickActivity.getInstance());
+                    CustomActivityManager.getInstance().startMainActivity(App.getInstance().getBaseContext());
                 }
                 setStatus(Status.CONNECTED);
                 System.out.println("[I] SocketManager: successful login!");

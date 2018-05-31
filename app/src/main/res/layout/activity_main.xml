@@ -28,8 +28,8 @@
             android:background="@android:color/transparent"
             android:cropToPadding="true"
             android:foreground="?attr/actionBarItemBackground"
-            android:onClick="onOpenSettings"
-            android:src="@drawable/settings" />
+            android:src="@drawable/settings"
+            android:onClick="onOpenSettings"/>
 
     </android.support.v7.widget.Toolbar>
 
