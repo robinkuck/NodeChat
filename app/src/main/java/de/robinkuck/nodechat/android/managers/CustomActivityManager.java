@@ -52,27 +52,32 @@ public class CustomActivityManager {
     public void startGlobalChatAcitity(final Context context, final String nick) {
         final Intent intent = new Intent(context, GlobalChatActivity.class);
         intent.putExtra("nick", nick);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     public void startPrivateChatActivity(final Context context, final String receipient) {
         Intent intent = new Intent(context, PrivateChatActivity.class);
         intent.putExtra("chatwith", receipient);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     public void startMainActivity(final Context context) {
         final Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     public void startNickActivity(final Context context) {
         final Intent intent = new Intent(context, NickActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     public void startSettingsActivity(final Context context) {
         final Intent intent = new Intent(context, SettingsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
