@@ -1,6 +1,7 @@
 package de.robinkuck.nodechat.android.managers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
@@ -48,46 +49,36 @@ public class CustomActivityManager {
         this.currentActivity = currentActivity;
     }
 
-    public void startGlobalChatAcitity(final Activity current, final String nick) {
-        final Intent intent = new Intent(current, GlobalChatActivity.class);
+    public void startGlobalChatAcitity(final Context context, final String nick) {
+        final Intent intent = new Intent(context, GlobalChatActivity.class);
         intent.putExtra("nick", nick);
-        current.startActivityIfNeeded(intent, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
-    public void startPrivateChatActivity(final Activity currentActivity, final String receipient) {
-        Intent intent = new Intent(currentActivity, PrivateChatActivity.class);
+    public void startPrivateChatActivity(final Context context, final String receipient) {
+        Intent intent = new Intent(context, PrivateChatActivity.class);
         intent.putExtra("chatwith", receipient);
-        currentActivity.startActivityIfNeeded(intent, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
-    public void startMainActivity(final Activity currentActivity) {
-        final Intent intent = new Intent(currentActivity, MainActivity.class);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                currentActivity.startActivityIfNeeded(intent, 0);
-            }
-        }).start();
+    public void startMainActivity(final Context context) {
+        final Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
-    public void startNickActivity(final Activity currentActivity) {
-        final Intent intent = new Intent(currentActivity, NickActivity.class);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                currentActivity.startActivityIfNeeded(intent, 0);
-            }
-        }).start();
+    public void startNickActivity(final Context context) {
+        final Intent intent = new Intent(context, NickActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
-    public void startSettingsActivity(final Activity currentActivity) {
-        final Intent intent = new Intent(currentActivity, SettingsActivity.class);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                currentActivity.startActivityIfNeeded(intent, 0);
-            }
-        }).start();
+    public void startSettingsActivity(final Context context) {
+        final Intent intent = new Intent(context, SettingsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     private void addInternetConnectionReceiver(final Activity startActivity) {

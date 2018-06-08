@@ -16,7 +16,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
     public SoftKeyboard softKeyboard;
 
     public void configViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setElevation(4.0f);
     }

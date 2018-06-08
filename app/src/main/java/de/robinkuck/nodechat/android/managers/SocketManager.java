@@ -1,18 +1,26 @@
 package de.robinkuck.nodechat.android.managers;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Application;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.App;
+import de.robinkuck.nodechat.android.ChangeNickDialog;
 import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
 import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.fragments.UserlistFragment;
+import de.robinkuck.nodechat.android.utils.UiUtils;
 import de.robinkuck.nodechat.android.utils.Utils;
 import de.robinkuck.nodechat.android.SimpleNotification;
 import de.robinkuck.nodechat.android.views.UserEntryView;
@@ -114,7 +122,7 @@ public class SocketManager {
                 jsonObject.put("date", date);
                 getSocket().emit("new_globalmessage", jsonObject, ack);
             } catch (JSONException e) {
-                System.out.println("Error sending global message");
+                e.printStackTrace();
             }
         }
     }
@@ -125,9 +133,45 @@ public class SocketManager {
             try {
                 jsonObject.put("receiver", receiver);
                 jsonObject.put("msg", message.trim());
-                SocketManager.getInstance().getSocket().emit("new_privatemessage", jsonObject);
+                getSocket().emit("new_privatemessage", jsonObject);
             } catch (JSONException e) {
-                System.out.println("Error sending private message");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void changeNick(final Activity activity, final String newNick, final ChangeNickDialog dialog) {
+        if (getSocket().connected()) {
+            final Ack ack = new Ack() {
+                @Override
+                public void call(Object... args) {
+                    if ((boolean) args[0]) {
+                        NickManager.getInstance().setCurrentNick(newNick);
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast toast = Toast.makeText(activity, "Nick successfully changed!", Toast.LENGTH_SHORT);
+                                toast.show();
+                                dialog.dismiss();
+                            }
+                        });
+                        ;
+                    } else {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.setErrorMsg("Nick already taken!");
+                            }
+                        });
+                    }
+                }
+            };
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("nick", newNick);
+                getSocket().emit("change_nick", jsonObject, ack);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -139,9 +183,9 @@ public class SocketManager {
             public void call(Object... args) {
                 if (Utils.isMyAppRunning()) {
                     NickManager.getInstance().setCurrentNick(NickManager.getInstance().getCurrentNick());
-                    CustomActivityManager.getInstance().startMainActivity(NickActivity.getInstance());
+                    CustomActivityManager.getInstance().startMainActivity(App.getInstance().getBaseContext());
                 }
-                SocketManager.getInstance().setStatus(Status.CONNECTED);
+                setStatus(Status.CONNECTED);
                 System.out.println("[I] SocketManager: successful login!");
             }
         }).on("nologin", new Emitter.Listener() {
@@ -163,6 +207,14 @@ public class SocketManager {
                             }
                         });
                     }
+                }
+                disconnectSocket();
+            }
+        }).on("change_nickname_taken", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                if (Utils.isMyAppRunning()) {
+
                 }
                 disconnectSocket();
             }

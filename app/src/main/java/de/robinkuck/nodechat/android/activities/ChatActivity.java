@@ -27,17 +27,18 @@ import java.util.Locale;
 import de.robinkuck.nodechat.android.ConfirmationDialog;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
+import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.history.ChatHistory;
 import de.robinkuck.nodechat.android.history.HistoryMessage;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.utils.Utils;
+import de.robinkuck.nodechat.android.views.ChatlistEntryView;
 
 public abstract class ChatActivity extends AbstractChildActivity {
 
     protected EditText editMsg;
     protected ImageButton sendButton;
     protected RelativeLayout rootLayout;
-    protected Spinner settingsSpinner;
     private boolean isActive;
 
     protected int x, y;
@@ -91,7 +92,15 @@ public abstract class ChatActivity extends AbstractChildActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuMuteChat:
-                ChatHistoryManager.getInstance().getChatHistory(getID()).updateMuted();
+                //update chatlistentry icon
+                ChatHistory<?> chatHistory = ChatHistoryManager.getInstance().getChatHistory(getID());
+                ChatlistEntryView chatlistEntryView = ChatlistFragment.getInstance().getChatlistEntry(getID());
+                chatHistory.muteOrUnmute();
+                if(chatHistory.isMuted()) {
+                    chatlistEntryView.setVolumeIcon(true);
+                } else {
+                    chatlistEntryView.setVolumeIcon(false);
+                }
                 break;
             case R.id.menuClearHistory:
                 new ConfirmationDialog(

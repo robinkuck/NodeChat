@@ -18,7 +18,7 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> implements 
     @JsonProperty("chatLabel")
     protected String chatLabel;
     @JsonProperty
-    protected boolean isMuted;
+    protected boolean muted;
     @JsonProperty("messages")
     private List<messageObj> messages;
 
@@ -26,10 +26,10 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> implements 
         messages = new ArrayList<>();
     }
 
-    public ChatHistory(final String chatLabel, final int unreadMessagesCount, final boolean isMuted) {
+    public ChatHistory(final String chatLabel, final int unreadMessagesCount, final boolean muted) {
         this();
         this.chatLabel = chatLabel;
-        this.isMuted = isMuted;
+        this.muted = muted;
         setUnreadMessagesCount(unreadMessagesCount);
 
     }
@@ -90,21 +90,17 @@ public abstract class ChatHistory<messageObj extends HistoryMessage> implements 
         this.chatLabel = chatLabel;
     }
 
-    public void updateMuted() {
+    public void muteOrUnmute() {
         if (isMuted()) {
-            setMuted(false);
+            muted = false;
         } else {
-            setMuted(true);
+            muted = true;
         }
-    }
-
-    public void setMuted(final boolean isMuted) {
-        this.isMuted = isMuted;
         save();
     }
 
     public boolean isMuted() {
-        return isMuted;
+        return muted;
     }
 
     private void incUnreadMessagesCount() {

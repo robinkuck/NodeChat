@@ -25,7 +25,7 @@ public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
     @Override
     public void addIncomingMessage(final GlobalHistoryMessage message, final boolean isReading) {
         super.addIncomingMessage(message, isReading);
-        if (ChatlistFragment.getInstance().getGlobalChatlistEntry() != null && !isReading) {
+        if (ChatlistFragment.getInstance() != null && ChatlistFragment.getInstance().getGlobalChatlistEntry() != null && !isReading) {
             ChatlistFragment.getInstance().getGlobalChatlistEntry().setMessageCount(getUnreadMessagesCount());
         }
     }
