@@ -3,6 +3,7 @@ package de.robinkuck.nodechat.android;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 
@@ -21,8 +22,7 @@ public class App extends Application {
                     App.getInstance().getResources().getString(R.string.app_name),
                     NotificationManager.IMPORTANCE_HIGH);
         }
-        //System.out.println("[I] Starting SocketServiceProvider from Application");
-        //startService(new Intent(this,SocketServiceProvider.class));
+        startService(new Intent(this, NotificationService.class));
         ChatHistoryManager.getInstance().loadData();
     }
 

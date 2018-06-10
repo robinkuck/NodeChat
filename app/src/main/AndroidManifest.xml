@@ -13,11 +13,8 @@
         android:icon="@mipmap/launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <receiver
-            android:name=".SocketServiceReceiver"
-            android:label="SocketServiceReceiver"></receiver>
 
-        <service android:name=".SocketServiceProvider" />
+        <service android:name=".NotificationService" />
 
         <activity
             android:name=".activities.SplashActivity"

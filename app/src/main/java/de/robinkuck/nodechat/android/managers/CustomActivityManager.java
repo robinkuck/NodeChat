@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import de.robinkuck.nodechat.android.CheckInternetConnectionReceiver;
-import de.robinkuck.nodechat.android.SocketServiceProvider;
+import de.robinkuck.nodechat.android.NotificationService;
 import de.robinkuck.nodechat.android.activities.GlobalChatActivity;
 import de.robinkuck.nodechat.android.activities.MainActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
@@ -88,7 +88,7 @@ public class CustomActivityManager {
     }
 
     private void addSocketService(final Activity startActivity) {
-        Intent i = new Intent(Intent.ACTION_SYNC, null, startActivity.getBaseContext(), SocketServiceProvider.class);
+        Intent i = new Intent(Intent.ACTION_SYNC, null, startActivity.getBaseContext(), NotificationService.class);
         i.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         startActivity.getBaseContext().startService(i);
     }

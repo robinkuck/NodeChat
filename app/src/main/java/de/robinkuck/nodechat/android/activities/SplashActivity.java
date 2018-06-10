@@ -1,10 +1,8 @@
 package de.robinkuck.nodechat.android.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import de.robinkuck.nodechat.android.R;
-import de.robinkuck.nodechat.android.SocketServiceProvider;
 import de.robinkuck.nodechat.android.utils.Utils;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 
@@ -15,7 +13,7 @@ public class SplashActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         CustomActivityManager.getInstance().setCurrentActivity(this);
-        //startService(new Intent(this, SocketServiceProvider.class));
+        //startService(new Intent(this, NotificationService.class));
         Utils.waitUntil(2500, new Runnable() {
             @Override
             public void run() {
