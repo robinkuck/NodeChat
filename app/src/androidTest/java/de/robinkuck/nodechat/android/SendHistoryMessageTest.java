@@ -27,16 +27,6 @@ public class SendHistoryMessageTest {
 
     @Test
     //@RepeatRule.Repeat(times = 100)
-    public void sendGlobalMessageTest() {
-        final String message = "Hello there!";
-        simpleLogin("Bill");
-        onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.chatentry_global)).perform(click());
-        onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.editMessage)).perform(typeText(message), closeSoftKeyboard());
-        onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.sendButton)).perform(click());
-    }
-
-    @Test
-    //@RepeatRule.Repeat(times = 100)
     public void sendGlobalMessageTest2() {
         final String message = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore";
         simpleLogin("Bill");
