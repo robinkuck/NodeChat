@@ -84,12 +84,12 @@ public class NickActivity extends AppCompatActivity {
     }
 
     private void configViews() {
-        notificationText = (TextView) findViewById(R.id.notification);
-        editNick = (EditText) findViewById(R.id.editNick);
+        notificationText = findViewById(R.id.notification);
+        editNick = findViewById(R.id.editNick);
         if (!NickManager.getInstance().getCurrentNick().equals("")) {
             editNick.setText(NickManager.getInstance().getCurrentNick());
         }
-        enter = (Button) findViewById(R.id.buttonEnter);
+        enter = findViewById(R.id.buttonEnter);
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

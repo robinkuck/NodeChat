@@ -10,6 +10,7 @@ import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 public class App extends Application {
 
     private static App INSTANCE;
+    private boolean firstRun = true;
     private NotificationChannel notificationChannel;
     private String channelID = "42021";
 
@@ -32,5 +33,14 @@ public class App extends Application {
 
     public NotificationChannel getNotificationChannel() {
         return notificationChannel;
+    }
+
+    public boolean isFirstRun() {
+        if (firstRun) {
+            firstRun = false;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

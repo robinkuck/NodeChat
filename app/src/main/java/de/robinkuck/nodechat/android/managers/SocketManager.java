@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import de.robinkuck.nodechat.android.App;
 import de.robinkuck.nodechat.android.ChangeNickDialog;
 import de.robinkuck.nodechat.android.GlobalChatNotification;
+import de.robinkuck.nodechat.android.activities.MainActivity;
 import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
 import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
@@ -78,9 +79,8 @@ public class SocketManager {
         try {
             opts.query = "nick=" + NickManager.getInstance().getCurrentNick() + "&deviceid=" + Utils.getDeviceID(context)
                     + "&authkey=" + getAuthKey();
-            //socket = IO.socket("http://" + HOST + ":" + PORT + "/", opts);
-            System.out.println("[I] SocketManager: trying to connect...");
             socket.connect();
+            System.out.println("[I] SocketManager: trying to connect...");
             System.out.println("[I] SocketManager: connection etablished!");
             configSocketEvents();
         } catch (Exception e) {
@@ -222,7 +222,7 @@ public class SocketManager {
         }).on("userConnect", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                if (Utils.isMyAppRunning()) {
+                if (Utils.isMyAppRunning() && CustomActivityManager.getInstance().getCurrentActivity() instanceof MainActivity) {
                     JSONObject data = (JSONObject) args[0];
                     try {
                         final String nick = data.getString("name");

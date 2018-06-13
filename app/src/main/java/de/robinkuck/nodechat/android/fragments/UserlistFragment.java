@@ -26,7 +26,7 @@ public class UserlistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         INSTANCE = this;
-        if (SocketManager.getInstance().getSocket()!=null) {
+        if (SocketManager.getInstance().getSocket() != null) {
             SocketManager.getInstance().getSocket().emit("getUsers");
         }
         return inflater.inflate(R.layout.fragment_users, container, false);
@@ -69,12 +69,7 @@ public class UserlistFragment extends Fragment {
     public void removeViewFromUserList(final String nick) {
         final UserEntryView userEntry = entries.get(nick);
         if (userEntry != null) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    userList.removeView(userEntry);
-                }
-            });
+            userList.removeView(userEntry);
         }
     }
 

@@ -50,6 +50,8 @@ public class MainActivity extends AbstractActivity {
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
+        } else {
+            finish();
         }
     }
 
