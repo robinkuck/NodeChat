@@ -29,7 +29,7 @@ public class SendMessageTest {
     //@RepeatRule.Repeat(times = 100)
     public void sendGlobalMessageTest() {
         final String message = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore";
-        TestUtils.simpleLogin("Bill");
+        TestUtils.simpleLogin("testuser01");
         onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.chatentry_global)).perform(click());
         onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.editMessage)).perform(typeText(message), closeSoftKeyboard());
         onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.sendButton)).perform(click());

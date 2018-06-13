@@ -20,7 +20,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class SettingsTest {
+public class ChatSettingsTest {
 
     @Rule
     public ActivityTestRule<NickActivity> nickActivityActivityTestRule = new ActivityTestRule<>(NickActivity.class);
@@ -39,7 +39,7 @@ public class SettingsTest {
 
     @Test
     public void clearGlobalChatHistoryTest() {
-        TestUtils.simpleLogin("testuser02");
+        TestUtils.simpleLogin("testuser03");
         onView(ViewMatchers.withId(de.robinkuck.nodechat.android.R.id.chatentry_global)).perform(click());
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(withText("Clear history")).perform(click());
