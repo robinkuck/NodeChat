@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.App;
 import de.robinkuck.nodechat.android.ChangeNickDialog;
+import de.robinkuck.nodechat.android.GlobalChatNotification;
 import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
 import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
@@ -287,8 +288,7 @@ public class SocketManager {
                         if (ChatHistoryManager.getInstance().getGlobalChatHistory().isMuted()) {
 
                         } else {
-                            new SimpleNotification(App.getInstance().getApplicationContext(), "New global message",
-                                    from + ": " + message).show();
+                            new GlobalChatNotification(App.getInstance().getApplicationContext(), from + ": " + message).show();
                         }
                         isReading = false;
                     }
