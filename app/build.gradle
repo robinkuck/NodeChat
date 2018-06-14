@@ -6,15 +6,19 @@ android {
         applicationId "de.robinkuck.nodechat"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 4
-        versionName "1.0.2"
+        versionCode 6
+        versionName "1.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
         }
     }
 

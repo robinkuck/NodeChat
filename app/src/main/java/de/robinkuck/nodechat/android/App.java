@@ -13,6 +13,7 @@ public class App extends Application {
     private boolean firstRun = true;
     private NotificationChannel notificationChannel;
     private String channelID = "42021";
+    private boolean debugMode;
 
     @Override
     public void onCreate() {
@@ -25,6 +26,10 @@ public class App extends Application {
         }
         startService(new Intent(this, NotificationService.class));
         ChatHistoryManager.getInstance().loadData();
+        if (BuildConfig.DEBUG) {
+            debugMode = true;
+            System.out.println("[I] Enabling debug mode");
+        }
     }
 
     public static App getInstance() {
@@ -42,5 +47,9 @@ public class App extends Application {
         } else {
             return false;
         }
+    }
+
+    public boolean isDebug() {
+        return debugMode;
     }
 }

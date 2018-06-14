@@ -68,7 +68,8 @@ public class SocketManager {
             socket.disconnect();
         }
         try {
-            socket = IO.socket("http://" + HOST + ":" + TEST_PORT + "/", opts);
+            socket = IO.socket("http://" + HOST + ":" +
+                    (App.getInstance().isDebug() ? TEST_PORT : PORT) + "/", opts);
         } catch (Exception e) {
             e.printStackTrace();
         }
