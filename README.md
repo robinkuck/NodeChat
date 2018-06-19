@@ -1,0 +1,4 @@
+# NodeChat
+<a href='http://www.jenkins.robinkuck.de/job/NodeChat/'><img src='http://www.jenkins.robinkuck.de/job/NodeChat/badge/icon'></a>
+
+chat application based on Android, NodeJS and SocketIO
