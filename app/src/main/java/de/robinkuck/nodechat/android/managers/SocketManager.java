@@ -129,13 +129,14 @@ public class SocketManager {
         }
     }
 
-    public void sendPrivateMessage(String receiver, String message) {
+    public void sendPrivateMessage(final String recipient, final String message, final String date, final Ack ack) {
         if (getSocket().connected()) {
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("receiver", receiver);
-                jsonObject.put("msg", message.trim());
-                getSocket().emit("new_privatemessage", jsonObject);
+                jsonObject.put("recipient", recipient);
+                jsonObject.put("msg", message);
+                jsonObject.put("date", date);
+                getSocket().emit("new_privatemessage", jsonObject, ack);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

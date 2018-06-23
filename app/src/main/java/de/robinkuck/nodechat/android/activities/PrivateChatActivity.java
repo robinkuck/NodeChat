@@ -7,9 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.history.ChatHistory;
+import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
+import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
 import de.robinkuck.nodechat.android.managers.SocketManager;
+import io.socket.client.Ack;
 import io.socket.emitter.Emitter;
 
 public class PrivateChatActivity extends ChatActivity {
@@ -45,35 +48,7 @@ public class PrivateChatActivity extends ChatActivity {
         SocketManager.getInstance().getSocket().on("privatemessage", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                JSONObject data = (JSONObject) args[0];
-                try {
-                    final String s1 = data.getString("text");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            addPrivateMessageView(s1);
-                        }
-                    });
-                } catch (JSONException e) {
-                    System.out.println("Error getting new message!");
-                }
-            }
-        }).on("yourmessage", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                JSONObject data = (JSONObject) args[0];
-                try {
-                    final String s2 = data.getString("text");
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //UiUtils.scrollDown(scroller);
-                        }
-                    });
-                } catch (JSONException e) {
-                    System.out.println("Error getting new message!");
-                }
+                notifyRecylerView();
             }
         });
     }
@@ -86,17 +61,24 @@ public class PrivateChatActivity extends ChatActivity {
 
                 } else {
                     if (InternetConnectionManager.getInstance().isOnline()) {
-                        SocketManager.getInstance().sendPrivateMessage(recipient, editMsg.getText().toString());
+                        final String message = editMsg.getText().toString().trim();
+                        final String date = PrivateChatActivity.super.getCurrentDateString();
                         clearEditMsg();
-                        //UiUtils.scrollDown(scroller);
+                        GlobalHistoryMessage historyMessage = new GlobalHistoryMessage(true, date, "", message);
+                        ChatHistoryManager.getInstance().getGlobalChatHistory().addSentMessage(historyMessage);
+                        notifyRecylerView();
+                        SocketManager.getInstance().sendPrivateMessage(recipient, message, date,
+                                new Ack() {
+                                    @Override
+                                    public void call(Object... args) {
+                                        System.out.println("[I] Private Message was sent successfully!");
+                                    }
+                                });
+                        clearEditMsg();
                     }
                 }
             }
         });
-    }
-
-    public void addPrivateMessageView(String text) {
-        //MessageView mv = super.createMessageView(text, false);
     }
 
     public String getRecipient() {

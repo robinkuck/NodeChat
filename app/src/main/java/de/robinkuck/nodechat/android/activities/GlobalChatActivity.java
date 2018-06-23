@@ -19,8 +19,6 @@ import io.socket.emitter.Emitter;
 
 public class GlobalChatActivity extends ChatActivity {
 
-    private String nick;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +27,6 @@ public class GlobalChatActivity extends ChatActivity {
         configSendButton();
         getSupportActionBar().setTitle("Global chat");
 
-        nick = getIntent().getStringExtra("nick");
         ChatlistFragment.getInstance().getGlobalChatlistEntry().resetTVUnreadMessagesCount();
         if (ChatHistoryManager.getInstance().getGlobalChatHistory().getUnreadMessagesCount() > 0) {
             ChatHistoryManager.getInstance().getGlobalChatHistory().resetUnreadMessagesCount();
