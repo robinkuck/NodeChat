@@ -41,7 +41,7 @@ public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
                 loadHistoryMessage(message);
             }
         } catch (JSONException e) {
-
+            e.printStackTrace();
         }
     }
 

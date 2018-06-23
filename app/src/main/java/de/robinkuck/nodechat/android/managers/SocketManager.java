@@ -75,6 +75,19 @@ public class SocketManager {
         }
     }
 
+    public void connectSocket() {
+        initSocket();
+        try {
+            opts.query = "nick=" + NickManager.getInstance().getCurrentNick() + "&authkey=" + getAuthKey();
+            socket.connect();
+            System.out.println("[I] SocketManager: trying to connect...");
+            System.out.println("[I] SocketManager: connection etablished!");
+            configSocketEvents();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public void connectSocket(final Context context) {
         initSocket();
         try {

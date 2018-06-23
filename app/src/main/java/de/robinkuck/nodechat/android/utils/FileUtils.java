@@ -48,6 +48,8 @@ public class FileUtils {
             outputStreamWriter.close();
         } catch (IOException e) {
             Log.e("FileUtils", "File write failed: " + e.toString());
+        } catch (NullPointerException e) {
+
         }
     }
 
