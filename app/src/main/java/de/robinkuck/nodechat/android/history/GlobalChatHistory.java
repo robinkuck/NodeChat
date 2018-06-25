@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 
-public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
+public class GlobalChatHistory extends ChatHistory<GlobalChatHistoryMessage> {
 
     public GlobalChatHistory() {
         super("Global Chat", 0, false);
@@ -23,7 +23,7 @@ public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
     }
 
     @Override
-    public void addIncomingMessage(final GlobalHistoryMessage message, final boolean isReading) {
+    public void addIncomingMessage(final GlobalChatHistoryMessage message, final boolean isReading) {
         super.addIncomingMessage(message, isReading);
         if (ChatlistFragment.getInstance() != null && ChatlistFragment.getInstance().getGlobalChatlistEntry() != null && !isReading) {
             ChatlistFragment.getInstance().getGlobalChatlistEntry().setMessageCount(getUnreadMessagesCount());
@@ -35,7 +35,7 @@ public class GlobalChatHistory extends ChatHistory<GlobalHistoryMessage> {
         try {
             for (int i = 0; i < messageList.length(); i++) {
                 JSONObject currentMessage = messageList.getJSONObject(i);
-                GlobalHistoryMessage message = new GlobalHistoryMessage(currentMessage.getBoolean("personal"),
+                GlobalChatHistoryMessage message = new GlobalChatHistoryMessage(currentMessage.getBoolean("personal"),
                         currentMessage.getString("dateString"), currentMessage.getString("nameString"),
                         currentMessage.getString("messageString"));
                 loadHistoryMessage(message);

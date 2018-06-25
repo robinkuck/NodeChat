@@ -3,11 +3,8 @@ package de.robinkuck.nodechat.android.activities;
 import android.os.Bundle;
 import android.view.View;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import de.robinkuck.nodechat.android.history.ChatHistory;
-import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
+import de.robinkuck.nodechat.android.history.GlobalChatHistoryMessage;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.InternetConnectionManager;
@@ -64,7 +61,7 @@ public class PrivateChatActivity extends ChatActivity {
                         final String message = editMsg.getText().toString().trim();
                         final String date = PrivateChatActivity.super.getCurrentDateString();
                         clearEditMsg();
-                        GlobalHistoryMessage historyMessage = new GlobalHistoryMessage(true, date, "", message);
+                        GlobalChatHistoryMessage historyMessage = new GlobalChatHistoryMessage(true, date, "", message);
                         ChatHistoryManager.getInstance().getGlobalChatHistory().addSentMessage(historyMessage);
                         notifyRecylerView();
                         SocketManager.getInstance().sendPrivateMessage(recipient, message, date,

@@ -11,8 +11,7 @@ import android.widget.TextView;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.history.ChatHistory;
-import de.robinkuck.nodechat.android.history.GlobalChatHistory;
-import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
+import de.robinkuck.nodechat.android.history.GlobalChatHistoryMessage;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.NickManager;
@@ -49,7 +48,7 @@ public class ChatlistEntryView extends RelativeLayout {
             isGlobal = true;
             this.nick = "Global chat";
             tvtitle.setText("Global chat");
-            ChatHistory<GlobalHistoryMessage> globalChatHistory = ChatHistoryManager.getInstance().getGlobalChatHistory();
+            ChatHistory<GlobalChatHistoryMessage> globalChatHistory = ChatHistoryManager.getInstance().getGlobalChatHistory();
             setMessageCount(globalChatHistory.getUnreadMessagesCount());
             setVolumeIcon(globalChatHistory.isMuted());
         } else {

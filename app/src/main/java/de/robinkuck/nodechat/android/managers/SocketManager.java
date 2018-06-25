@@ -1,12 +1,8 @@
 package de.robinkuck.nodechat.android.managers;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Application;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -17,14 +13,12 @@ import de.robinkuck.nodechat.android.App;
 import de.robinkuck.nodechat.android.ChangeNickDialog;
 import de.robinkuck.nodechat.android.GlobalChatNotification;
 import de.robinkuck.nodechat.android.activities.MainActivity;
-import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
+import de.robinkuck.nodechat.android.history.GlobalChatHistoryMessage;
 import de.robinkuck.nodechat.android.activities.ChatActivity;
 import de.robinkuck.nodechat.android.activities.NickActivity;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.fragments.UserlistFragment;
-import de.robinkuck.nodechat.android.utils.UiUtils;
 import de.robinkuck.nodechat.android.utils.Utils;
-import de.robinkuck.nodechat.android.SimpleNotification;
 import de.robinkuck.nodechat.android.views.UserEntryView;
 import io.socket.client.Ack;
 import io.socket.client.IO;
@@ -308,7 +302,7 @@ public class SocketManager {
                         isReading = false;
                     }
                     ChatHistoryManager.getInstance().getGlobalChatHistory().addIncomingMessage(
-                            new GlobalHistoryMessage(false, date, from, message), isReading);
+                            new GlobalChatHistoryMessage(false, date, from, message), isReading);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

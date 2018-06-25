@@ -9,7 +9,7 @@ import java.util.HashMap;
 import de.robinkuck.nodechat.android.App;
 import de.robinkuck.nodechat.android.history.ChatHistory;
 import de.robinkuck.nodechat.android.history.GlobalChatHistory;
-import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
+import de.robinkuck.nodechat.android.history.GlobalChatHistoryMessage;
 import de.robinkuck.nodechat.android.history.HistoryMessage;
 import de.robinkuck.nodechat.android.json.JSONReaderAndWriter;
 
@@ -38,8 +38,8 @@ public class ChatHistoryManager {
         return chatHistoryMap.get(chatID);
     }
 
-    public ChatHistory<GlobalHistoryMessage> getGlobalChatHistory() {
-        return (ChatHistory<GlobalHistoryMessage>) getChatHistory(0);
+    public ChatHistory<GlobalChatHistoryMessage> getGlobalChatHistory() {
+        return (ChatHistory<GlobalChatHistoryMessage>) getChatHistory(0);
     }
 
     public void loadData() {
