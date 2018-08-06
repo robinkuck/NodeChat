@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import de.robinkuck.nodechat.android.BuildConfig;
 import de.robinkuck.nodechat.android.utils.UiUtils;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.api.SoftKeyboard;
@@ -106,9 +105,7 @@ public class NickActivity extends AppCompatActivity {
                 }
             }
         });
-        rootLayout = (RelativeLayout)
-
-                findViewById(R.id.rootLayout);
+        rootLayout = findViewById(R.id.rootLayout);
         if (!InternetConnectionManager.getInstance().
 
                 isOnline())

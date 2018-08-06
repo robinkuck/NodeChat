@@ -2,8 +2,6 @@ package de.robinkuck.nodechat.android.activities;
 
 import android.view.MenuItem;
 
-import de.robinkuck.nodechat.android.R;
-
 public abstract class AbstractChildActivity extends AbstractActivity {
 
     @Override

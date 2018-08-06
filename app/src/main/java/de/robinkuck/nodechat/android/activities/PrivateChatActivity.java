@@ -54,9 +54,7 @@ public class PrivateChatActivity extends ChatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editMsg.getText().toString().trim().equals("")) {
-
-                } else {
+                if (editMsg.getText().toString().trim().equals("")) { } else {
                     if (InternetConnectionManager.getInstance().isOnline()) {
                         final String message = editMsg.getText().toString().trim();
                         final String date = PrivateChatActivity.super.getCurrentDateString();

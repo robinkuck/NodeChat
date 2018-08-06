@@ -136,13 +136,13 @@ public abstract class ChatActivity extends AbstractChildActivity {
 
     public void configViews() {
         super.configViews();
-        editMsg = (EditText) findViewById(R.id.editMessage);
+        editMsg = findViewById(R.id.editMessage);
         editMsg.setFocusableInTouchMode(true);
-        sendButton = (ImageButton) findViewById(R.id.sendButton);
-        rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
+        sendButton = findViewById(R.id.sendButton);
+        rootLayout = findViewById(R.id.rootLayout);
 
         adapter = new ListViewAdapter(ChatHistoryManager.getInstance().getChatHistory(getID()).getMessages());
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -219,7 +219,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
         final int DAY = c.get(Calendar.DAY_OF_MONTH);
         final int MONTH = c.get(Calendar.MONTH) + 1;
         final int YEAR = c.get(Calendar.YEAR);
-        String date = "";
+        String date;
         if (DAY < 10) {
             date = "0" + DAY + "." +
                     (MONTH < 10 ? "0" + MONTH : MONTH) +
@@ -230,7 +230,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
                     "." + YEAR;
         }
 
-        String time = "";
+        String time;
         if (MINUTE < 10) {
             time = "" + HOUR + ":0" + MINUTE;
         } else {
@@ -259,7 +259,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
         @Override
         public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             MessageViewHolder holder = null;
-            View view = null;
+            View view;
             switch (viewType) {
                 case 0:
                     view = ((LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE))
@@ -298,8 +298,8 @@ public abstract class ChatActivity extends AbstractChildActivity {
 
             public MessageViewHolder(final View view) {
                 super(view);
-                message = (TextView) view.findViewById(R.id.vmessage);
-                date = (TextView) view.findViewById(R.id.vdate);
+                message = view.findViewById(R.id.vmessage);
+                date = view.findViewById(R.id.vdate);
                 message.setMaxWidth(getMessageViewWidth());
             }
         }
@@ -315,7 +315,7 @@ public abstract class ChatActivity extends AbstractChildActivity {
 
             public GlobalForeignMessageViewHolder(final View view) {
                 super(view);
-                name = (TextView) view.findViewById(R.id.vname);
+                name = view.findViewById(R.id.vname);
             }
         }
     }

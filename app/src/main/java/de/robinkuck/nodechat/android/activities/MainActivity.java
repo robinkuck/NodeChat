@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
@@ -18,8 +16,6 @@ import de.robinkuck.nodechat.android.managers.CustomActivityManager;
 import de.robinkuck.nodechat.android.managers.NickManager;
 
 public class MainActivity extends AbstractActivity {
-
-    private ImageButton settingsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
