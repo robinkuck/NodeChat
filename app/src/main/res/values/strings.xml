@@ -7,7 +7,7 @@
     <string name="confirm_clear_chat_msg">Do you really want to clear the chat history?</string>
 
     <string name="app_name">NodeChat</string>
-    <id name="chatentry_global">chatentry_global</id>
+    <string name="chatentry_global">chatentry_global</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->

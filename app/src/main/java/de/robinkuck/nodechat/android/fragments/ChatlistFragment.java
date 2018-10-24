@@ -62,7 +62,7 @@ public class ChatlistFragment extends Fragment {
         privateChatListLayout = (LinearLayout) layout.findViewById(R.id.private_chat_list_layout);
         globalChatLayout = (LinearLayout) layout.findViewById(R.id.global_chat_layout);
         globalChatlistEntry = new ChatlistEntryView(getActivity(), "global");
-        globalChatlistEntry.setId(R.id.chatentry_global);
+        //globalChatlistEntry.setId(R.string.chatentry_global);
         addViewtoGlobalChatList(globalChatlistEntry);
         entries.put(0, globalChatlistEntry);
     }
