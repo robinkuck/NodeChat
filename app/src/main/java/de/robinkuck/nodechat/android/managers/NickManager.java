@@ -13,7 +13,7 @@ public class NickManager {
     }
 
     public static NickManager getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new NickManager();
         }
         return INSTANCE;
@@ -33,7 +33,7 @@ public class NickManager {
         SharedPreferences preferences = CustomActivityManager.getInstance().getCurrentActivity().getSharedPreferences("nodechat", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("nickName", currentNick);
-        editor.commit();
+        editor.apply();
         System.out.println("[NickManager] nick name successfully updated");
     }
 

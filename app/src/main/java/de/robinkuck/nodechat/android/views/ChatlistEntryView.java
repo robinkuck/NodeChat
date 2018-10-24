@@ -11,7 +11,6 @@ import android.widget.TextView;
 import de.robinkuck.nodechat.android.R;
 import de.robinkuck.nodechat.android.fragments.ChatlistFragment;
 import de.robinkuck.nodechat.android.history.ChatHistory;
-import de.robinkuck.nodechat.android.history.GlobalChatHistory;
 import de.robinkuck.nodechat.android.history.GlobalHistoryMessage;
 import de.robinkuck.nodechat.android.managers.ChatHistoryManager;
 import de.robinkuck.nodechat.android.managers.CustomActivityManager;
@@ -62,7 +61,7 @@ public class ChatlistEntryView extends RelativeLayout {
         setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isGlobal) {
+                if (isGlobal) {
                     CustomActivityManager.getInstance().startGlobalChatAcitity(ChatlistFragment.getInstance().getActivity(),
                             NickManager.getInstance().getCurrentNick());
                     System.out.println("[I] Global chat started!");
@@ -111,7 +110,7 @@ public class ChatlistEntryView extends RelativeLayout {
     }
 
     public void setVolumeIcon(final boolean isMuted) {
-        if(isMuted) {
+        if (isMuted) {
             imgVolume.setVisibility(VISIBLE);
         } else {
             imgVolume.setVisibility(INVISIBLE);

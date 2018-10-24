@@ -1,10 +1,7 @@
 package de.robinkuck.nodechat.android;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-
-import de.robinkuck.nodechat.android.utils.Utils;
 
 public class NotificationService extends IntentService {
 

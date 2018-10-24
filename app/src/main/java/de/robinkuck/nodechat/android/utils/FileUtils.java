@@ -21,7 +21,7 @@ public class FileUtils {
             if (inputStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receive = "";
+                String receive;
                 StringBuilder stringBuilder = new StringBuilder();
                 while ((receive = bufferedReader.readLine()) != null) {
                     stringBuilder.append(receive);

@@ -75,7 +75,7 @@ public class UserlistFragment extends Fragment {
 
     private void configViews(View v) {
         entries = new HashMap<>();
-        userList = (LinearLayout) v.findViewById(R.id.users_list);
+        userList = v.findViewById(R.id.users_list);
     }
 
 }

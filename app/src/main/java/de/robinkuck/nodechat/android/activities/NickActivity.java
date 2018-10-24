@@ -106,9 +106,7 @@ public class NickActivity extends AppCompatActivity {
                 }
             }
         });
-        rootLayout = (RelativeLayout)
-
-                findViewById(R.id.rootLayout);
+        rootLayout = findViewById(R.id.rootLayout);
         if (!InternetConnectionManager.getInstance().
 
                 isOnline())

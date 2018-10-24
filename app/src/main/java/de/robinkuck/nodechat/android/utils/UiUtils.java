@@ -15,14 +15,13 @@ public class UiUtils {
     }
 
     public static void closeKeyboard(final Activity act) {
-        final Activity activity = act;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     InputMethodManager inputManager = (InputMethodManager)
-                            activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
+                            act.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(act.getCurrentFocus().getWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
                 } catch (NullPointerException e) {
 

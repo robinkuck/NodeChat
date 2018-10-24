@@ -19,8 +19,6 @@ import de.robinkuck.nodechat.android.managers.NickManager;
 
 public class MainActivity extends AbstractActivity {
 
-    private ImageButton settingsBtn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

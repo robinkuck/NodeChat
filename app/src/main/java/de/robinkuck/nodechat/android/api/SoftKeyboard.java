@@ -78,7 +78,7 @@ public class SoftKeyboard implements View.OnFocusChangeListener {
 
     private void initEditTexts(ViewGroup viewgroup) {
         if (editTextList == null)
-            editTextList = new ArrayList<EditText>();
+            editTextList = new ArrayList<>();
 
         int childCount = viewgroup.getChildCount();
         for (int i = 0; i <= childCount - 1; i++) {

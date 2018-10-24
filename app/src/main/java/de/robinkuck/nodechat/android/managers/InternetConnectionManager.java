@@ -24,7 +24,7 @@ public class InternetConnectionManager {
     }
 
     public static InternetConnectionManager getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new InternetConnectionManager();
         }
         return INSTANCE;
@@ -36,12 +36,12 @@ public class InternetConnectionManager {
 
     public void setOnline(final boolean isOnline) {
         this.isOnline = isOnline;
-        if(isOnline) {
+        if (isOnline) {
             snackbar.dismiss();
         } else {
             final Activity currentActivity = CustomActivityManager.getInstance().getCurrentActivity();
-            if(currentActivity!=null && (currentActivity instanceof MainActivity)||(currentActivity instanceof NickActivity)) {
-                snackbar.show((ViewGroup)currentActivity.findViewById(R.id.rootLayout));
+            if (currentActivity != null && (currentActivity instanceof MainActivity) || (currentActivity instanceof NickActivity)) {
+                snackbar.show((ViewGroup) currentActivity.findViewById(R.id.rootLayout));
             }
         }
     }
@@ -49,7 +49,6 @@ public class InternetConnectionManager {
     public void showSnackbar(final ViewGroup parent) {
         snackbar.show(parent);
     }
-
 
 
 }

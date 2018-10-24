@@ -4,7 +4,6 @@ import android.app.*;
 import android.content.Context;
 import android.os.Handler;
 import android.provider.Settings;
-import android.util.Pair;
 
 import java.io.IOException;
 import java.net.InetAddress;
